@@ -6,6 +6,7 @@
     <link rel="import" href="/bower_components/local-dom/local-dom.html">
     <link rel="import" href="./accordion-treble.html">
     <link rel="import" href="./accordion-bass.html">
+    <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html" async>
 </imports>
 <script src="./accordion_synth_vars.js"></script>
 
@@ -43,6 +44,25 @@
                 color: var(--content-color);
             }
         </style>
+        <style swap-button>
+            [options-layout]{
+                position:absolute;
+                height:100%;
+                width:100%;
+                @apply(--layout-horizontal);
+                @apply(--layout-center);
+                @apply(--layout-end-justified);
+            }
+            [swap-button] {
+                background-color: var(--background-color0);
+                border-radius: 100%;
+                margin-right: 2vw;
+                color: var(--content-background);
+            }
+            [swap-button]:hover {
+                color: var(--theme-color1);
+            }
+        </style>
         <style>
             local-dom{
                 margin:0 ;
@@ -72,6 +92,11 @@
             }
         </style>
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}">
+            <div options-layout>
+                <template is="dom-if" if="[[mobile]]">
+                <paper-icon-button swap-button on-click="swap" icon="swap-horiz"></paper-icon-button>
+                </template>
+            </div>
             <div wrapper class$="{{_computeRotation(rotation)}}">
                 <accordion-treble buttons id='treble' class$='{{_computeDisplayTreble(mobile,showingTreble)}} {{_computeDisplay(finishedLoading)}}'
                     name='diapasón'
