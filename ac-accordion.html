@@ -7,9 +7,8 @@
     <link rel="import" href="./accordion-treble.html">
     <link rel="import" href="./accordion-bass.html">
     <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html" async>
+    <script src="./keyboardMapping.js"></script>
 </imports>
-<script src="./accordion_synth_vars.js"></script>
-
 <dom-module id="ac-accordion">
     <template>
         <style default-theme>
@@ -45,10 +44,10 @@
             }
         </style>
         <style swap-button>
-            [options-layout]{
-                position:absolute;
-                height:100%;
-                width:100%;
+            [options-layout] {
+                position: absolute;
+                height: 100%;
+                width: 100%;
                 @apply(--layout-horizontal);
                 @apply(--layout-center);
                 @apply(--layout-end-justified);
@@ -64,22 +63,22 @@
             }
         </style>
         <style>
-            local-dom{
-                margin:0 ;
-                padding:0 ;
-                height:100%;
-                width:100%;
+            local-dom {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
                 @apply(--layout-horizontal);
                 @apply(--layout-around-justified);
             }
             [wrapper] {
-                width:65vw;
+                width: 65vw;
                 @apply(--layout-horizontal);
                 @apply(--layout-around-justified);
             }
             .reversed {
                 @apply(--layout-horizontal-reverse);
-                margin-right:100px;
+                margin-right: 100px;
             }
             .horizontal {
                 @apply(--layout-horizontal);
@@ -94,25 +93,26 @@
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}">
             <div options-layout>
                 <template is="dom-if" if="[[mobile]]">
-                <paper-icon-button swap-button on-click="swap" icon="swap-horiz"></paper-icon-button>
+                    <paper-icon-button swap-button on-click="swap" icon="swap-horiz"></paper-icon-button>
                 </template>
             </div>
             <div wrapper class$="{{_computeRotation(rotation)}}">
-                <accordion-treble buttons id='treble' class$='{{_computeDisplayTreble(mobile,showingTreble)}} {{_computeDisplay(finishedLoading)}}'
+                <accordion-treble
+                    class$='{{_computeDisplayTreble(mobile,showingTreble)}} {{_computeDisplay(finishedLoading)}}'
+                    buttons
                     name='diapasón'
                     default-instrument-panning='0.4'
                     default-playback-panning='0.2'
                     default-instrument-volume='1'
-                    default-playback-volume='0.7'>
-                </accordion-treble>
-                <accordion-bass buttons id='bass'
+                    default-playback-volume='0.7'></accordion-treble>
+                <accordion-bass
                     class$='{{_computeDisplayBass(mobile,showingTreble)}} {{_computeDisplay(finishedLoading)}}'
+                    buttons
                     name='bajos'
                     default-playback-panning='-0.2'
                     default-instrument-panning='-0.4'
                     default-instrument-volume='0.45'
-                    default-playback-volume='0.25'>
-                </accordion-bass>
+                    default-playback-volume='0.25'></accordion-bass>
             </div>
         </local-dom>
     </template>
@@ -126,7 +126,7 @@
             listeners: {
                 'keypress': '_keyPress',
                 'keyup': '_keyUp',
-                'theme-app':'_themeApp',
+                'theme-app': '_themeApp',
                 'theme-update': '_updateTheme',
                 'set-default-theme': '_setDefaultTheme'
                 // 'mousemove': '_updateOpening'
@@ -149,7 +149,7 @@
                 }
             },
             _onFinishedLoadingNotes: function () {
-                this.playAnimation('entry') ;
+                this.playAnimation('entry');
             },
         /* ------------ keyboard mouse activity ------------- */
             _updateOpening: function (e) {
@@ -184,56 +184,56 @@
                 var st = this.bassNotes;
                 var button = -1;
                 //based on G accrdion with notes on bass: 41,43,45,46,48,49,50,51,52,53,54,55,56,57,58,59  bits represent: 41,42,43,44,45,46,47,48,49,50,51,52,53,54,  55,56,57,58,59   this.$.trebleSynthesizer.allNotesOffChords(); s0 closed
-                if (true) {
-                    if ((st & (1 << 7)) && (st & (1 << 11)) && (st & (1 << 14)))
-                        button = 0;
+            /* ------------------- Bit test ------------------- */
+                if ((st & (1 << 7)) && (st & (1 << 11)) && (st & (1 << 14)))
+                    button = 0;
 
-                    //s0 opened
-                    if ((st & (1 << 7)) && (st & (1 << 10)) && (st & (1 << 14)))
-                        button = 1;
+                //s0 opened
+                if ((st & (1 << 7)) && (st & (1 << 10)) && (st & (1 << 14)))
+                    button = 1;
 
-                    //s1 closed
-                    if ((st & (1 << 8)) && (st & (1 << 12)) && (st & (1 << 15)))
-                        button = 2;
+                //s1 closed
+                if ((st & (1 << 8)) && (st & (1 << 12)) && (st & (1 << 15)))
+                    button = 2;
 
-                    //s1 opened
-                    if ((st & (1 << 8)) && (st & (1 << 11)) && (st & (1 << 15)))
-                        button = 3;
+                //s1 opened
+                if ((st & (1 << 8)) && (st & (1 << 11)) && (st & (1 << 15)))
+                    button = 3;
 
-                    //s2 closed
-                    if ((st & (1 << 9)) && (st & (1 << 13)) && (st & (1 << 16)))
-                        button = 4;
+                //s2 closed
+                if ((st & (1 << 9)) && (st & (1 << 13)) && (st & (1 << 16)))
+                    button = 4;
 
-                    //s2 opened
-                    if ((st & (1 << 9)) && (st & (1 << 12)) && (st & (1 << 16)))
-                        button = 5;
+                //s2 opened
+                if ((st & (1 << 9)) && (st & (1 << 12)) && (st & (1 << 16)))
+                    button = 5;
 
-                    //s3 closed
-                    if ((st & (1 << 10)) && (st & (1 << 14)) && (st & (1 << 17)))
-                        button = 6;
+                //s3 closed
+                if ((st & (1 << 10)) && (st & (1 << 14)) && (st & (1 << 17)))
+                    button = 6;
 
-                    //s3 opened
-                    if ((st & (1 << 10)) && (st & (1 << 13)) && (st & (1 << 17)))
-                        button = 7;
+                //s3 opened
+                if ((st & (1 << 10)) && (st & (1 << 13)) && (st & (1 << 17)))
+                    button = 7;
 
-                    //s4 closed
-                    if ((st & (1 << 11)) && (st & (1 << 15)) && (st & (1 << 18)))
-                        button = 8;
+                //s4 closed
+                if ((st & (1 << 11)) && (st & (1 << 15)) && (st & (1 << 18)))
+                    button = 8;
 
-                    //s4 opened
-                    if ((st & (1 << 11)) && (st & (1 << 14)) && (st & (1 << 18)))
-                        button = 9;
+                //s4 opened
+                if ((st & (1 << 11)) && (st & (1 << 14)) && (st & (1 << 18)))
+                    button = 9;
 
-                    //s5 closed
-                    if ((st & (1 << 0)) && (st & (1 << 16)) && (st & (1 << 7)))
-                        button = 10;
+                //s5 closed
+                if ((st & (1 << 0)) && (st & (1 << 16)) && (st & (1 << 7)))
+                    button = 10;
 
-                    //s5 opened
-                    if ((st & (1 << 0)) && (st & (1 << 15)) && (st & (1 << 7)))
-                        button = 11;
-                    }
+                //s5 opened
+                if ((st & (1 << 0)) && (st & (1 << 15)) && (st & (1 << 7)))
+                    button = 11;
                 if (button === -1)
                     return;
+            /* ------------------- adds button action ------------------- */
                 var e = {};
                 e.detail = {};
                 e.detail.time = context.currentTime;
@@ -241,23 +241,30 @@
                 e.detail.channel = 3;
                 e.detail.origin = 'instrument';
                 e.detail.cmd = cmd;
-                this.$$('ACCORDION-BASS').addButtonAction(e);
+                this.$$('ACCORDION-BASS').onButtonEvent(e);
             },
-            _instrumentAction: function (e) {
-                var channel, midiNote, cmd ;
-                channel = e.channel ;
-                button = e.button ;
-                cmd = e.cmd ;
-                if (channel === 0)
-                    this.$$('ACCORDION-TREBLE').addButtonAction(e);
-                else if (channel === 1 || channel === 3)
-                    this.$$('ACCORDION-BASS').addButtonAction(e);
+            _bitCount: function (num) {
+                var cnt = 0;
+                for (var i = 0; i < 31; i++) {
+                    if (num & (1 << i))
+                        cnt++;
+                    }
+                return cnt;
+            },
+            _onButtonEvent: function (e) {
+                if (e.channel === 0) {
+                    this.$$('ACCORDION-TREBLE').onButtonEvent(e);
+                }
+                else if (e.channel === 1 || e.channel === 3)
+                    this.$$('ACCORDION-BASS').onButtonEvent(e);
                 else if (channel === 2) {
                     var cnt = (this._bitCount(this.bassNotes) % 3);
+                    // revisar
+                    // generates button  = -1
                     if (cnt === 0)
                         this._chordActivity('note-off');
-                    var bNote = button - 41;
-                    if (cmd === 'note-on')
+                    var bNote = e.button - 41;
+                    if (e.cmd === 'note-on')
                         this.bassNotes = this.bassNotes | (1 << bNote);
                     else {
                         var tmp = 524287 ^ (1 << bNote);
@@ -268,15 +275,7 @@
                         this._chordActivity('note-on');
                 }
             },
-            _bitCount: function (num) {
-                var cnt = 0;
-                for (var i = 0; i < 31; i++) {
-                    if (num & (1 << i))
-                        cnt++;
-                    }
-                return cnt;
-            },
-        /* ----------------- general controls --------------- */
+        /* ----------------- GUI --------------- */
             swap: function () {
                 this.showingTreble = !this.showingTreble;
                 this.playAnimation('entry');
@@ -305,8 +304,35 @@
                     return "reversed";
                 return "horizontal";
             },
+        /* ------------------- Initialization ------------------- */
             ready: function () {
-                this.defaultReverb = 30 ;
+                this.defaultReverb = 30;
+                this.chords = [
+                    "C",
+                    "Cm",
+                    "C#",
+                    "C#m",
+                    "D",
+                    "Dm",
+                    "Eb",
+                    "Ebm",
+                    "E",
+                    "Em",
+                    "F",
+                    "Fm",
+                    "F#",
+                    "F#m",
+                    "G",
+                    "Gm",
+                    "A",
+                    "Am",
+                    "Ab",
+                    "Abm",
+                    "Bb",
+                    "Bbm",
+                    "B",
+                    "Bm"
+                ];
                 // this.setPitch(67) ;
             }
         });

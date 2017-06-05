@@ -1,5 +1,3 @@
-var noteNotFound = false ;
-
 //bass_chords pitch change
 var bassChordsNextNote = [] ;
 var bassChordspreviousNote = [] ;
@@ -11,11 +9,7 @@ bassChordsNextNote[2] = 6 ;
 bassChordspreviousNote[2] = 36 ;
 bassChordsNextNote[3] = 7 ;
 bassChordspreviousNote[3] = 37 ;
-
-
 bassChordsNextNote[4] = 8 ;
-
-
 bassChordspreviousNote[4] = 0 ;
 bassChordsNextNote[5] = 8 ;
 bassChordspreviousNote[5] = 1 ;
@@ -91,37 +85,3 @@ bassChordsNextNote[40] = 21 ;
 bassChordspreviousNote[40] = 33 ;
 bassChordsNextNote[41] = 22 ;
 bassChordspreviousNote[41] = 32 ;
-
-//keyboad actions
-var keyMap = [] ;
-keyMap['w'] = 24 ;
-keyMap['e'] = 26 ;
-keyMap['r'] = 28 ;
-keyMap['t'] = 30 ;
-keyMap['y'] = 32 ;
-keyMap['u'] = 34 ;
-keyMap['i'] = 36 ;
-keyMap['o'] = 38 ;
-keyMap['p'] = 40 ;
-keyMap['['] = 42 ;
-keyMap['a'] = 44 ;
-keyMap['s'] = 46 ;
-keyMap['d'] = 48 ;
-keyMap['f'] = 50 ;
-keyMap['g'] = 52 ;
-keyMap['h'] = 54 ;
-keyMap['j'] = 56 ;
-keyMap['k'] = 58 ;
-keyMap['l'] = 60 ;
-keyMap[';'] = 62 ;
-keyMap['0'] = 64 ;
-keyMap['z'] = 66 ;
-keyMap['x'] = 68 ;
-keyMap['c'] = 70 ;
-keyMap['v'] = 72 ;
-keyMap['b'] = 74 ;
-keyMap['n'] = 76 ;
-keyMap['m'] = 78 ;
-keyMap[','] = 80 ;
-keyMap['.'] = 82 ;
-keyMap['/'] = 84 ;
