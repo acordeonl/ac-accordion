@@ -78,47 +78,47 @@ For an overlayed drop menu:
         <!-- local DOM -->
         <view-audio
             id="trebleAudio"
-            channel='0'
+            channel0
             total-notes='62'
             default-audio-url='/data/accordion_synth/treble'>
         </view-audio>
         <local-dom class$="{{_computeRotation(rotation)}}" mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}">
             <div class$="col1 {{_computeColRotation(rotation)}}">
-                <accordion-button button id21 button-type="treble"></accordion-button>
-                <accordion-button button id22 button-type="treble"></accordion-button>
-                <accordion-button button id23 button-type="treble"></accordion-button>
-                <accordion-button button id24 button-type="treble"></accordion-button>
-                <accordion-button button id25 button-type="treble"></accordion-button>
-                <accordion-button button id26 button-type="treble"></accordion-button>
-                <accordion-button button id27 button-type="treble"></accordion-button>
-                <accordion-button button id28 button-type="treble"></accordion-button>
-                <accordion-button button id29 button-type="treble"></accordion-button>
-                <accordion-button button id30 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id21 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id22 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id23 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id24 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id25 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id26 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id27 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id28 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id29 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id30 button-type="treble"></accordion-button>
             </div>
             <div class$="col2 {{_computeColRotation(rotation)}}">
-                <accordion-button button id10 button-type="treble"></accordion-button>
-                <accordion-button button id11 button-type="treble"></accordion-button>
-                <accordion-button button id12 button-type="treble"></accordion-button>
-                <accordion-button button id13 button-type="treble"></accordion-button>
-                <accordion-button button id14 button-type="treble"></accordion-button>
-                <accordion-button button id15 button-type="treble"></accordion-button>
-                <accordion-button button id16 button-type="treble"></accordion-button>
-                <accordion-button button id17 button-type="treble"></accordion-button>
-                <accordion-button button id18 button-type="treble"></accordion-button>
-                <accordion-button button id19 button-type="treble"></accordion-button>
-                <accordion-button button id20 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id10 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id11 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id12 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id13 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id14 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id15 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id16 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id17 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id18 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id19 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id20 button-type="treble"></accordion-button>
             </div>
             <div class$="col1 {{_computeColRotation(rotation)}}">
-                <accordion-button button id0 button-type="treble"></accordion-button>
-                <accordion-button button id1 button-type="treble"></accordion-button>
-                <accordion-button button id2 button-type="treble"></accordion-button>
-                <accordion-button button id3 button-type="treble"></accordion-button>
-                <accordion-button button id4 button-type="treble"></accordion-button>
-                <accordion-button button id5 button-type="treble"></accordion-button>
-                <accordion-button button id6 button-type="treble"></accordion-button>
-                <accordion-button button id7 button-type="treble"></accordion-button>
-                <accordion-button button id8 button-type="treble"></accordion-button>
-                <accordion-button button id9 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id0 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id1 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id2 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id3 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id4 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id5 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id6 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id7 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id8 button-type="treble"></accordion-button>
+                <accordion-button button channel0 id9 button-type="treble"></accordion-button>
             </div>
         </local-dom>
     </template>
@@ -142,40 +142,23 @@ For an overlayed drop menu:
                     value:67
                 }
             },
-            _loadNotes: function () {
-                var i;
-                for (i = 0; i < 31; i++) {
-                    this._loadNote('trebleAudio', this.buttonCloseNote[i]);
-                }
-                for (i = 0; i < 31; i++) {
-                    this._loadNote('trebleAudio', this.buttonOpenNote[i]);
-                }
+
+        /* ------------------- Button Event ------------------- */
+            _mapButtonEventToButtonId: function(button,channel){
+                var buttonId = Math.floor((button - 24) / 2);
+                return buttonId ;
             },
-            _setPitch: function (pitch) {
-                var diff = pitch - this.pitch ;
-                this.pitch += diff ;
-                for (var i = 0; i < 31; i++) {
-                    this.buttonCloseNote[i] += diff;
-                    this.buttonOpenNote[i] += diff;
-                }
-            },
-            _ButtonEventToAudio: function (e) {
-                var buttonId = Math.floor((e.button - 24) / 2);
+            _mapButtonEventToNote: function(buttonId,button,channel){
                 var note = this.buttonCloseNote[buttonId];
-                if(e.cmd === 'note-off')
-                    this.$$('VIEW-AUDIO')._stopAudio(buttonId, e);
-                else {
-                    if ((e.button - 24) % 2)
-                        note = this.buttonOpenNote[buttonId];
-                    this.$$('VIEW-AUDIO')._startAudio(note, buttonId, e);
-                }
+                if ((button - 24) % 2)
+                    note = this.buttonOpenNote[buttonId];
+                return note ;
             },
-            _ButtonEventToGUI: function(e){
-                var buttonId = Math.floor((e.button - 24) / 2);
+            _mapButtonEventToButtonState: function(cmd,button,channel){
                 var buttonState = 0;
-                if (e.cmd === 'note-on') 
-                    buttonState = ((e.button - 24) % 2) + 1;
-                this.displayEvent( 'id'+buttonId , buttonState , e ) ;
+                if (cmd === 'note-on')
+                    buttonState = ((button - 24) % 2) + 1;
+                return buttonState ;
             },
         /* ------------------- Chords ------------------- */
             _displayChord: function(chord){
@@ -197,7 +180,24 @@ For an overlayed drop menu:
                     this.playAnimation('entry');
                 }
             },
-        /* ------------------- Initialization ------------------- */
+        /* ------------------- Setup ------------------- */
+            _loadNotes: function () {
+                var i;
+                for (i = 0; i < 31; i++) {
+                    this._loadNote('trebleAudio', this.buttonCloseNote[i]);
+                }
+                for (i = 0; i < 31; i++) {
+                    this._loadNote('trebleAudio', this.buttonOpenNote[i]);
+                }
+            },
+            _setPitch: function (pitch) {
+                var diff = pitch - this.pitch ;
+                this.pitch += diff ;
+                for (var i = 0; i < 31; i++) {
+                    this.buttonCloseNote[i] += diff;
+                    this.buttonOpenNote[i] += diff;
+                }
+            },
             ready: function () {
             /* ------------------- Button note mapping ------------------- */
                 this.buttonCloseNote[21] = 61;
