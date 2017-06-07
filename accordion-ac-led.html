@@ -1,5 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
-<link rel="import" href="/bower_components/ac-view/ac-button-behavior.html">
+<link rel="import" href="/bower_components/ac-view/ac-led-behavior.html">
 <!--
 
 Shows drop down menu (works on chrome)
@@ -25,7 +25,7 @@ For an overlayed drop menu:
 
 @demo demo/drop-menu-demo.html
 -->
-<dom-module id="accordion-button">
+<dom-module id="accordion-ac-led">
     <template>
         <style>
             :host {}
@@ -41,7 +41,7 @@ For an overlayed drop menu:
                 color: var(--content-background,#fafafa);
                 font-family: 'Roboto', sans-serif;
                 font-weight: 400;
-                font-size: 18px; 
+                font-size: 18px;
                 /*font-weight: bold;*/
                 @apply(--layout-horizontal);
                 @apply(--layout-center-justified);
@@ -72,7 +72,7 @@ For an overlayed drop menu:
                 @apply(--layout-center-justified);
                 @apply(--layout-vertical);
                 @apply(--layout-center);
-                background-color: var(--button-shadow,#bdbdbd);
+                background-color: var(--ac-led-shadow,#bdbdbd);
                 border-radius: 100%;
             }
             .treble[shadow] {
@@ -120,9 +120,9 @@ For an overlayed drop menu:
     </template>
     <script>
         Polymer({
-            is: "accordion-button",
+            is: "accordion-ac-led",
             observers: [],
-            behaviors: [ACButtonBehavior],
+            behaviors: [acLedBehavior],
             listeners: {},
             properties: {
                 instrumentNote: {
@@ -149,7 +149,7 @@ For an overlayed drop menu:
                 },
                 buttonType: {
                     type: String
-                },
+                }
             },
             _computeCloseNote: function(){
                 this.closeNote= this._noteNumberToName(this.closeNoteIndex);

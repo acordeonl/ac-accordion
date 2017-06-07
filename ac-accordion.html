@@ -99,7 +99,7 @@
             <div wrapper class$="{{_computeRotation(rotation)}}">
                 <accordion-treble
                     class$='{{_computeDisplayTreble(mobile,showingTreble)}} {{_computeDisplay(finishedLoading)}}'
-                    buttons
+                    acLedGroup
                     name='diapasón'
                     default-instrument-panning='0.4'
                     default-playback-panning='0.2'
@@ -107,7 +107,7 @@
                     default-playback-volume='0.7'></accordion-treble>
                 <accordion-bass
                     class$='{{_computeDisplayBass(mobile,showingTreble)}} {{_computeDisplay(finishedLoading)}}'
-                    buttons
+                    acLedGroup
                     name='bajos'
                     default-playback-panning='-0.2'
                     default-instrument-panning='-0.4'
@@ -241,7 +241,8 @@
                 e.detail.channel = 3;
                 e.detail.origin = 'instrument';
                 e.detail.cmd = cmd;
-                this.$$('ACCORDION-BASS').onButtonEvent(e);
+                console.log('fdafasdf'); 
+                this.$$('ACCORDION-BASS').onMIDIEvent(e);
             },
             _bitCount: function (num) {
                 var cnt = 0;
@@ -251,12 +252,12 @@
                     }
                 return cnt;
             },
-            _onButtonEvent: function (e) {
+            _onMIDIEvent: function (e) {
                 if (e.channel === 0) {
-                    this.$$('ACCORDION-TREBLE').onButtonEvent(e);
+                    this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
                 }
                 else if (e.channel === 1 || e.channel === 3)
-                    this.$$('ACCORDION-BASS').onButtonEvent(e);
+                    this.$$('ACCORDION-BASS').onMIDIEvent(e);
                 else if (channel === 2) {
                     var cnt = (this._bitCount(this.bassNotes) % 3);
                     // revisar

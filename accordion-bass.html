@@ -1,9 +1,9 @@
 <imports >
     <link rel="import" href="/bower_components/polymer/polymer.html">
-    <link rel="import" href="/bower_components/ac-view/ac-buttons-group-behavior.html">
+    <link rel="import" href="/bower_components/ac-view/ac-led-group-behavior.html">
     <link rel="import" href="/bower_components/ac-view/view-audio.html">
     <link rel="import" href="/bower_components/local-dom/local-dom.html">
-    <link rel="import" href="./accordion-button.html">
+    <link rel="import" href="./accordion-ac-led.html">
     <script src="./bassButtonNoteMapping.js"></script>
 </imports>
 <!--
@@ -69,20 +69,20 @@ For an overlayed drop menu:
         <view-audio id="bassChordsAudio" channel3 total-notes='12' default-audio-url='/data/accordion_synth/bass_chords'></view-audio>
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(rotation)}}">
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-button button channel3 id3 button-type="bass_chord"></accordion-button>
-                <accordion-button button channel1 id3 button-type="bass_note"></accordion-button>
-                <accordion-button button channel3 id4 button-type="bass_chord"></accordion-button>
-                <accordion-button button channel1 id4 button-type="bass_note"></accordion-button>
-                <accordion-button button channel3 id5 button-type="bass_chord"></accordion-button>
-                <accordion-button button channel1 id5 button-type="bass_note"></accordion-button>
+                <accordion-ac-led acLed id3 channel3 button-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id3 channel1 button-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id4 channel3 button-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id4 channel1 button-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id5 channel3 button-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id5 channel1 button-type="bass_note"></accordion-ac-led>
             </div>
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-button button channel3 id0 button-type="bass_chord"></accordion-button>
-                <accordion-button button channel1 id0 button-type="bass_note"></accordion-button>
-                <accordion-button button channel3 id1 button-type="bass_chord"></accordion-button>
-                <accordion-button button channel1 id1 button-type="bass_note"></accordion-button>
-                <accordion-button button channel3 id2 button-type="bass_chord"></accordion-button>
-                <accordion-button button channel1 id2 button-type="bass_note"></accordion-button>
+                <accordion-ac-led acLed id0 channel3 button-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id0 channel1 button-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id1 channel3 button-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id1 channel1 button-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id2 channel3 button-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id2 channel1 button-type="bass_note"></accordion-ac-led>
             </div>
         </local-dom>
     </template>
@@ -91,7 +91,7 @@ For an overlayed drop menu:
             is: "accordion-bass",
             observers: ['_swap(showingTreble)'],
             listeners: {},
-            behaviors: [ACButtonsGroupBehavior],
+            behaviors: [acLedGroupBehavior],
             properties: {
                 buttonCloseNote: {
                     type: Array,
@@ -115,31 +115,29 @@ For an overlayed drop menu:
                 }
             },
         /* ------------------- Button Events ------------------- */
-            _mapButtonEventToButtonId: function (button, channel) {
-                var buttonId = Math.floor(button / 2);
+            _mapMIDIEventToAcLedId: function (midiNote, channel) {
+                var acLedId = Math.floor(midiNote / 2);
                 if (channel === 1)
-                    buttonId = Math.floor((button - 48) / 2);
-                return buttonId;
+                    acLedId = Math.floor((midiNote - 48) / 2);
+                return acLedId;
             },
-            _mapButtonEventToNote: function (buttonId, button, channel) {
-                var note = (button % 2)
-                    ? this.chordButtonOpenNote[buttonId]
-                    : this.chordButtonCloseNote[buttonId];
+            _mapMIDIEventToAcLedState: function (cmd, midiNote, channel) {
+                var acLedState = 0;
+                if (channel === 3){
+                    if (cmd === 'note-on')
+                        acLedState = (midiNote % 2) + 1;
+                }
+                else if (channel === 1) {
+                    if (cmd === 'note-on')
+                        acLedState = ((midiNote - 48) % 2) + 1;
+                }
+                return acLedState ;
+            },
+            _mapMIDIEventToMIDINote: function (acLedId, midiNote, channel) {
+                var note = (midiNote % 2)? this.chordButtonOpenNote[acLedId]: this.chordButtonCloseNote[acLedId];
                 if (channel === 1)
-                    note = ((button - 48) % 2)
-                        ? this.buttonOpenNote[buttonId]
-                        : this.buttonCloseNote[buttonId];
+                    note = ((midiNote - 48) % 2) ? this.buttonOpenNote[acLedId]: this.buttonCloseNote[acLedId];
                 return note;
-            },
-            _mapButtonEventToButtonState: function (cmd, button, channel) {
-                var buttonState = 0;
-                if (channel === 3)
-                    if (cmd === 'note-on')
-                        buttonState = (button % 2) + 1;
-                else if (channel === 1)
-                    if (cmd === 'note-on')
-                        buttonState = ((button - 48) % 2) + 1;
-                return buttonState ;
             },
         /* ------------------- Chords ------------------- */
             _displayChord: function (chord) {},
