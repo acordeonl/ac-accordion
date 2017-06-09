@@ -65,24 +65,24 @@ For an overlayed drop menu:
             }
         </style>
         <!-- local DOM -->
-        <view-audio id="bassNotesAudio" channel1 total-notes='12' default-audio-url='/data/accordion_synth/bass_notes'></view-audio>
-        <view-audio id="bassChordsAudio" channel3 total-notes='12' default-audio-url='/data/accordion_synth/bass_chords'></view-audio>
+        <view-audio id="bassNotesAudio" channel='1' channel1 total-notes='12' default-audio-url='/data/accordion_synth/bass_notes'></view-audio>
+        <!-- <view-audio id="bassChordsAudio" channel3 total-notes='12' default-audio-url='/data/accordion_synth/bass_chords'></view-audio> -->
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(rotation)}}">
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-ac-led acLed id3 channel3 button-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id3 channel1 button-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id4 channel3 button-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id4 channel1 button-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id5 channel3 button-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id5 channel1 button-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id3 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id3 channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id4 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id4 channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id5 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id5 channel1 ac-led-type="bass_note"></accordion-ac-led>
             </div>
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-ac-led acLed id0 channel3 button-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id0 channel1 button-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id1 channel3 button-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id1 channel1 button-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id2 channel3 button-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id2 channel1 button-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id0 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id0 channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id1 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id1 channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed id2 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id2 channel1 ac-led-type="bass_note"></accordion-ac-led>
             </div>
         </local-dom>
     </template>
@@ -93,6 +93,10 @@ For an overlayed drop menu:
             listeners: {},
             behaviors: [acLedGroupBehavior],
             properties: {
+                MIDIEventToNoteMap:{
+                    type:Array,
+                    value:[]
+                },
                 buttonCloseNote: {
                     type: Array,
                     value: []
@@ -114,7 +118,7 @@ For an overlayed drop menu:
                     value: 67
                 }
             },
-        /* ------------------- Button Events ------------------- */
+        /* ------------------- MIDI Event to AcLedAction ------------------- */
             _mapMIDIEventToAcLedId: function (midiNote, channel) {
                 var acLedId = Math.floor(midiNote / 2);
                 if (channel === 1)
@@ -133,6 +137,7 @@ For an overlayed drop menu:
                 }
                 return acLedState ;
             },
+        /* ------------------- MIDI Event to Audio ------------------- */
             _mapMIDIEventToMIDINote: function (acLedId, midiNote, channel) {
                 var note = (midiNote % 2)? this.chordButtonOpenNote[acLedId]: this.chordButtonCloseNote[acLedId];
                 if (channel === 1)
@@ -155,16 +160,13 @@ For an overlayed drop menu:
                     subs = true;
                     diff *= -1;
                 }
-                for (var i = 0; i < 6; i++) {
+                for (var i = 0; i < this.MIDIEventToNoteMap[1].length; i++) {
                     if (!subs) {
-                        this.buttonCloseNote[i] += (diff % 12);
-                        this.buttonOpenNote[i] += (diff % 12);
+                        this.MIDIEventToNoteMap[1][i] += (diff % 12);
                     } else {
-                        this.buttonCloseNote[i] -= (diff % 12);
-                        this.buttonOpenNote[i] -= (diff % 12);
+                        this.MIDIEventToNoteMap[1][i] -= (diff % 12);
                     }
-                    this.buttonCloseNote[i] = this._checkBassNotes(this.buttonCloseNote[i]);
-                    this.buttonOpenNote[i] = this._checkBassNotes(this.buttonOpenNote[i]);
+                    this.MIDIEventToNoteMap[1][i] = this._checkBassNotes(this.MIDIEventToNoteMap[1][i]);
                 }
             },
             _changeChordsPitch: function (diff) {
@@ -204,45 +206,50 @@ For an overlayed drop menu:
             },
         /* ------------------- Setup ------------------- */
             _loadNotes: function () {
-                for (var i = 0; i < 6; i++) {
-                    this._loadNote('bassNotesAudio', this.buttonCloseNote[i]);
-                    this._loadNote('bassNotesAudio', this.buttonOpenNote[i]);
-                    this._loadNote('bassChordsAudio', this.chordButtonCloseNote[i]);
-                    this._loadNote('bassChordsAudio', this.chordButtonOpenNote[i]);
+                // for (var i = 0; i < 6; i++) {
+                //     this._loadNote('bassNotesAudio', this.buttonCloseNote[i]);
+                //     this._loadNote('bassNotesAudio', this.buttonOpenNote[i]);
+                //     this._loadNote('bassChordsAudio', this.chordButtonCloseNote[i]);
+                //     this._loadNote('bassChordsAudio', this.chordButtonOpenNote[i]);
+                // }
+                for (var i = 48; i < 60; i++) {
+                    this._loadNote('bassNotesAudio', this.MIDIEventToNoteMap[1][i]);
                 }
             },
             _setPitch: function (value) {
                 var diff = value - this.pitch;
                 this.pitch += diff;
-                this._changeChordsPitch(diff);
+                // this._changeChordsPitch(diff);
                 this._changeBassNotesPitch(diff);
             },
             ready: function () {
             /* ------------------- Button note mapping ------------------- */
-                this.buttonCloseNote[0] = 55;
-                this.buttonCloseNote[1] = 48;
-                this.buttonCloseNote[2] = 53;
-                this.buttonCloseNote[3] = 52;
-                this.buttonCloseNote[4] = 57;
-                this.buttonCloseNote[5] = 58;
-                this.buttonOpenNote[0] = 50;
-                this.buttonOpenNote[1] = 55;
-                this.buttonOpenNote[2] = 48;
-                this.buttonOpenNote[3] = 57;
-                this.buttonOpenNote[4] = 50;
-                this.buttonOpenNote[5] = 58;
-                this.chordButtonCloseNote[0] = 35;
-                this.chordButtonCloseNote[1] = 15;
-                this.chordButtonCloseNote[2] = 22;
-                this.chordButtonCloseNote[3] = 41;
-                this.chordButtonCloseNote[4] = 5;
-                this.chordButtonCloseNote[5] = 9;
-                this.chordButtonOpenNote[0] = 26;
-                this.chordButtonOpenNote[1] = 35;
-                this.chordButtonOpenNote[2] = 15;
-                this.chordButtonOpenNote[3] = 3;
-                this.chordButtonOpenNote[4] = 24;
-                this.chordButtonOpenNote[5] = 9;
+                // [channel][midiNote] -> note
+                this.MIDIEventToNoteMap[1][48] = 55;
+                this.MIDIEventToNoteMap[1][49] = 50;
+                this.MIDIEventToNoteMap[1][50] = 48;
+                this.MIDIEventToNoteMap[1][51] = 55;
+                this.MIDIEventToNoteMap[1][52] = 53;
+                this.MIDIEventToNoteMap[1][53] = 48;
+                this.MIDIEventToNoteMap[1][54] = 52;
+                this.MIDIEventToNoteMap[1][55] = 57;
+                this.MIDIEventToNoteMap[1][56] = 57;
+                this.MIDIEventToNoteMap[1][57] = 50;
+                this.MIDIEventToNoteMap[1][58] = 58;
+                this.MIDIEventToNoteMap[1][59] = 58;
+
+                // this.chordButtonCloseNote[0] = 35;
+                // this.chordButtonCloseNote[1] = 15;
+                // this.chordButtonCloseNote[2] = 22;
+                // this.chordButtonCloseNote[3] = 41;
+                // this.chordButtonCloseNote[4] = 5;
+                // this.chordButtonCloseNote[5] = 9;
+                // this.chordButtonOpenNote[0] = 26;
+                // this.chordButtonOpenNote[1] = 35;
+                // this.chordButtonOpenNote[2] = 15;
+                // this.chordButtonOpenNote[3] = 3;
+                // this.chordButtonOpenNote[4] = 24;
+                // this.chordButtonOpenNote[5] = 9;
             }
         });
     </script>

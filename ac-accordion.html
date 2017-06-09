@@ -241,7 +241,7 @@
                 e.detail.channel = 3;
                 e.detail.origin = 'instrument';
                 e.detail.cmd = cmd;
-                console.log('fdafasdf'); 
+                console.log('fdafasdf');
                 this.$$('ACCORDION-BASS').onMIDIEvent(e);
             },
             _bitCount: function (num) {
@@ -256,9 +256,11 @@
                 if (e.channel === 0) {
                     this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
                 }
-                else if (e.channel === 1 || e.channel === 3)
+                // else if (e.channel === 1 || e.channel === 3)
+                //     this.$$('ACCORDION-BASS').onMIDIEvent(e);
+                else if (e.channel === 1)
                     this.$$('ACCORDION-BASS').onMIDIEvent(e);
-                else if (channel === 2) {
+                else if (e.channel === 2) {
                     var cnt = (this._bitCount(this.bassNotes) % 3);
                     // revisar
                     // generates button  = -1

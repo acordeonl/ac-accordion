@@ -100,16 +100,16 @@ For an overlayed drop menu:
             }
         </style>
         <!-- local DOM -->
-        <div shadow class$="[[buttonType]]">
-            <div circle class$="[[buttonType]]" style="visibility:visible;"></div>
-            <div circle class$='[[buttonType]] [[_computeColor(instrumentState,0)]] [[_computeVisibility(instrumentState,0)]]' style$='opacity:[[instrumentOpacity]]'>
+        <div shadow class$="[[acLedType]]">
+            <div circle class$="[[acLedType]]" style="visibility:visible;"></div>
+            <div circle class$='[[acLedType]] [[_computeColor(instrumentState,0)]] [[_computeVisibility(instrumentState,0)]]' style$='opacity:[[instrumentOpacity]]'>
                 <template is="dom-if" if="[[showingInstrumentNotes]]">
                     <div text>
                         [[instrumentNote]]
                     </div>
                 </template>
             </div>
-            <div circle class$="[[buttonType]] [[_computeColor(playbackState,1)]] [[_computeVisibility(playbackState,1)]]" style$='opacity:[[playbackOpacity]]'>
+            <div circle class$="[[acLedType]] [[_computeColor(playbackState,1)]] [[_computeVisibility(playbackState,1)]]" style$='opacity:[[playbackOpacity]]'>
                 <template is="dom-if" if="[[showingPlaybackNotes]]">
                     <div text>
                         [[playBackNote]]
@@ -147,7 +147,7 @@ For an overlayed drop menu:
                 closeNote:{
                     type:String
                 },
-                buttonType: {
+                acLedType: {
                     type: String
                 }
             },
@@ -158,7 +158,7 @@ For an overlayed drop menu:
                 this.openNote= this._noteNumberToName(this.openNoteIndex);
             },
             _noteNumberToName: function (note) {
-                if (this.buttonType === 'bass_chord')
+                if (this.acLedType === 'bass_chord')
                     return "";
                 return this._getNoteName(note);
             },
