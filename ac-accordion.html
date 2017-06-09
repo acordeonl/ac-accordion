@@ -132,6 +132,10 @@
                 // 'mousemove': '_updateOpening'
             },
             properties: {
+                _chordOn:{
+                    type:Number,
+                    value:-1
+                },
                 opening: {
                     type: Boolean,
                     value: false
@@ -179,71 +183,101 @@
                     origin: 'instrument'
                 });
             },
-        /* ----------------- accordion activity ------------- */
-            _chordActivity: function (cmd) {
+        /* ----------------- MIDI ------------- */
+            _chordActivity: function () {
                 var st = this.bassNotes;
-                var button = -1;
+                var midiNote = -1;
                 //based on G accrdion with notes on bass: 41,43,45,46,48,49,50,51,52,53,54,55,56,57,58,59  bits represent: 41,42,43,44,45,46,47,48,49,50,51,52,53,54,  55,56,57,58,59   this.$.trebleSynthesizer.allNotesOffChords(); s0 closed
             /* ------------------- Bit test ------------------- */
                 if ((st & (1 << 7)) && (st & (1 << 11)) && (st & (1 << 14)))
-                    button = 0;
+                    midiNote = 0;
 
                 //s0 opened
                 if ((st & (1 << 7)) && (st & (1 << 10)) && (st & (1 << 14)))
-                    button = 1;
+                    midiNote = 1;
 
                 //s1 closed
                 if ((st & (1 << 8)) && (st & (1 << 12)) && (st & (1 << 15)))
-                    button = 2;
+                    midiNote = 2;
 
                 //s1 opened
                 if ((st & (1 << 8)) && (st & (1 << 11)) && (st & (1 << 15)))
-                    button = 3;
+                    midiNote = 3;
 
                 //s2 closed
                 if ((st & (1 << 9)) && (st & (1 << 13)) && (st & (1 << 16)))
-                    button = 4;
+                    midiNote = 4;
 
                 //s2 opened
                 if ((st & (1 << 9)) && (st & (1 << 12)) && (st & (1 << 16)))
-                    button = 5;
+                    midiNote = 5;
 
                 //s3 closed
                 if ((st & (1 << 10)) && (st & (1 << 14)) && (st & (1 << 17)))
-                    button = 6;
+                    midiNote = 6;
 
                 //s3 opened
                 if ((st & (1 << 10)) && (st & (1 << 13)) && (st & (1 << 17)))
-                    button = 7;
+                    midiNote = 7;
 
                 //s4 closed
                 if ((st & (1 << 11)) && (st & (1 << 15)) && (st & (1 << 18)))
-                    button = 8;
+                    midiNote = 8;
 
                 //s4 opened
                 if ((st & (1 << 11)) && (st & (1 << 14)) && (st & (1 << 18)))
-                    button = 9;
+                    midiNote = 9;
 
                 //s5 closed
                 if ((st & (1 << 0)) && (st & (1 << 16)) && (st & (1 << 7)))
-                    button = 10;
+                    midiNote = 10;
 
                 //s5 opened
                 if ((st & (1 << 0)) && (st & (1 << 15)) && (st & (1 << 7)))
-                    button = 11;
-                if (button === -1)
-                    return;
-            /* ------------------- adds button action ------------------- */
+                    midiNote = 11;
+            /* ------------------- adds midiNote action ------------------- */
                 var e = {};
-                e.detail = {};
-                e.detail.time = context.currentTime;
-                e.detail.midiNote = button;
-                e.detail.channel = 3;
-                e.detail.origin = 'instrument';
-                e.detail.cmd = cmd;
-                console.log('fdafasdf');
+                e.time = context.currentTime;
+                e.midiNote = midiNote;
+                e.channel = 2;
+                e.origin = 'instrument';
+                e.cmd = 'note-on';
+                this._chordOn = midiNote ;
                 this.$$('ACCORDION-BASS').onMIDIEvent(e);
             },
+
+            _onMIDIEvent: function (e) {
+                if (e.channel === 0)
+                    this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
+                if (e.channel === 1)
+                    this.$$('ACCORDION-BASS').onMIDIEvent(e);
+                if (e.channel === 2) {
+                    var cnt, bNote = e.midiNote - 41;
+                    if (e.cmd === 'note-on') {
+                        this.bassNotes = this.bassNotes | (1 << bNote);
+                        cnt = (this._bitCount(this.bassNotes) % 3);
+                        if (cnt === 0 && this._chordOn === -1)
+                            this._chordActivity(e.cmd);
+                    }
+                    else {
+                        var tmp = 524287 ^ (1 << bNote);
+                        this.bassNotes = this.bassNotes & tmp;
+                        cnt = (this._bitCount(this.bassNotes) % 3);
+                        if (cnt === 0 && this._chordOn !== -1) {
+                            var e = {};
+                            e.time = context.currentTime;
+                            e.midiNote = this._chordOn;
+                            e.channel = 2;
+                            e.origin = 'instrument';
+                            e.cmd = 'note-off';
+                            this.$$('ACCORDION-BASS').onMIDIEvent(e);
+                            this._chordOn = -1 ;
+                        }
+
+                    }
+                }
+            },
+        /* ------------------- MIDI helpers ------------------- */
             _bitCount: function (num) {
                 var cnt = 0;
                 for (var i = 0; i < 31; i++) {
@@ -251,32 +285,6 @@
                         cnt++;
                     }
                 return cnt;
-            },
-            _onMIDIEvent: function (e) {
-                if (e.channel === 0) {
-                    this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
-                }
-                // else if (e.channel === 1 || e.channel === 3)
-                //     this.$$('ACCORDION-BASS').onMIDIEvent(e);
-                else if (e.channel === 1)
-                    this.$$('ACCORDION-BASS').onMIDIEvent(e);
-                else if (e.channel === 2) {
-                    var cnt = (this._bitCount(this.bassNotes) % 3);
-                    // revisar
-                    // generates button  = -1
-                    if (cnt === 0)
-                        this._chordActivity('note-off');
-                    var bNote = e.button - 41;
-                    if (e.cmd === 'note-on')
-                        this.bassNotes = this.bassNotes | (1 << bNote);
-                    else {
-                        var tmp = 524287 ^ (1 << bNote);
-                        this.bassNotes = this.bassNotes & tmp;
-                    }
-                    cnt = (this._bitCount(this.bassNotes) % 3);
-                    if (cnt === 0)
-                        this._chordActivity('note-on');
-                }
             },
         /* ----------------- GUI --------------- */
             swap: function () {
@@ -310,32 +318,32 @@
         /* ------------------- Initialization ------------------- */
             ready: function () {
                 this.defaultReverb = 30;
-                this.chords = [
-                    "C",
-                    "Cm",
-                    "C#",
-                    "C#m",
-                    "D",
-                    "Dm",
-                    "Eb",
-                    "Ebm",
-                    "E",
-                    "Em",
-                    "F",
-                    "Fm",
-                    "F#",
-                    "F#m",
-                    "G",
-                    "Gm",
-                    "A",
-                    "Am",
-                    "Ab",
-                    "Abm",
-                    "Bb",
-                    "Bbm",
-                    "B",
-                    "Bm"
-                ];
+                // this.chords = [
+                //     "C",
+                //     "Cm",
+                //     "C#",
+                //     "C#m",
+                //     "D",
+                //     "Dm",
+                //     "Eb",
+                //     "Ebm",
+                //     "E",
+                //     "Em",
+                //     "F",
+                //     "Fm",
+                //     "F#",
+                //     "F#m",
+                //     "G",
+                //     "Gm",
+                //     "A",
+                //     "Am",
+                //     "Ab",
+                //     "Abm",
+                //     "Bb",
+                //     "Bbm",
+                //     "B",
+                //     "Bm"
+                // ];
                 // this.setPitch(67) ;
             }
         });

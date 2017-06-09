@@ -65,23 +65,23 @@ For an overlayed drop menu:
             }
         </style>
         <!-- local DOM -->
-        <view-audio id="bassNotesAudio" channel='1' channel1 total-notes='12' default-audio-url='/data/accordion_synth/bass_notes'></view-audio>
-        <!-- <view-audio id="bassChordsAudio" channel3 total-notes='12' default-audio-url='/data/accordion_synth/bass_chords'></view-audio> -->
+        <view-audio id="bassNotesAudio" channel='1'  total-notes='12' default-audio-url='/data/accordion_synth/bass_notes'></view-audio>
+        <view-audio id="bassChordsAudio" channel='2' total-notes='12' default-audio-url='/data/accordion_synth/bass_chords'></view-audio>
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(rotation)}}">
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-ac-led acLed id3 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id3 channel2 ac-led-type="bass_chord"></accordion-ac-led>
                 <accordion-ac-led acLed id3 channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id4 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id4 channel2 ac-led-type="bass_chord"></accordion-ac-led>
                 <accordion-ac-led acLed id4 channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id5 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id5 channel2 ac-led-type="bass_chord"></accordion-ac-led>
                 <accordion-ac-led acLed id5 channel1 ac-led-type="bass_note"></accordion-ac-led>
             </div>
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-ac-led acLed id0 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id0 channel2 ac-led-type="bass_chord"></accordion-ac-led>
                 <accordion-ac-led acLed id0 channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id1 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id1 channel2 ac-led-type="bass_chord"></accordion-ac-led>
                 <accordion-ac-led acLed id1 channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id2 channel3 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed id2 channel2 ac-led-type="bass_chord"></accordion-ac-led>
                 <accordion-ac-led acLed id2 channel1 ac-led-type="bass_note"></accordion-ac-led>
             </div>
         </local-dom>
@@ -112,37 +112,30 @@ For an overlayed drop menu:
                 chordButtonOpenNote: {
                     type: Array,
                     value: []
-                },
-                pitch: {
-                    type: Number,
-                    value: 67
                 }
             },
-        /* ------------------- MIDI Event to AcLedAction ------------------- */
+        /* ------------------- acLed Action ------------------- */
             _mapMIDIEventToAcLedId: function (midiNote, channel) {
-                var acLedId = Math.floor(midiNote / 2);
                 if (channel === 1)
-                    acLedId = Math.floor((midiNote - 48) / 2);
-                return acLedId;
-            },
-            _mapMIDIEventToAcLedState: function (cmd, midiNote, channel) {
-                var acLedState = 0;
-                if (channel === 3){
-                    if (cmd === 'note-on')
-                        acLedState = (midiNote % 2) + 1;
+                    return Math.floor((midiNote - 48) / 2);
+                if (channel === 2) {
+                    return Math.floor(midiNote / 2);
                 }
-                else if (channel === 1) {
-                    if (cmd === 'note-on')
-                        acLedState = ((midiNote - 48) % 2) + 1;
-                }
-                return acLedState ;
             },
-        /* ------------------- MIDI Event to Audio ------------------- */
-            _mapMIDIEventToMIDINote: function (acLedId, midiNote, channel) {
-                var note = (midiNote % 2)? this.chordButtonOpenNote[acLedId]: this.chordButtonCloseNote[acLedId];
+            _mapMIDIEventToAcLedState: function (midiNote, channel) {
                 if (channel === 1)
-                    note = ((midiNote - 48) % 2) ? this.buttonOpenNote[acLedId]: this.buttonCloseNote[acLedId];
-                return note;
+                    return ((midiNote - 48) % 2) + 1;
+                if (channel === 2){
+                    return (midiNote % 2) + 1;
+                }
+            },
+            _addPitch: function (note,channel,diff) {
+                if (channel === 1)
+                    return this._changeBassNotesPitch(note,diff);
+                if (channel === 2) {
+                    var newNote = this._changeChordsPitch(note,diff);
+                    return newNote ;
+                }
             },
         /* ------------------- Chords ------------------- */
             _displayChord: function (chord) {},
@@ -154,39 +147,30 @@ For an overlayed drop menu:
                     return 59 - 47 + note;
                 return note;
             },
-            _changeBassNotesPitch: function (diff) {
+            _changeBassNotesPitch: function (note,diff) {
                 var subs = false;
                 if (diff < 0) {
                     subs = true;
                     diff *= -1;
                 }
-                for (var i = 0; i < this.MIDIEventToNoteMap[1].length; i++) {
-                    if (!subs) {
-                        this.MIDIEventToNoteMap[1][i] += (diff % 12);
-                    } else {
-                        this.MIDIEventToNoteMap[1][i] -= (diff % 12);
-                    }
-                    this.MIDIEventToNoteMap[1][i] = this._checkBassNotes(this.MIDIEventToNoteMap[1][i]);
-                }
+                if (!subs)
+                    note += (diff % 12);
+                else
+                    note -= (diff % 12);
+                return this._checkBassNotes(note);
             },
-            _changeChordsPitch: function (diff) {
-                if (diff === 0) {
-                    return;
+            _changeChordsPitch: function (note,diff) {
+                if (diff === 0)
+                    return note;
+                if (diff > 0) {
+                    note = bassChordsNextNote[note];
+                    note = this._changeChordsPitch(note,diff - 1);
                 }
-                for (var i = 0; i < 42; i++) {
-                    if (diff > 0) {
-                        this.chordButtonCloseNote[i] = bassChordsNextNote[this.chordButtonCloseNote[i]];
-                        this.chordButtonOpenNote[i] = bassChordsNextNote[this.chordButtonOpenNote[i]];
-                    } else {
-                        this.chordButtonCloseNote[i] = bassChordspreviousNote[this.chordButtonCloseNote[i]];
-                        this.chordButtonOpenNote[i] = bassChordspreviousNote[this.chordButtonOpenNote[i]];
-                    }
+                else{
+                    note = bassChordspreviousNote[note];
+                    note = this._changeChordsPitch(note,diff + 1);
                 }
-                if (diff > 0)
-                    this._changeChordsPitch(diff - 1);
-                else {
-                    this._changeChordsPitch(diff + 1);
-                }
+                return note ;
             },
         /* ------------------- GUI  ------------------- */
             _swap: function (showingTreble) {
@@ -205,51 +189,34 @@ For an overlayed drop menu:
                 return "vertical";
             },
         /* ------------------- Setup ------------------- */
-            _loadNotes: function () {
-                // for (var i = 0; i < 6; i++) {
-                //     this._loadNote('bassNotesAudio', this.buttonCloseNote[i]);
-                //     this._loadNote('bassNotesAudio', this.buttonOpenNote[i]);
-                //     this._loadNote('bassChordsAudio', this.chordButtonCloseNote[i]);
-                //     this._loadNote('bassChordsAudio', this.chordButtonOpenNote[i]);
-                // }
-                for (var i = 48; i < 60; i++) {
-                    this._loadNote('bassNotesAudio', this.MIDIEventToNoteMap[1][i]);
-                }
-            },
-            _setPitch: function (value) {
-                var diff = value - this.pitch;
-                this.pitch += diff;
-                // this._changeChordsPitch(diff);
-                this._changeBassNotesPitch(diff);
-            },
             ready: function () {
             /* ------------------- Button note mapping ------------------- */
-                // [channel][midiNote] -> note
-                this.MIDIEventToNoteMap[1][48] = 55;
-                this.MIDIEventToNoteMap[1][49] = 50;
-                this.MIDIEventToNoteMap[1][50] = 48;
-                this.MIDIEventToNoteMap[1][51] = 55;
-                this.MIDIEventToNoteMap[1][52] = 53;
-                this.MIDIEventToNoteMap[1][53] = 48;
-                this.MIDIEventToNoteMap[1][54] = 52;
-                this.MIDIEventToNoteMap[1][55] = 57;
-                this.MIDIEventToNoteMap[1][56] = 57;
-                this.MIDIEventToNoteMap[1][57] = 50;
-                this.MIDIEventToNoteMap[1][58] = 58;
-                this.MIDIEventToNoteMap[1][59] = 58;
-
-                // this.chordButtonCloseNote[0] = 35;
-                // this.chordButtonCloseNote[1] = 15;
-                // this.chordButtonCloseNote[2] = 22;
-                // this.chordButtonCloseNote[3] = 41;
-                // this.chordButtonCloseNote[4] = 5;
-                // this.chordButtonCloseNote[5] = 9;
-                // this.chordButtonOpenNote[0] = 26;
-                // this.chordButtonOpenNote[1] = 35;
-                // this.chordButtonOpenNote[2] = 15;
-                // this.chordButtonOpenNote[3] = 3;
-                // this.chordButtonOpenNote[4] = 24;
-                // this.chordButtonOpenNote[5] = 9;
+                //bass notes
+                this._mapMIDIEventToNote(1,48,55);
+                this._mapMIDIEventToNote(1,49,50);
+                this._mapMIDIEventToNote(1,50,48);
+                this._mapMIDIEventToNote(1,51,55);
+                this._mapMIDIEventToNote(1,52,53);
+                this._mapMIDIEventToNote(1,53,48);
+                this._mapMIDIEventToNote(1,54,52);
+                this._mapMIDIEventToNote(1,55,57);
+                this._mapMIDIEventToNote(1,56,57);
+                this._mapMIDIEventToNote(1,57,50);
+                this._mapMIDIEventToNote(1,58,58);
+                this._mapMIDIEventToNote(1,59,58);
+                //bass chords
+                this._mapMIDIEventToNote(2,0,35);
+                this._mapMIDIEventToNote(2,1,26);
+                this._mapMIDIEventToNote(2,2,15);
+                this._mapMIDIEventToNote(2,3,35);
+                this._mapMIDIEventToNote(2,4,22);
+                this._mapMIDIEventToNote(2,5,15);
+                this._mapMIDIEventToNote(2,6,41);
+                this._mapMIDIEventToNote(2,7,3);
+                this._mapMIDIEventToNote(2,8,5);
+                this._mapMIDIEventToNote(2,9,24);
+                this._mapMIDIEventToNote(2,10,9);
+                this._mapMIDIEventToNote(2,11,9);
             }
         });
     </script>
