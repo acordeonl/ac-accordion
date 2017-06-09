@@ -245,12 +245,12 @@
                 this._chordOn = midiNote ;
                 this.$$('ACCORDION-BASS').onMIDIEvent(e);
             },
-
             _onMIDIEvent: function (e) {
                 if (e.channel === 0)
                     this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
-                if (e.channel === 1)
+                if (e.channel === 1) {
                     this.$$('ACCORDION-BASS').onMIDIEvent(e);
+                }
                 if (e.channel === 2) {
                     var cnt, bNote = e.midiNote - 41;
                     if (e.cmd === 'note-on') {

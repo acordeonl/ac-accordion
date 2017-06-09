@@ -65,24 +65,24 @@ For an overlayed drop menu:
             }
         </style>
         <!-- local DOM -->
-        <view-audio id="bassNotesAudio" channel='1'  total-notes='12' default-audio-url='/data/accordion_synth/bass_notes'></view-audio>
+        <view-audio id="bassNotesAudio" channel='1' total-notes='12' default-audio-url='/data/accordion_synth/bass_notes'></view-audio>
         <view-audio id="bassChordsAudio" channel='2' total-notes='12' default-audio-url='/data/accordion_synth/bass_chords'></view-audio>
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(rotation)}}">
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-ac-led acLed id3 channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id3 channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id4 channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id4 channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id5 channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id5 channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='3' channel2 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='3' channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='4' channel2 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='4' channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='5' channel2 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='5' channel1 ac-led-type="bass_note"></accordion-ac-led>
             </div>
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-ac-led acLed id0 channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id0 channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id1 channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id1 channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed id2 channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed id2 channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='0' channel2 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='0' channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='1' channel2 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='1' channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='2' channel2 ac-led-type="bass_chord"></accordion-ac-led>
+                <accordion-ac-led acLed ac-id='2' channel1 ac-led-type="bass_note"></accordion-ac-led>
             </div>
         </local-dom>
     </template>
@@ -190,7 +190,7 @@ For an overlayed drop menu:
             },
         /* ------------------- Setup ------------------- */
             ready: function () {
-            /* ------------------- Button note mapping ------------------- */
+            /* ------------------- MIDI note mapping ------------------- */
                 //bass notes
                 this._mapMIDIEventToNote(1,48,55);
                 this._mapMIDIEventToNote(1,49,50);
