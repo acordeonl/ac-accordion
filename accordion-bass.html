@@ -3,7 +3,7 @@
     <link rel="import" href="/bower_components/ac-view/ac-led-group-behavior.html">
     <link rel="import" href="/bower_components/ac-view/view-audio.html">
     <link rel="import" href="/bower_components/local-dom/local-dom.html">
-    <link rel="import" href="./bass-led.html">
+    <link rel="import" href="./accordion-button.html">
     <script src="./bassButtonNoteMapping.js"></script>
 </imports>
 <!--
@@ -69,20 +69,20 @@ For an overlayed drop menu:
         <view-audio id="bassChordsAudio" channel='2' total-notes='12' default-audio-url='/data/accordion_synth/bass_chords'></view-audio>
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(rotation)}}">
             <div class$="col {{_computeColRotation(rotation)}}">
-                <bass-led acLed ac-id='3' channel2 ></bass-led>
-                <bass-led acLed ac-id='3' channel1 ></bass-led>
-                <bass-led acLed ac-id='4' channel2 ></bass-led>
-                <bass-led acLed ac-id='4' channel1 ></bass-led>
-                <bass-led acLed ac-id='5' channel2 ></bass-led>
-                <bass-led acLed ac-id='5' channel1 ></bass-led>
+                <accordion-button is-bass acLed ac-id='3' channel2 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='3' channel1 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='4' channel2 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='4' channel1 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='5' channel2 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='5' channel1 ></accordion-button>
             </div>
             <div class$="col {{_computeColRotation(rotation)}}">
-                <bass-led acLed ac-id='0' channel2 ></bass-led>
-                <bass-led acLed ac-id='0' channel1 ></bass-led>
-                <bass-led acLed ac-id='1' channel2 ></bass-led>
-                <bass-led acLed ac-id='1' channel1 ></bass-led>
-                <bass-led acLed ac-id='2' channel2 ></bass-led>
-                <bass-led acLed ac-id='2' channel1 ></bass-led>
+                <accordion-button is-bass acLed ac-id='0' channel2 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='0' channel1 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='1' channel2 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='1' channel1 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='2' channel2 ></accordion-button>
+                <accordion-button is-bass acLed ac-id='2' channel1 ></accordion-button>
             </div>
         </local-dom>
     </template>

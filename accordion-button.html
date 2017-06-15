@@ -1,0 +1,111 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/ac-view/ac-led-behavior.html">
+<!--
+
+Shows drop down menu (works on chrome)
+
+### Usage
+The list displayed in the drop down menu can be set as an attribute.
+
+    <drop-menu list-items='["first" ,"second"]'></drop-menu>
+
+For an overlayed drop menu:
+
+    <drop-menu overlay-menu list-items='["first" ,"second"]'></drop-menu>
+
+### Styling
+ Custom property | Description | Default
+----------------|-------------|----------
+`--item-background-color` | List item backround color | `#f1ecef`
+`--item-color` | List item color used for fonts | `#302f31`
+`--button-close-color` | Icon button hover color | `4775D1`
+`--button-background-color` | Drop menu's background color | `white`
+`--button-close-color` | Icon button hover color | `4775D1`
+`--icon-button` | Mixin applied the icon button | `{}`
+
+@demo demo/drop-menu-demo.html
+-->
+<dom-module id="accordion-button">
+    <template>
+        <style accordionButton>
+            [circle] {
+                position: absolute;
+                background-color: var(--content-background,#fafafa);
+                border-radius: 100%;
+            }
+            [circle]:hover {
+                cursor: pointer;
+            }
+            [shadow]{
+                position: absolute;
+                margin-top: 0.8vh;
+                background-color: var(--ac-led-shadow,gray);
+            }
+        </style>
+        <style acLed>
+            [acLed] {
+                position: absolute;
+                border-radius: 100%;
+                background-color:purple;
+            }
+            /* override default*/
+            /*[note]{
+                position: absolute;
+                font-size: 20px ;
+                margin-left: 10px ;
+                color:red ;
+            }*/
+        </style>
+        <style GUIAction>
+            .closing{
+                background-color: var(--theme-color1,#4775D1) ;
+            }
+            .opening{
+                background-color: var(--theme-color2,#CC6666) ;
+            }
+            .hidden{
+                visibility: hidden ;
+            }
+            .visible{
+                visibility: visible ;
+            }
+        </style>
+
+        <div wrapper style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
+            <div circle shadow style$='width:[[buttonWidth]]; height:[[buttonHeight]];'></div>
+            <div circle style$='width:[[buttonWidth]]; height:[[buttonHeight]];'></div>
+            <div acLed style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
+                <!-- override default -->
+                <!-- <div note>
+                    F#
+                </div> -->
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: "accordion-button",
+            behaviors: [acLedBehavior],
+            properties:{
+                buttonWidth:{
+                    type:String,
+                    value:'6.8vh'
+                },
+                buttonHeight:{
+                    type:String,
+                    value:'6.8vh'
+                },
+                isBass:{
+                    type:Boolean,
+                    value:false
+                }
+            },
+            ready: function () {
+                if(this.isBass){
+                    this.buttonWidth = '5.4vh';
+                    this.buttonHeight = '5.4vh';
+                }
+            }
+        });
+    </script>
+</dom-module>
