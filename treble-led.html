@@ -27,20 +27,13 @@ For an overlayed drop menu:
 -->
 <dom-module id="treble-led">
     <template>
-        <style>
-            /* to override default*/
-            [note] {
-                position:absolute;
-                color: var(--content-background,#fafafa);
-                font-weight: 400;
-                font-size: 18px;
+        <style accordionButton>
+            [wrapper]{
                 height:6.8vh;
                 width:6.8vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
             }
             [circle] {
+                position: absolute;
                 background-color: var(--content-background,#fafafa);
                 border-radius: 100%;
                 height: 6.8vh;
@@ -49,12 +42,27 @@ For an overlayed drop menu:
             [circle]:hover {
                 cursor: pointer;
             }
+            [shadow]{
+                position: absolute;
+                margin-top: 0.8vh;
+                background-color: var(--ac-led-shadow,gray);
+            }
+        </style>
+        <style acLed>
             [acLed] {
+                position: absolute;
                 border-radius: 100%;
                 height:6.8vh;
                 width:6.8vh;
-                background-color: green ;
+                background-color:purple;
             }
+            /* override default*/
+            /*[note]{
+                position: absolute;
+                font-size: 20px ;
+                margin-left: 10px ;
+                color:pink ;
+            }*/
         </style>
         <style GUIAction>
             .closing{
@@ -70,9 +78,15 @@ For an overlayed drop menu:
                 visibility: visible ;
             }
         </style>
-        <div circle >
-            <div acLed withShadow>
-                <!-- to override default -->
+
+        <div wrapper>
+            <div circle shadow></div>
+            <div circle ></div>
+            <div acLed>
+                <!-- override default -->
+                <!-- <div note>
+                    F#
+                </div> -->
             </div>
         </div>
     </template>
@@ -107,9 +121,6 @@ For an overlayed drop menu:
                 }
             },
             _getAcLedColor: function(acLedState){
-                if (acLedState === 0) {
-                    return 'white' ;
-                }
                 if (acLedState === 1) {
                     return 'blue' ;
                 }
