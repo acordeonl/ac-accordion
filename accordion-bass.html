@@ -3,7 +3,7 @@
     <link rel="import" href="/bower_components/ac-view/ac-led-group-behavior.html">
     <link rel="import" href="/bower_components/ac-view/view-audio.html">
     <link rel="import" href="/bower_components/local-dom/local-dom.html">
-    <link rel="import" href="./accordion-ac-led.html">
+    <link rel="import" href="./bass-led.html">
     <script src="./bassButtonNoteMapping.js"></script>
 </imports>
 <!--
@@ -69,20 +69,20 @@ For an overlayed drop menu:
         <view-audio id="bassChordsAudio" channel='2' total-notes='12' default-audio-url='/data/accordion_synth/bass_chords'></view-audio>
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(rotation)}}">
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-ac-led acLed ac-id='3' channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='3' channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='4' channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='4' channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='5' channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='5' channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <bass-led acLed ac-id='3' channel2 ></bass-led>
+                <bass-led acLed ac-id='3' channel1 ></bass-led>
+                <bass-led acLed ac-id='4' channel2 ></bass-led>
+                <bass-led acLed ac-id='4' channel1 ></bass-led>
+                <bass-led acLed ac-id='5' channel2 ></bass-led>
+                <bass-led acLed ac-id='5' channel1 ></bass-led>
             </div>
             <div class$="col {{_computeColRotation(rotation)}}">
-                <accordion-ac-led acLed ac-id='0' channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='0' channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='1' channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='1' channel1 ac-led-type="bass_note"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='2' channel2 ac-led-type="bass_chord"></accordion-ac-led>
-                <accordion-ac-led acLed ac-id='2' channel1 ac-led-type="bass_note"></accordion-ac-led>
+                <bass-led acLed ac-id='0' channel2 ></bass-led>
+                <bass-led acLed ac-id='0' channel1 ></bass-led>
+                <bass-led acLed ac-id='1' channel2 ></bass-led>
+                <bass-led acLed ac-id='1' channel1 ></bass-led>
+                <bass-led acLed ac-id='2' channel2 ></bass-led>
+                <bass-led acLed ac-id='2' channel1 ></bass-led>
             </div>
         </local-dom>
     </template>

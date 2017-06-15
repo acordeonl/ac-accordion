@@ -25,67 +25,38 @@ For an overlayed drop menu:
 
 @demo demo/drop-menu-demo.html
 -->
-<dom-module id="accordion-ac-led">
+<dom-module id="treble-led">
     <template>
         <style>
-            :host {}
-            .bass_chord {
-                margin-top: -0.6vh;
-                height: 5.4vh;
-                width: 5.4vh;
-                visibility: hidden;
-            }
-            [text] {
-                height: 100%;
-                width: 100%;
+            /* to override default*/
+            [note] {
+                position:absolute;
                 color: var(--content-background,#fafafa);
-                font-family: 'Roboto', sans-serif;
                 font-weight: 400;
                 font-size: 18px;
-                /*font-weight: bold;*/
-                @apply(--layout-horizontal);
-                @apply(--layout-center-justified);
-                @apply(--layout-center);
-                @apply(--layout-vertical);
-            }
-            .bass_note {
-                margin-top: -0.6vh;
-                height: 5.4vh;
-                width: 5.4vh;
-                visibility: hidden;
-            }
-            .treble {
-                margin-top: -0.6vh;
-                height: 6.8vh;
-                width: 6.8vh;
-                visibility: hidden;
+                height:6.8vh;
+                width:6.8vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
             [circle] {
-                position:absolute;
                 background-color: var(--content-background,#fafafa);
                 border-radius: 100%;
+                height: 6.8vh;
+                width: 6.8vh;
             }
             [circle]:hover {
                 cursor: pointer;
             }
-            [shadow] {
-                @apply(--layout-center-justified);
-                @apply(--layout-vertical);
-                @apply(--layout-center);
-                background-color: var(--ac-led-shadow,#bdbdbd);
+            [acLed] {
                 border-radius: 100%;
+                height:6.8vh;
+                width:6.8vh;
+                background-color: green ;
             }
-            .treble[shadow] {
-                height: 7.1vh;
-                width: 7.1vh;
-                visibility: visible;
-            }
-            .bass_chord[shadow],
-            .bass_note[shadow] {
-                height: 5.8vh;
-                width: 5.8vh;
-                visibility: visible;
-            }
+        </style>
+        <style GUIAction>
             .closing{
                 background-color: var(--theme-color1,#4775D1) ;
             }
@@ -99,28 +70,15 @@ For an overlayed drop menu:
                 visibility: visible ;
             }
         </style>
-        <!-- local DOM -->
-        <div shadow class$="[[acLedType]]">
-            <div circle class$="[[acLedType]]" style="visibility:visible;"></div>
-            <div circle class$='[[acLedType]] [[_computeColor(instrumentState,0)]] [[_computeVisibility(instrumentState,0)]]' style$='opacity:[[instrumentOpacity]]'>
-                <template is="dom-if" if="[[showingInstrumentNotes]]">
-                    <div text>
-                        [[instrumentNote]]
-                    </div>
-                </template>
-            </div>
-            <div circle class$="[[acLedType]] [[_computeColor(playbackState,1)]] [[_computeVisibility(playbackState,1)]]" style$='opacity:[[playbackOpacity]]'>
-                <template is="dom-if" if="[[showingPlaybackNotes]]">
-                    <div text>
-                        [[playBackNote]]
-                    </div>
-                </template>
+        <div circle >
+            <div acLed withShadow>
+                <!-- to override default -->
             </div>
         </div>
     </template>
     <script>
         Polymer({
-            is: "accordion-ac-led",
+            is: "treble-led",
             observers: [],
             behaviors: [acLedBehavior],
             listeners: {},
@@ -146,9 +104,17 @@ For an overlayed drop menu:
                 },
                 closeNote:{
                     type:String
-                },
-                acLedType: {
-                    type: String
+                }
+            },
+            _getAcLedColor: function(acLedState){
+                if (acLedState === 0) {
+                    return 'white' ;
+                }
+                if (acLedState === 1) {
+                    return 'blue' ;
+                }
+                if (acLedState === 2) {
+                    return 'red' ;
                 }
             },
             _computeCloseNote: function(){
