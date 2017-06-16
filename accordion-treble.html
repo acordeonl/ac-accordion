@@ -126,7 +126,14 @@ For an overlayed drop menu:
         Polymer({
             is: "accordion-treble", observers: ['_swap(showingTreble)'],
             behaviors: [acLedGroupBehavior],
+            listeners:{
+                'click':'_test'
+            },
             properties: {
+                cnt:{
+                    type:Number,
+                    value:0
+                }
             },
         /* ------------------- acLed Action ------------------- */
             // override
@@ -140,6 +147,17 @@ For an overlayed drop menu:
         /* ------------------- Chords ------------------- */
             _displayChord: function(chord){
                 console.log('will display ', chord , 'in treble');
+            },
+            // TODO
+            _test: function(){
+                if (this.cnt === 0) {
+                    this._playChord(0,[28,30,32])
+                }
+                if (this.cnt === 1) {
+                    this._stopChord() ;
+                }
+                this.cnt ++ ;
+                this.cnt %= 2 ;
             },
         /* ------------------- GUI ------------------- */
             _computeRotation: function(rotation){
