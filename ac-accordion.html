@@ -245,6 +245,7 @@
                 this._chordOn = midiNote ;
                 this.$$('ACCORDION-BASS').onMIDIEvent(e);
             },
+            // override
             _onMIDIEvent: function (e) {
                 if (e.channel === 0)
                     this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
