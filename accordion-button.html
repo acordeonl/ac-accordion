@@ -56,21 +56,7 @@ For an overlayed drop menu:
                 color:red ;
             }*/
         </style>
-        <style GUIAction>
-            .closing{
-                background-color: var(--theme-color1,#4775D1) ;
-            }
-            .opening{
-                background-color: var(--theme-color2,#CC6666) ;
-            }
-            .hidden{
-                visibility: hidden ;
-            }
-            .visible{
-                visibility: visible ;
-            }
-        </style>
-        <div wrapper style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
+        <div style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
             <div circle shadow style$='width:[[buttonWidth]]; height:[[buttonHeight]];'></div>
             <div circle style$='width:[[buttonWidth]]; height:[[buttonHeight]];'></div>
             <div acLed style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
@@ -122,7 +108,7 @@ For an overlayed drop menu:
                 name += octave;
                 return name;
             },
-            // override
+            // override     
             // _getAcLedColor: function(acLedState){
             //     if (acLedState === 1) {
             //         return 'blue' ;
