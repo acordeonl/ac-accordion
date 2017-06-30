@@ -179,7 +179,7 @@
                     channel: 0,
                     midiNote: note,
                     cmd: cmd,
-                    time: context.currentTime,
+                    time: instrumentContext.currentTime,
                     origin: 'instrument'
                 });
             },
@@ -237,7 +237,7 @@
                     midiNote = 11;
             /* ------------------- adds midiNote action ------------------- */
                 var e = {};
-                e.time = context.currentTime;
+                e.time = instrumentContext.currentTime;
                 e.midiNote = midiNote;
                 e.channel = 2;
                 e.origin = 'instrument';
@@ -266,7 +266,7 @@
                         cnt = (this._bitCount(this.bassNotes) % 3);
                         if (cnt === 0 && this._chordOn !== -1) {
                             var e = {};
-                            e.time = context.currentTime;
+                            e.time = instrumentContext.currentTime;
                             e.midiNote = this._chordOn;
                             e.channel = 2;
                             e.origin = 'instrument';
