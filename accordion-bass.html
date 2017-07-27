@@ -140,8 +140,6 @@ For an overlayed drop menu:
                     return newNote ;
                 }
             },
-        /* ------------------- Chords ------------------- */
-            _displayChord: function (chord) {},
         /* ------------------- Change pitch helpers ------------------- */
             _checkBassNotes: function (note) {
                 if (note > 59)
@@ -220,6 +218,11 @@ For an overlayed drop menu:
                 this._mapMIDIEventToNote(2,9,24);
                 this._mapMIDIEventToNote(2,10,9);
                 this._mapMIDIEventToNote(2,11,9);
+
+                this._setChord(65,'major',[[2,10],[1,58]]) ;
+                this._setChord(65,'major (2)',[[2,35]]) ;
+                this._setChord(65,'minor',[[]]) ;
+                this._setChord(65,'dim7',[[]]) ;
             }
         });
     </script>

@@ -143,21 +143,6 @@ For an overlayed drop menu:
             _mapMIDIEventToAcLedState: function(channel,midiNote){
                 return ((midiNote - 24) % 2) + 1;
             },
-        /* ------------------- Chords ------------------- */
-            _displayChord: function(chord){
-                console.log('will display ', chord , 'in treble');
-            },
-            // TODO
-            _test: function(){
-                if (this.cnt === 0) {
-                    this._playChord(0,[28,30,32])
-                }
-                if (this.cnt === 1) {
-                    this._stopChord() ;
-                }
-                this.cnt ++ ;
-                this.cnt %= 2 ;
-            },
         /* ------------------- GUI ------------------- */
             _computeRotation: function(rotation){
                 if( rotation )
@@ -240,6 +225,12 @@ For an overlayed drop menu:
                 this._mapMIDIEventToNote(0,84,86);
                 this._mapMIDIEventToNote(0,85,81);
 
+                this._setChord(65,'major',[[0,28,30,32]]) ;
+                this._setChord(49,'major',[[0,28,30,32]]) ;
+                this._setChord(65,'minor',[[0,38,40,42]]) ;
+                this._setChord(64,'minor',[[]]) ;
+                this._setChord(65,'some other',[[]]) ;
+                this._setChord(65,'dim7',[[]]) ;
             }
         });
     </script>
