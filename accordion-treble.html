@@ -126,7 +126,7 @@ For an overlayed drop menu:
             is: "accordion-treble", observers: ['_swap(showingTreble)'],
             behaviors: [acLedGroupBehavior],
             listeners:{
-                'click':'_test'
+                'click':'_toggleButtonNotes'
             },
             properties: {
                 cnt:{
@@ -157,6 +157,42 @@ For an overlayed drop menu:
             _swap: function (showingTreble) {
                 if (showingTreble) {
                     this.playAnimation('entry');
+                }
+            },
+            _onAddPitch: function(){
+                this._setNoteNames() ;
+            },
+            _setNoteNames: function(){
+                var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
+                for (var i = 0; i < nodeList.length; i++) {
+                    nodeList[i].note1 = this._getNoteName(this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+24]) ;
+                    nodeList[i].note2 = this._getNoteName(this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+25])
+                }
+            },
+            _getNoteName: function(note){
+                var notes = [
+                    'C',
+                    'C#',
+                    'D',
+                    'Eb',
+                    'E',
+                    'F',
+                    'F#',
+                    'G',
+                    'Ab',
+                    'A',
+                    'Bb',
+                    'B'
+                ];
+                var octave = Math.floor(note / 12);
+                var name = notes[note % 12];
+                name += octave;
+                return name;
+            },
+            _toggleButtonNotes: function(){
+                var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
+                for (var i = 0; i < nodeList.length; i++) {
+                    nodeList[i].toggleButtonNotes() ;
                 }
             },
         /* ------------------- Setup ------------------- */
@@ -226,11 +262,15 @@ For an overlayed drop menu:
                 this._mapMIDIEventToNote(0,85,81);
 
                 this._setChord(65,'major',[[0,28,30,32]]) ;
+                this._setChord(64,'major',[[0,29,31,33]]) ;
+                this._setChord(66,'major',[[0,30,32,34]]) ;
                 this._setChord(49,'major',[[0,28,30,32]]) ;
                 this._setChord(65,'minor',[[0,38,40,42]]) ;
                 this._setChord(64,'minor',[[]]) ;
                 this._setChord(65,'some other',[[]]) ;
                 this._setChord(65,'dim7',[[]]) ;
+
+                this._setNoteNames() ;
             }
         });
     </script>

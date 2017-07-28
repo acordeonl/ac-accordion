@@ -55,10 +55,27 @@ For an overlayed drop menu:
                 margin-left: 10px ;
                 color:red ;
             }*/
+            [noteNames] {
+                @apply(--layout-center);
+                @apply(--layout-center-justified);
+                @apply(--layout-horizontal);
+                @apply(--layout-vertical);
+                height:100%;
+                width:100%;
+                margin-left: 2px ;
+                margin-top: 1px ;
+                color: var(--title-color1, gray);
+            }
         </style>
         <div style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
             <div circle shadow style$='width:[[buttonWidth]]; height:[[buttonHeight]];'></div>
-            <div circle style$='width:[[buttonWidth]]; height:[[buttonHeight]];'></div>
+            <div circle style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
+                <div noteNames style$='display:[[showingNotes]] ;'>
+                    [[note1]]
+                    </br>
+                    [[note2]]
+                </div>
+            </div>
             <div acLed style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
                 <!-- override default -->
                 <!-- <div note>
@@ -72,6 +89,10 @@ For an overlayed drop menu:
             is: "accordion-button",
             behaviors: [acLedBehavior],
             properties:{
+                showingNotes:{
+                    type:String,
+                    value:'none'
+                },
                 buttonWidth:{
                     type:String,
                     value:'6.8vh'
@@ -83,6 +104,13 @@ For an overlayed drop menu:
                 isBass:{
                     type:Boolean,
                     value:false
+                }
+            },
+            toggleButtonNotes: function(){
+                if (this.showingNotes === 'flex')
+                    this.showingNotes = 'none' ;
+                else {
+                    this.showingNotes = 'flex' ;
                 }
             },
             // override
@@ -108,7 +136,7 @@ For an overlayed drop menu:
                 name += octave;
                 return name;
             },
-            // override     
+            // override
             // _getAcLedColor: function(acLedState){
             //     if (acLedState === 1) {
             //         return 'blue' ;
