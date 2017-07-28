@@ -159,35 +159,20 @@ For an overlayed drop menu:
                     this.playAnimation('entry');
                 }
             },
+        /* ------------------- Setup ------------------- */
             _onAddPitch: function(){
                 this._setNoteNames() ;
             },
             _setNoteNames: function(){
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
                 for (var i = 0; i < nodeList.length; i++) {
-                    nodeList[i].note1 = this._getNoteName(this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+24]) ;
-                    nodeList[i].note2 = this._getNoteName(this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+25])
+                    var note1 = this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+24] ;
+                    var note2 =this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+25] ;
+                    nodeList[i].note1 ="C C#D EbE F F#G AbA BbB "  ;
+                    nodeList[i].note1 = (nodeList[i].note1.substring((note1 % 12) * 2, (note1 % 12) * 2 + 2) + (Math.floor(note1 / 12) ).toString()).replace(" ", "");
+                    nodeList[i].note2 = "C C#D EbE F F#G AbA BbB " ;
+                    nodeList[i].note2 = (nodeList[i].note2.substring((note2 % 12) * 2, (note2 % 12) * 2 + 2) + (Math.floor(note2 / 12) ).toString()).replace(" ", "");
                 }
-            },
-            _getNoteName: function(note){
-                var notes = [
-                    'C',
-                    'C#',
-                    'D',
-                    'Eb',
-                    'E',
-                    'F',
-                    'F#',
-                    'G',
-                    'Ab',
-                    'A',
-                    'Bb',
-                    'B'
-                ];
-                var octave = Math.floor(note / 12);
-                var name = notes[note % 12];
-                name += octave;
-                return name;
             },
             _toggleButtonNotes: function(){
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
@@ -195,7 +180,6 @@ For an overlayed drop menu:
                     nodeList[i].toggleButtonNotes() ;
                 }
             },
-        /* ------------------- Setup ------------------- */
             ready: function () {
             /* ------------------- MIDI note mapping ------------------- */
                 this._mapMIDIEventToNote(0,24,75);
