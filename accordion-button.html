@@ -114,29 +114,6 @@ For an overlayed drop menu:
                 }
             },
             // override
-            _getNoteName: function(note){
-                if(this.channel === 2)
-                    return "" ;
-                var notes = [
-                    'C',
-                    'C#',
-                    'D',
-                    'Eb',
-                    'E',
-                    'F',
-                    'F#',
-                    'G',
-                    'Ab',
-                    'A',
-                    'Bb',
-                    'B'
-                ];
-                var octave = Math.floor(note / 12);
-                var name = notes[note % 12];
-                name += octave;
-                return name;
-            },
-            // override
             // _getAcLedColor: function(acLedState){
             //     if (acLedState === 1) {
             //         return 'blue' ;

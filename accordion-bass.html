@@ -90,7 +90,9 @@ For an overlayed drop menu:
         Polymer({
             is: "accordion-bass",
             observers: ['_swap(showingTreble)'],
-            listeners: {},
+            listeners: {
+                'click':'_toggleButtonNotes'
+            },
             behaviors: [acLedGroupBehavior],
             properties: {
                 MIDIEventToNoteMap:{
@@ -190,6 +192,28 @@ For an overlayed drop menu:
                 return "vertical";
             },
         /* ------------------- Setup ------------------- */
+            _onAddPitch: function(){
+                this._setNoteNames() ;
+            },
+            _setNoteNames: function(){
+                var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
+                for (var i = 0; i < nodeList.length; i++) {
+                    if (nodeList[i].channel === 2 )
+                        continue ;
+                    var note1 = this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+48] ;
+                    var note2 =this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+49] ;
+                    nodeList[i].note1 ="C C#D EbE F F#G AbA BbB "  ;
+                    nodeList[i].note1 = (nodeList[i].note1.substring((note1 % 12) * 2, (note1 % 12) * 2 + 2) + (Math.floor(note1 / 12) ).toString()).replace(" ", "");
+                    nodeList[i].note2 = "C C#D EbE F F#G AbA BbB " ;
+                    nodeList[i].note2 = (nodeList[i].note2.substring((note2 % 12) * 2, (note2 % 12) * 2 + 2) + (Math.floor(note2 / 12) ).toString()).replace(" ", "");
+                }
+            },
+            _toggleButtonNotes: function(){
+                var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
+                for (var i = 0; i < nodeList.length; i++) {
+                    nodeList[i].toggleButtonNotes() ;
+                }
+            },
             ready: function () {
             /* ------------------- MIDI note mapping ------------------- */
                 //bass notes
@@ -225,6 +249,8 @@ For an overlayed drop menu:
                 this._setChord(65,'major (2)',[[2,35]]) ;
                 this._setChord(65,'minor',[[]]) ;
                 this._setChord(65,'dim7',[[]]) ;
+
+                this._setNoteNames() ;
             }
         });
     </script>
