@@ -247,8 +247,13 @@
             },
             // override
             _onMIDIEvent: function (e) {
-                if (e.channel === 0)
+
+                if (e.channel === 0){
+                    if (e.cmd === 'note-on') {
+                        console.log(e.midiNote); 
+                    }
                     this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
+                }
                 if (e.channel === 1) {
                     this.$$('ACCORDION-BASS').onMIDIEvent(e);
                 }
