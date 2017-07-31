@@ -124,12 +124,10 @@
                 ACViewBehavior, ScaleUpBehavior
             ],
             listeners: {
-                'keypress': '_keyPress',
-                'keyup': '_keyUp',
                 'theme-app': '_themeApp',
                 'theme-update': '_updateTheme',
-                'set-default-theme': '_setDefaultTheme'
-                // 'mousemove': '_updateOpening'
+                'set-default-theme': '_setDefaultTheme',
+                'mousemove': '_updateOpening'
             },
             properties: {
                 _chordOn:{
@@ -162,26 +160,7 @@
                 if (e.movementX < 0) {
                     this.opening = false;
                 }
-            },
-            _keyPress: function (e) {
-                this._keyAction(e.key, "note-on");
-            },
-            _keyUp: function (e) {
-                this._keyAction(e.key, "note-off");
-            },
-            _keyAction: function (key, cmd) {
-                var note = keyMap[key];
-                if (note === undefined)
-                    return;
-                if (this.opening)
-                    note++;
-                this.fire('action', {
-                    channel: 0,
-                    midiNote: note,
-                    cmd: cmd,
-                    time: instrumentContext.currentTime,
-                    origin: 'instrument'
-                });
+                this.$$('ACCORDION-TREBLE').updateOpening(this.opening) ; 
             },
         /* ----------------- MIDI ------------- */
             _chordActivity: function () {
@@ -247,11 +226,7 @@
             },
             // override
             _onMIDIEvent: function (e) {
-
                 if (e.channel === 0){
-                    if (e.cmd === 'note-on') {
-                        console.log(e.midiNote); 
-                    }
                     this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
                 }
                 if (e.channel === 1) {

@@ -129,10 +129,18 @@ For an overlayed drop menu:
                 'click':'_toggleButtonNotes'
             },
             properties: {
-                cnt:{
-                    type:Number,
-                    value:0
-                }
+                updateOpening:{
+                    type:Boolean,
+                    value:false
+                },
+                opening:{
+                    type:Boolean,
+                    value:false
+                },
+                keysDown:{
+                    type:Array,
+                    value:[]
+                },
             },
         /* ------------------- acLed Action ------------------- */
             // override
@@ -178,6 +186,68 @@ For an overlayed drop menu:
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
                 for (var i = 0; i < nodeList.length; i++) {
                     nodeList[i].toggleButtonNotes() ;
+                }
+            },
+            updateOpening: async function(opening){
+                if (opening !== this.opening) {
+                    var arr = []
+                    for (var i = 0; i < this.keysDown.length; i++) {
+                        arr[i] = this.keysDown[i]
+                    }
+                    for (let i = 0; i < arr.length; i++)
+                        this.onKeyboardNoteOff(arr[i]) ;
+                    this.opening = opening ;
+                    for (let i = 0; i < arr.length; i++)
+                        this.onKeyboardNoteOn(arr[i]) ;
+                }
+            },
+            //override
+            onKeyboardNoteOn: function(key){
+                for (var i = 0; i < this.keysDown.length; i++) {
+                    if (this.keysDown[i] ===key) {
+                        return ;
+                    }
+                }
+                if (this.mapKeyboardToNote[key] !== undefined) {
+                    var e = {};
+                    e.playNow = 1;
+                    e.midiNote = this.mapKeyboardToNote[key][1];
+                    if (this.opening)
+                        e.midiNote ++ ;
+                    e.channel = this.mapKeyboardToNote[key][0];
+                    e.origin = 'keyboard';
+                    e.cmd = 'note-on';
+                    this.keysDown.push(key) ;
+                    this.onMIDIEvent(e) ;
+                }
+            },
+            //override
+            onKeyboardNoteOff: function(key){
+                var flag = true ;
+                for (var i = 0; i < this.keysDown.length; i++) {
+                    if (this.keysDown[i] ===key) {
+                        flag = false ;
+                    }
+                }
+                if (flag)
+                    return ;
+                if (this.mapKeyboardToNote[key] !== undefined) {
+                    var e = {};
+                    e.playNow = 1;
+                    e.midiNote = this.mapKeyboardToNote[key][1];
+                    e.channel = this.mapKeyboardToNote[key][0];
+                    if (this.opening)
+                        e.midiNote ++ ;
+                    e.origin = 'keyboard';
+                    e.cmd = 'note-off';
+                    var index = 0 ;
+                    for (let i = 0; i < this.keysDown.length; i++) {
+                        if (this.keysDown[i]===key) {
+                            index = i ;
+                        }
+                    }
+                    this.keysDown.splice(index, 1);
+                    this.onMIDIEvent(e) ;
                 }
             },
             ready: function () {
@@ -282,6 +352,39 @@ For an overlayed drop menu:
                 this._setChord(71,'m',[[0,55,57,83]]) ;
                 this._setChord(59,'m',[[0,44,70,72]]) ;
                 this._setChord(59,'m (2)',[[0,47,49,75]]) ;
+
+                this._setKeyboardToNote('w',[0,24]) ;
+                this._setKeyboardToNote('e',[0,26]) ;
+                this._setKeyboardToNote('r',[0,28]) ;
+                this._setKeyboardToNote('t',[0,30]) ;
+                this._setKeyboardToNote('y',[0,32]) ;
+                this._setKeyboardToNote('u',[0,34]) ;
+                this._setKeyboardToNote('i',[0,36]) ;
+                this._setKeyboardToNote('o',[0,38]) ;
+                this._setKeyboardToNote('p',[0,40]) ;
+                this._setKeyboardToNote('[',[0,42]) ;
+                this._setKeyboardToNote('a',[0,44]) ;
+                this._setKeyboardToNote('s',[0,46]) ;
+                this._setKeyboardToNote('d',[0,48]) ;
+                this._setKeyboardToNote('f',[0,50]) ;
+                this._setKeyboardToNote('g',[0,52]) ;
+                this._setKeyboardToNote('h',[0,54]) ;
+                this._setKeyboardToNote('j',[0,56]) ;
+                this._setKeyboardToNote('k',[0,58]) ;
+                this._setKeyboardToNote('l',[0,60]) ;
+                this._setKeyboardToNote(';',[0,62]) ;
+                this._setKeyboardToNote('0',[0,64]) ;
+                this._setKeyboardToNote('z',[0,66]) ;
+                this._setKeyboardToNote('x',[0,68]) ;
+                this._setKeyboardToNote('c',[0,70]) ;
+                this._setKeyboardToNote('v',[0,72]) ;
+                this._setKeyboardToNote('b',[0,74]) ;
+                this._setKeyboardToNote('n',[0,76]) ;
+                this._setKeyboardToNote('m',[0,78]) ;
+                this._setKeyboardToNote(',',[0,80]) ;
+                this._setKeyboardToNote('.',[0,82]) ;
+                this._setKeyboardToNote('/',[0,84]) ;
+
                 this._setNoteNames() ;
             }
         });
