@@ -160,7 +160,7 @@
                 if (e.movementX < 0) {
                     this.opening = false;
                 }
-                this.$$('ACCORDION-TREBLE').updateOpening(this.opening) ; 
+                this.$$('ACCORDION-TREBLE').updateOpening(this.opening) ;
             },
         /* ----------------- MIDI ------------- */
             _chordActivity: function () {
@@ -219,7 +219,7 @@
                 e.time = instrumentContext.currentTime;
                 e.midiNote = midiNote;
                 e.channel = 2;
-                e.origin = 'instrument';
+                e.origin = 'acView';
                 e.cmd = 'note-on';
                 this._chordOn = midiNote ;
                 this.$$('ACCORDION-BASS').onMIDIEvent(e);
@@ -249,7 +249,7 @@
                             e.time = instrumentContext.currentTime;
                             e.midiNote = this._chordOn;
                             e.channel = 2;
-                            e.origin = 'instrument';
+                            e.origin = 'acView';
                             e.cmd = 'note-off';
                             this.$$('ACCORDION-BASS').onMIDIEvent(e);
                             this._chordOn = -1 ;
