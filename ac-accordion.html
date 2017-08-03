@@ -117,7 +117,7 @@
         </local-dom>
     </template>
     <script>
-        ACView = Polymer({
+        Polymer({
             is: "ac-accordion",
             observers: [],
             behaviors: [
@@ -167,7 +167,7 @@
                 var st = this.bassNotes;
                 var midiNote = -1;
                 //based on G accrdion with notes on bass: 41,43,45,46,48,49,50,51,52,53,54,55,56,57,58,59  bits represent: 41,42,43,44,45,46,47,48,49,50,51,52,53,54,  55,56,57,58,59   this.$.trebleSynthesizer.allNotesOffChords(); s0 closed
-            /* ------------------- Bit test ------------------- */
+                /* ------------------- Bit test ------------------- */
                 if ((st & (1 << 7)) && (st & (1 << 11)) && (st & (1 << 14)))
                     midiNote = 0;
 
@@ -214,7 +214,7 @@
                 //s5 opened
                 if ((st & (1 << 0)) && (st & (1 << 15)) && (st & (1 << 7)))
                     midiNote = 11;
-            /* ------------------- adds midiNote action ------------------- */
+                /* ------------------- adds midiNote action ------------------- */
                 var e = {};
                 e.time = instrumentContext.currentTime;
                 e.midiNote = midiNote;
@@ -222,15 +222,14 @@
                 e.origin = 'acView';
                 e.cmd = 'note-on';
                 this._chordOn = midiNote ;
-                this.$$('ACCORDION-BASS').onMIDIEvent(e);
+                this.$$('ACCORDION-BASS').___acV_onMIDIEvent(e);
             },
-            // override
-            ___acV_onMIDIEvent: function (e) {
+            ___acV_handleMIDIEvent: function (e) {
                 if (e.channel === 0){
-                    this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
+                    this.$$('ACCORDION-TREBLE').___acV_onMIDIEvent(e);
                 }
                 if (e.channel === 1) {
-                    this.$$('ACCORDION-BASS').onMIDIEvent(e);
+                    this.$$('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
                 if (e.channel === 2) {
                     var cnt, bNote = e.midiNote - 41;
@@ -251,7 +250,7 @@
                             e.channel = 2;
                             e.origin = 'acView';
                             e.cmd = 'note-off';
-                            this.$$('ACCORDION-BASS').onMIDIEvent(e);
+                            this.$$('ACCORDION-BASS').___acV_onMIDIEvent(e);
                             this._chordOn = -1 ;
                         }
 

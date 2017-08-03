@@ -67,8 +67,8 @@ For an overlayed drop menu:
         <!-- local DOM -->
         <view-audio id="bassNotesAudio" channel='1' default-audio-url='/data/accordion_synth/bass_notes.mp3'></view-audio>
         <view-audio id="bassChordsAudio" channel='2' default-audio-url='/data/accordion_synth/bass_chords.mp3'></view-audio>
-        <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(rotation)}}">
-            <div class$="col {{_computeColRotation(rotation)}}">
+        <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(___acV_rotation)}}">
+            <div class$="col {{_computeColRotation(___acV_rotation)}}">
                 <accordion-button is-bass acLed ac-id='3' channel='2' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='3' channel='1' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='4' channel='2' ></accordion-button>
@@ -76,7 +76,7 @@ For an overlayed drop menu:
                 <accordion-button is-bass acLed ac-id='5' channel='2' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='5' channel='1' ></accordion-button>
             </div>
-            <div class$="col {{_computeColRotation(rotation)}}">
+            <div class$="col {{_computeColRotation(___acV_rotation)}}">
                 <accordion-button is-bass acLed ac-id='0' channel='2' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='0' channel='1' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='1' channel='2' ></accordion-button>
@@ -95,10 +95,6 @@ For an overlayed drop menu:
             },
             behaviors: [acLedGroupBehavior],
             properties: {
-                MIDIEventToNoteMap:{
-                    type:Array,
-                    value:[]
-                },
                 buttonCloseNote: {
                     type: Array,
                     value: []
@@ -117,24 +113,21 @@ For an overlayed drop menu:
                 }
             },
         /* ------------------- acLed Action ------------------- */
-            // override
-            _mapMIDIEventToAcLedId: function (channel, midiNote) {
+            ___acV_mapMIDIEventToAcLedId: function (channel, midiNote) {
                 if (channel === 1)
                     return Math.floor((midiNote - 48) / 2);
                 if (channel === 2) {
                     return Math.floor(midiNote / 2);
                 }
             },
-            // override
-            _mapMIDIEventToAcLedState: function (channel, midiNote) {
+            ___acV_mapMIDIEventToAcLedState: function (channel, midiNote) {
                 if (channel === 1)
                     return ((midiNote - 48) % 2) + 1;
                 if (channel === 2){
                     return (midiNote % 2) + 1;
                 }
             },
-            // override
-            _addPitch: function (note,channel,diff) {
+            ___acV_handleAddPitch: function (note,channel,diff) {
                 if (channel === 1)
                     return this._changeBassNotesPitch(note,diff);
                 if (channel === 2) {
@@ -192,7 +185,7 @@ For an overlayed drop menu:
                 return "vertical";
             },
         /* ------------------- Setup ------------------- */
-            _onAddPitch: function(){
+            ___acV_onAddPitch: function(){
                 this._setNoteNames() ;
             },
             _setNoteNames: function(){
@@ -200,8 +193,8 @@ For an overlayed drop menu:
                 for (var i = 0; i < nodeList.length; i++) {
                     if (nodeList[i].channel === 2 )
                         continue ;
-                    var note1 = this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+48] ;
-                    var note2 =this.MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+49] ;
+                    var note1 = this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+48] ;
+                    var note2 =this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+49] ;
                     nodeList[i].note1 ="C C#D EbE F F#G AbA BbB "  ;
                     nodeList[i].note1 = (nodeList[i].note1.substring((note1 % 12) * 2, (note1 % 12) * 2 + 2) + (Math.floor(note1 / 12) ).toString()).replace(" ", "");
                     nodeList[i].note2 = "C C#D EbE F F#G AbA BbB " ;
@@ -217,33 +210,31 @@ For an overlayed drop menu:
             ready: function () {
             /* ------------------- MIDI note mapping ------------------- */
                 //bass notes
-                this._mapMIDIEventToNote(1,48,55);
-                this._mapMIDIEventToNote(1,49,50);
-                this._mapMIDIEventToNote(1,50,48);
-                this._mapMIDIEventToNote(1,51,55);
-                this._mapMIDIEventToNote(1,52,53);
-                this._mapMIDIEventToNote(1,53,48);
-                this._mapMIDIEventToNote(1,54,52);
-                this._mapMIDIEventToNote(1,55,57);
-                this._mapMIDIEventToNote(1,56,57);
-                this._mapMIDIEventToNote(1,57,50);
-                this._mapMIDIEventToNote(1,58,58);
-                this._mapMIDIEventToNote(1,59,58);
+                this.___acV_mapMIDIEventToNote(1,48,55);
+                this.___acV_mapMIDIEventToNote(1,49,50);
+                this.___acV_mapMIDIEventToNote(1,50,48);
+                this.___acV_mapMIDIEventToNote(1,51,55);
+                this.___acV_mapMIDIEventToNote(1,52,53);
+                this.___acV_mapMIDIEventToNote(1,53,48);
+                this.___acV_mapMIDIEventToNote(1,54,52);
+                this.___acV_mapMIDIEventToNote(1,55,57);
+                this.___acV_mapMIDIEventToNote(1,56,57);
+                this.___acV_mapMIDIEventToNote(1,57,50);
+                this.___acV_mapMIDIEventToNote(1,58,58);
+                this.___acV_mapMIDIEventToNote(1,59,58);
                 //bass chords
-                this._mapMIDIEventToNote(2,0,35);
-                this._mapMIDIEventToNote(2,1,26);
-                this._mapMIDIEventToNote(2,2,15);
-                this._mapMIDIEventToNote(2,3,35);
-                this._mapMIDIEventToNote(2,4,22);
-                this._mapMIDIEventToNote(2,5,15);
-                this._mapMIDIEventToNote(2,6,41);
-                this._mapMIDIEventToNote(2,7,3);
-                this._mapMIDIEventToNote(2,8,5);
-                this._mapMIDIEventToNote(2,9,24);
-                this._mapMIDIEventToNote(2,10,9);
-                this._mapMIDIEventToNote(2,11,9);
-
-                // this._setChord(65,'major',[[2,10],[1,58]]) ;
+                this.___acV_mapMIDIEventToNote(2,0,35);
+                this.___acV_mapMIDIEventToNote(2,1,26);
+                this.___acV_mapMIDIEventToNote(2,2,15);
+                this.___acV_mapMIDIEventToNote(2,3,35);
+                this.___acV_mapMIDIEventToNote(2,4,22);
+                this.___acV_mapMIDIEventToNote(2,5,15);
+                this.___acV_mapMIDIEventToNote(2,6,41);
+                this.___acV_mapMIDIEventToNote(2,7,3);
+                this.___acV_mapMIDIEventToNote(2,8,5);
+                this.___acV_mapMIDIEventToNote(2,9,24);
+                this.___acV_mapMIDIEventToNote(2,10,9);
+                this.___acV_mapMIDIEventToNote(2,11,9);
 
                 this._setNoteNames() ;
             }
