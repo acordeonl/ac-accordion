@@ -96,9 +96,9 @@
                     <paper-icon-button swap-button on-click="swap" icon="swap-horiz"></paper-icon-button>
                 </template>
             </div>
-            <div wrapper class$="{{_computeRotation(rotation)}}">
+            <div wrapper class$="{{_computeRotation(___acVrotation)}}">
                 <accordion-treble
-                    class$='{{_computeDisplayTreble(mobile,showingTreble)}} {{_computeDisplay(finishedLoading)}}'
+                    class$='{{_computeDisplayTreble(mobile,showingTreble)}} {{_computeDisplay(___acVfinishedLoading)}}'
                     acLedGroup
                     name='diapasón'
                     default-instrument-panning='0.4'
@@ -106,7 +106,7 @@
                     default-instrument-volume='1'
                     default-playback-volume='0.7'></accordion-treble>
                 <accordion-bass
-                    class$='{{_computeDisplayBass(mobile,showingTreble)}} {{_computeDisplay(finishedLoading)}}'
+                    class$='{{_computeDisplayBass(mobile,showingTreble)}} {{_computeDisplay(___acVfinishedLoading)}}'
                     acLedGroup
                     name='bajos'
                     default-playback-panning='-0.2'
@@ -298,8 +298,8 @@
             },
         /* ------------------- Initialization ------------------- */
             ready: function () {
-                this._setDefaultReverb(30) ;
-                this._setReferencePitch(55) ;
+                this.___acV_setDefaultReverb(30) ;
+                this.___acV_setReferencePitch(55) ;
             }
         });
     </script>
