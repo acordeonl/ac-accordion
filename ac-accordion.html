@@ -96,9 +96,9 @@
                     <paper-icon-button swap-button on-click="swap" icon="swap-horiz"></paper-icon-button>
                 </template>
             </div>
-            <div wrapper class$="{{_computeRotation(___acVrotation)}}">
+            <div wrapper class$="{{_computeRotation(___acV_rotation)}}">
                 <accordion-treble
-                    class$='{{_computeDisplayTreble(mobile,showingTreble)}} {{_computeDisplay(___acVfinishedLoading)}}'
+                    class$='{{_computeDisplayTreble(mobile,showingTreble)}} {{_computeDisplay(___acV_finishedLoading)}}'
                     acLedGroup
                     name='diapasón'
                     default-instrument-panning='0.4'
@@ -106,7 +106,7 @@
                     default-instrument-volume='1'
                     default-playback-volume='0.7'></accordion-treble>
                 <accordion-bass
-                    class$='{{_computeDisplayBass(mobile,showingTreble)}} {{_computeDisplay(___acVfinishedLoading)}}'
+                    class$='{{_computeDisplayBass(mobile,showingTreble)}} {{_computeDisplay(___acV_finishedLoading)}}'
                     acLedGroup
                     name='bajos'
                     default-playback-panning='-0.2'
@@ -150,7 +150,7 @@
                     type: Object
                 }
             },
-            _onFinishedLoadingNotes: function () {
+            ___acV_onFinishedLoadingNotes: function () {
                 this.playAnimation('entry');
             },
         /* ------------ keyboard mouse activity ------------- */
@@ -225,7 +225,7 @@
                 this.$$('ACCORDION-BASS').onMIDIEvent(e);
             },
             // override
-            _onMIDIEvent: function (e) {
+            ___acV_onMIDIEvent: function (e) {
                 if (e.channel === 0){
                     this.$$('ACCORDION-TREBLE').onMIDIEvent(e);
                 }
