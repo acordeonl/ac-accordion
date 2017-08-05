@@ -7,28 +7,28 @@
 </imports>
 <!--
 
-Shows drop down menu (works on chrome)
+    Shows drop down menu (works on chrome)
 
-### Usage
-The list displayed in the drop down menu can be set as an attribute.
+    ### Usage
+    The list displayed in the drop down menu can be set as an attribute.
 
-    <drop-menu list-items='["first" ,"second"]'></drop-menu>
+        <drop-menu list-items='["first" ,"second"]'></drop-menu>
 
-For an overlayed drop menu:
+    For an overlayed drop menu:
 
-    <drop-menu overlay-menu list-items='["first" ,"second"]'></drop-menu>
+        <drop-menu overlay-menu list-items='["first" ,"second"]'></drop-menu>
 
-### Styling
- Custom property | Description | Default
-----------------|-------------|----------
-`--item-background-color` | List item backround color | `#f1ecef`
-`--item-color` | List item color used for fonts | `#302f31`
-`--button-close-color` | Icon button hover color | `4775D1`
-`--button-background-color` | Drop menu's background color | `white`
-`--button-close-color` | Icon button hover color | `4775D1`
-`--icon-button` | Mixin applied the icon button | `{}`
+    ### Styling
+    Custom property | Description | Default
+    ----------------|-------------|----------
+    `--item-background-color` | List item backround color | `#f1ecef`
+    `--item-color` | List item color used for fonts | `#302f31`
+    `--button-close-color` | Icon button hover color | `4775D1`
+    `--button-background-color` | Drop menu's background color | `white`
+    `--button-close-color` | Icon button hover color | `4775D1`
+    `--icon-button` | Mixin applied the icon button | `{}`
 
-@demo demo/drop-menu-demo.html
+    @demo demo/drop-menu-demo.html
 -->
 <dom-module id="accordion-treble">
     <template>
@@ -139,14 +139,14 @@ For an overlayed drop menu:
                     value: []
                 }
             },
-            /* ------------------- acLed Action ------------------- */
+        // ------------------- acLed Action -------------------
             ___acV_mapMIDIEventToAcLedId: function (channel, midiNote) {
                 return Math.floor((midiNote - 24) / 2);
             },
             ___acV_mapMIDIEventToAcLedState: function (channel, midiNote) {
                 return ((midiNote - 24) % 2) + 1;
             },
-            /* ------------------- GUI ------------------- */
+        // ------------------- GUI -------------------
             _computeRotation: function (rotation) {
                 if (rotation)
                     return "reversedHorizontal";
@@ -162,7 +162,7 @@ For an overlayed drop menu:
                     this.playAnimation('entry');
                 }
             },
-            /* ------------------- Setup ------------------- */
+        // ------------------- Setup -------------------
             ___acV_onAddPitch: function () {
                 this._setNoteNames();
             },
@@ -244,7 +244,7 @@ For an overlayed drop menu:
                 }
             },
             ready: function () {
-                /* ------------------- MIDI note mapping ------------------- */
+            // ------------------- MIDI note mapping -------------------
                 this.___acV_mapMIDIEventToNote(0, 24, 75);
                 this.___acV_mapMIDIEventToNote(0, 25, 73);
                 this.___acV_mapMIDIEventToNote(0, 26, 60);
@@ -307,6 +307,7 @@ For an overlayed drop menu:
                 this.___acV_mapMIDIEventToNote(0, 83, 78);
                 this.___acV_mapMIDIEventToNote(0, 84, 86);
                 this.___acV_mapMIDIEventToNote(0, 85, 81);
+            // --------------- chords setup ----------------------
                 this.___acV_setChord(60, 'M', [
                     [0, 48, 50, 52]
                 ]);
@@ -418,6 +419,7 @@ For an overlayed drop menu:
                 this.___acV_setChord(59, 'm (2)', [
                     [0, 47, 49, 75]
                 ]);
+            // --------------- keyboard setup ----------------------
                 this.___acV_setKeyboardToNote('w', [0, 24]);
                 this.___acV_setKeyboardToNote('e', [0, 26]);
                 this.___acV_setKeyboardToNote('r', [0, 28]);
