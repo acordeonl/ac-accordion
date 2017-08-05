@@ -76,133 +76,130 @@ For an overlayed drop menu:
             }
         </style>
         <!-- local DOM -->
-        <view-audio
-            id="trebleAudio"
-            channel='0'
-            default-audio-url='/data/accordion_synth/treble.mp3'>
-        </view-audio>
+        <view-audio id="trebleAudio" channel='0' default-audio-url='/data/accordion_synth/treble.mp3'></view-audio>
         <local-dom class$="{{_computeRotation(___acV_rotation)}}" mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}">
             <div class$="col1 {{_computeColRotation(___acV_rotation)}}">
-                <accordion-button acLed ac-id='21' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='22' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='23' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='24' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='25' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='26' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='27' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='28' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='29' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='30' channel='0' ></accordion-button>
+                <accordion-button acLed ac-id='21' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='22' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='23' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='24' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='25' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='26' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='27' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='28' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='29' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='30' channel='0'></accordion-button>
             </div>
             <div class$="col2 {{_computeColRotation(___acV_rotation)}}">
-                <accordion-button acLed ac-id='10' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='11' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='12' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='13' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='14' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='15' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='16' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='17' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='18' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='19' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='20' channel='0' ></accordion-button>
+                <accordion-button acLed ac-id='10' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='11' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='12' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='13' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='14' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='15' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='16' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='17' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='18' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='19' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='20' channel='0'></accordion-button>
             </div>
             <div class$="col1 {{_computeColRotation(___acV_rotation)}}">
-                <accordion-button acLed ac-id='0' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='1' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='2' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='3' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='4' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='5' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='6' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='7' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='8' channel='0' ></accordion-button>
-                <accordion-button acLed ac-id='9' channel='0' ></accordion-button>
+                <accordion-button acLed ac-id='0' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='1' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='2' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='3' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='4' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='5' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='6' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='7' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='8' channel='0'></accordion-button>
+                <accordion-button acLed ac-id='9' channel='0'></accordion-button>
             </div>
         </local-dom>
     </template>
     <script>
         Polymer({
-            is: "accordion-treble", observers: ['_swap(showingTreble)'],
+            is: "accordion-treble",
+            observers: ['_swap(showingTreble)'],
             behaviors: [acLedGroupBehavior],
-            listeners:{
-                'click':'_toggleButtonNotes'
+            listeners: {
+                'click': '_toggleButtonNotes'
             },
             properties: {
-                updateOpening:{
-                    type:Boolean,
-                    value:false
+                updateOpening: {
+                    type: Boolean,
+                    value: false
                 },
-                opening:{
-                    type:Boolean,
-                    value:false
+                opening: {
+                    type: Boolean,
+                    value: false
                 },
-                keysDown:{
-                    type:Array,
-                    value:[]
-                },
+                keysDown: {
+                    type: Array,
+                    value: []
+                }
             },
-        /* ------------------- acLed Action ------------------- */
-            ___acV_mapMIDIEventToAcLedId: function(channel,midiNote){
-                return Math.floor((midiNote - 24) / 2) ;
+            /* ------------------- acLed Action ------------------- */
+            ___acV_mapMIDIEventToAcLedId: function (channel, midiNote) {
+                return Math.floor((midiNote - 24) / 2);
             },
-            ___acV_mapMIDIEventToAcLedState: function(channel,midiNote){
+            ___acV_mapMIDIEventToAcLedState: function (channel, midiNote) {
                 return ((midiNote - 24) % 2) + 1;
             },
-        /* ------------------- GUI ------------------- */
-            _computeRotation: function(rotation){
-                if( rotation )
-                    return "reversedHorizontal" ;
-                return "horizontal" ;
+            /* ------------------- GUI ------------------- */
+            _computeRotation: function (rotation) {
+                if (rotation)
+                    return "reversedHorizontal";
+                return "horizontal";
             },
-            _computeColRotation: function(rotation){
-                if( rotation )
-                    return "reversedVertical" ;
-                return "vertical" ;
+            _computeColRotation: function (rotation) {
+                if (rotation)
+                    return "reversedVertical";
+                return "vertical";
             },
             _swap: function (showingTreble) {
                 if (showingTreble) {
                     this.playAnimation('entry');
                 }
             },
-        /* ------------------- Setup ------------------- */
-            ___acV_onAddPitch: function(){
-                this._setNoteNames() ;
+            /* ------------------- Setup ------------------- */
+            ___acV_onAddPitch: function () {
+                this._setNoteNames();
             },
-            _setNoteNames: function(){
+            _setNoteNames: function () {
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
                 for (var i = 0; i < nodeList.length; i++) {
-                    var note1 = this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+24] ;
-                    var note2 =this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+25] ;
-                    nodeList[i].note1 ="C C#D EbE F F#G AbA BbB "  ;
-                    nodeList[i].note1 = (nodeList[i].note1.substring((note1 % 12) * 2, (note1 % 12) * 2 + 2) + (Math.floor(note1 / 12) ).toString()).replace(" ", "");
-                    nodeList[i].note2 = "C C#D EbE F F#G AbA BbB " ;
-                    nodeList[i].note2 = (nodeList[i].note2.substring((note2 % 12) * 2, (note2 % 12) * 2 + 2) + (Math.floor(note2 / 12) ).toString()).replace(" ", "");
+                    var note1 = this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId * 2 + 24];
+                    var note2 = this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId * 2 + 25];
+                    nodeList[i].note1 = "C C#D EbE F F#G AbA BbB ";
+                    nodeList[i].note1 = (nodeList[i].note1.substring((note1 % 12) * 2, (note1 % 12) * 2 + 2) + (Math.floor(note1 / 12)).toString()).replace(" ", "");
+                    nodeList[i].note2 = "C C#D EbE F F#G AbA BbB ";
+                    nodeList[i].note2 = (nodeList[i].note2.substring((note2 % 12) * 2, (note2 % 12) * 2 + 2) + (Math.floor(note2 / 12)).toString()).replace(" ", "");
                 }
             },
-            _toggleButtonNotes: function(){
+            _toggleButtonNotes: function () {
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
                 for (var i = 0; i < nodeList.length; i++) {
-                    nodeList[i].toggleButtonNotes() ;
+                    nodeList[i].toggleButtonNotes();
                 }
             },
-            updateOpening: async function(opening){
+            updateOpening: async function (opening) {
                 if (opening !== this.opening) {
                     var arr = []
                     for (var i = 0; i < this.keysDown.length; i++) {
                         arr[i] = this.keysDown[i]
                     }
                     for (let i = 0; i < arr.length; i++)
-                        this.___acV_onKeyboardNoteOff(arr[i]) ;
-                    this.opening = opening ;
+                        this.___acV_onKeyboardNoteOff(arr[i]);
+                    this.opening = opening;
                     for (let i = 0; i < arr.length; i++)
-                        this.___acV_onKeyboardNoteOn(arr[i]) ;
-                }
-            },
-            ___acV_onKeyboardNoteOn: function(key){
+                        this.___acV_onKeyboardNoteOn(arr[i]);
+                    }
+                },
+            ___acV_onKeyboardNoteOn: function (key) {
                 for (var i = 0; i < this.keysDown.length; i++) {
-                    if (this.keysDown[i] ===key) {
-                        return ;
+                    if (this.keysDown[i] === key) {
+                        return;
                     }
                 }
                 if (this.___acV_mapKeyboardToNote[key] !== undefined) {
@@ -210,178 +207,249 @@ For an overlayed drop menu:
                     e.playNow = 1;
                     e.midiNote = this.___acV_mapKeyboardToNote[key][1];
                     if (this.opening)
-                        e.midiNote ++ ;
+                        e.midiNote++;
                     e.channel = this.___acV_mapKeyboardToNote[key][0];
                     e.origin = 'keyboard';
                     e.cmd = 'note-on';
-                    this.keysDown.push(key) ;
-                    this.___acV_onMIDIEvent(e) ;
+                    this.keysDown.push(key);
+                    this.___acV_onMIDIEvent(e);
                 }
             },
-            ___acV_onKeyboardNoteOff: function(key){
-                var flag = true ;
+            ___acV_onKeyboardNoteOff: function (key) {
+                var flag = true;
                 for (var i = 0; i < this.keysDown.length; i++) {
-                    if (this.keysDown[i] ===key) {
-                        flag = false ;
+                    if (this.keysDown[i] === key) {
+                        flag = false;
                     }
                 }
                 if (flag)
-                    return ;
+                    return;
                 if (this.___acV_mapKeyboardToNote[key] !== undefined) {
                     var e = {};
                     e.playNow = 1;
                     e.midiNote = this.___acV_mapKeyboardToNote[key][1];
                     e.channel = this.___acV_mapKeyboardToNote[key][0];
                     if (this.opening)
-                        e.midiNote ++ ;
+                        e.midiNote++;
                     e.origin = 'keyboard';
                     e.cmd = 'note-off';
-                    var index = 0 ;
+                    var index = 0;
                     for (let i = 0; i < this.keysDown.length; i++) {
-                        if (this.keysDown[i]===key) {
-                            index = i ;
+                        if (this.keysDown[i] === key) {
+                            index = i;
                         }
                     }
                     this.keysDown.splice(index, 1);
-                    this.___acV_onMIDIEvent(e) ;
+                    this.___acV_onMIDIEvent(e);
                 }
             },
             ready: function () {
-            /* ------------------- MIDI note mapping ------------------- */
-                this.___acV_mapMIDIEventToNote(0,24,75);
-                this.___acV_mapMIDIEventToNote(0,25,73);
-                this.___acV_mapMIDIEventToNote(0,26,60);
-                this.___acV_mapMIDIEventToNote(0,27,64);
-                this.___acV_mapMIDIEventToNote(0,28,65);
-                this.___acV_mapMIDIEventToNote(0,29,67);
-                this.___acV_mapMIDIEventToNote(0,30,69);
-                this.___acV_mapMIDIEventToNote(0,31,70);
-                this.___acV_mapMIDIEventToNote(0,32,72);
-                this.___acV_mapMIDIEventToNote(0,33,74);
-                this.___acV_mapMIDIEventToNote(0,34,77);
-                this.___acV_mapMIDIEventToNote(0,35,76);
-                this.___acV_mapMIDIEventToNote(0,36,81);
-                this.___acV_mapMIDIEventToNote(0,37,79);
-                this.___acV_mapMIDIEventToNote(0,38,84);
-                this.___acV_mapMIDIEventToNote(0,39,82);
-                this.___acV_mapMIDIEventToNote(0,40,89);
-                this.___acV_mapMIDIEventToNote(0,41,86);
-                this.___acV_mapMIDIEventToNote(0,42,93);
-                this.___acV_mapMIDIEventToNote(0,43,88);
-                this.___acV_mapMIDIEventToNote(0,44,66);
-                this.___acV_mapMIDIEventToNote(0,45,68);
-                this.___acV_mapMIDIEventToNote(0,46,55);
-                this.___acV_mapMIDIEventToNote(0,47,59);
-                this.___acV_mapMIDIEventToNote(0,48,60);
-                this.___acV_mapMIDIEventToNote(0,49,62);
-                this.___acV_mapMIDIEventToNote(0,50,64);
-                this.___acV_mapMIDIEventToNote(0,51,65);
-                this.___acV_mapMIDIEventToNote(0,52,67);
-                this.___acV_mapMIDIEventToNote(0,53,69);
-                this.___acV_mapMIDIEventToNote(0,54,72);
-                this.___acV_mapMIDIEventToNote(0,55,71);
-                this.___acV_mapMIDIEventToNote(0,56,76);
-                this.___acV_mapMIDIEventToNote(0,57,74);
-                this.___acV_mapMIDIEventToNote(0,58,79);
-                this.___acV_mapMIDIEventToNote(0,59,77);
-                this.___acV_mapMIDIEventToNote(0,60,84);
-                this.___acV_mapMIDIEventToNote(0,61,81);
-                this.___acV_mapMIDIEventToNote(0,62,88);
-                this.___acV_mapMIDIEventToNote(0,63,83);
-                this.___acV_mapMIDIEventToNote(0,64,91);
-                this.___acV_mapMIDIEventToNote(0,65,86);
-                this.___acV_mapMIDIEventToNote(0,66,61);
-                this.___acV_mapMIDIEventToNote(0,67,63);
-                this.___acV_mapMIDIEventToNote(0,68,55);
-                this.___acV_mapMIDIEventToNote(0,69,57);
-                this.___acV_mapMIDIEventToNote(0,70,59);
-                this.___acV_mapMIDIEventToNote(0,71,60);
-                this.___acV_mapMIDIEventToNote(0,72,62);
-                this.___acV_mapMIDIEventToNote(0,73,64);
-                this.___acV_mapMIDIEventToNote(0,74,67);
-                this.___acV_mapMIDIEventToNote(0,75,66);
-                this.___acV_mapMIDIEventToNote(0,76,71);
-                this.___acV_mapMIDIEventToNote(0,77,69);
-                this.___acV_mapMIDIEventToNote(0,78,74);
-                this.___acV_mapMIDIEventToNote(0,79,72);
-                this.___acV_mapMIDIEventToNote(0,80,79);
-                this.___acV_mapMIDIEventToNote(0,81,76);
-                this.___acV_mapMIDIEventToNote(0,82,83);
-                this.___acV_mapMIDIEventToNote(0,83,78);
-                this.___acV_mapMIDIEventToNote(0,84,86);
-                this.___acV_mapMIDIEventToNote(0,85,81);
-
-                this.___acV_setChord(60,'M',[[0,48,50,52]]) ;
-                this.___acV_setChord(60,'m',[[0,67,71,29]]) ;
-                this.___acV_setChord(73,'M',[[0,45,25,51]]) ;
-                this.___acV_setChord(73,'m',[[0,45,25,73]]) ;
-                this.___acV_setChord(62,'M',[[0,49,75,77]]) ;
-                this.___acV_setChord(62,'m',[[0,51,49,53]]) ;
-                this.___acV_setChord(63,'M',[[0,67,29,31]]) ;
-                this.___acV_setChord(63,'m',[[0,67,75,31]]) ;
-                this.___acV_setChord(64,'M',[[0,45,47,73]]) ;
-                this.___acV_setChord(64,'m',[[0,46,70,50]]) ;
-                this.___acV_setChord(65,'M',[[0,28,30,32]]) ;
-                this.___acV_setChord(65,'M (2)',[[0,51,71,53]]) ;
-                this.___acV_setChord(65,'m',[[0,45,71,51]]) ;
-                this.___acV_setChord(66,'M',[[0,25,75,31]]) ;
-                this.___acV_setChord(66,'m',[[0,75,77,25]]) ;
-                this.___acV_setChord(66,'m (2)',[[0,30,44,66]]) ;
-                this.___acV_setChord(55,'M',[[0,68,70,72]]) ;
-                this.___acV_setChord(67,'M',[[0,29,55,57]]) ;
-                this.___acV_setChord(67,'m',[[0,29,31,33]]) ;
-                this.___acV_setChord(68,'M',[[0,45,67,71]]) ;
-                this.___acV_setChord(68,'m',[[0,45,67,55]]) ;
-                this.___acV_setChord(68,'m (2)',[[0,45,67,47]]) ;
-                this.___acV_setChord(69,'M',[[0,66,50,30]]) ;
-                this.___acV_setChord(69,'M (2)',[[0,25,53,35]]) ;
-                this.___acV_setChord(69,'M (3)',[[0,25,27,53]]) ;
-                this.___acV_setChord(57,'m',[[0,69,71,73]]) ;
-                this.___acV_setChord(69,'m',[[0,48,50,30]]) ;
-                this.___acV_setChord(69,'m (2)',[[0,48,50,30]]) ;
-                this.___acV_setChord(69,'m (3)',[[0,30,32,56]]) ;
-                this.___acV_setChord(70,'M',[[0,49,51,31]]) ;
-                this.___acV_setChord(70,'M (2)',[[0,31,33,59]]) ;
-                this.___acV_setChord(70,'m',[[0,25,51,31]]) ;
-                this.___acV_setChord(82,'M',[[0,59,39,41]]) ;
-                this.___acV_setChord(71,'M',[[0,67,75,55]]) ;
-                this.___acV_setChord(71,'m',[[0,55,57,83]]) ;
-                this.___acV_setChord(59,'m',[[0,44,70,72]]) ;
-                this.___acV_setChord(59,'m (2)',[[0,47,49,75]]) ;
-
-                this.___acV_setKeyboardToNote('w',[0,24]) ;
-                this.___acV_setKeyboardToNote('e',[0,26]) ;
-                this.___acV_setKeyboardToNote('r',[0,28]) ;
-                this.___acV_setKeyboardToNote('t',[0,30]) ;
-                this.___acV_setKeyboardToNote('y',[0,32]) ;
-                this.___acV_setKeyboardToNote('u',[0,34]) ;
-                this.___acV_setKeyboardToNote('i',[0,36]) ;
-                this.___acV_setKeyboardToNote('o',[0,38]) ;
-                this.___acV_setKeyboardToNote('p',[0,40]) ;
-                this.___acV_setKeyboardToNote('[',[0,42]) ;
-                this.___acV_setKeyboardToNote('a',[0,44]) ;
-                this.___acV_setKeyboardToNote('s',[0,46]) ;
-                this.___acV_setKeyboardToNote('d',[0,48]) ;
-                this.___acV_setKeyboardToNote('f',[0,50]) ;
-                this.___acV_setKeyboardToNote('g',[0,52]) ;
-                this.___acV_setKeyboardToNote('h',[0,54]) ;
-                this.___acV_setKeyboardToNote('j',[0,56]) ;
-                this.___acV_setKeyboardToNote('k',[0,58]) ;
-                this.___acV_setKeyboardToNote('l',[0,60]) ;
-                this.___acV_setKeyboardToNote(';',[0,62]) ;
-                this.___acV_setKeyboardToNote('0',[0,64]) ;
-                this.___acV_setKeyboardToNote('z',[0,66]) ;
-                this.___acV_setKeyboardToNote('x',[0,68]) ;
-                this.___acV_setKeyboardToNote('c',[0,70]) ;
-                this.___acV_setKeyboardToNote('v',[0,72]) ;
-                this.___acV_setKeyboardToNote('b',[0,74]) ;
-                this.___acV_setKeyboardToNote('n',[0,76]) ;
-                this.___acV_setKeyboardToNote('m',[0,78]) ;
-                this.___acV_setKeyboardToNote(',',[0,80]) ;
-                this.___acV_setKeyboardToNote('.',[0,82]) ;
-                this.___acV_setKeyboardToNote('/',[0,84]) ;
-
-                this._setNoteNames() ;
+                /* ------------------- MIDI note mapping ------------------- */
+                this.___acV_mapMIDIEventToNote(0, 24, 75);
+                this.___acV_mapMIDIEventToNote(0, 25, 73);
+                this.___acV_mapMIDIEventToNote(0, 26, 60);
+                this.___acV_mapMIDIEventToNote(0, 27, 64);
+                this.___acV_mapMIDIEventToNote(0, 28, 65);
+                this.___acV_mapMIDIEventToNote(0, 29, 67);
+                this.___acV_mapMIDIEventToNote(0, 30, 69);
+                this.___acV_mapMIDIEventToNote(0, 31, 70);
+                this.___acV_mapMIDIEventToNote(0, 32, 72);
+                this.___acV_mapMIDIEventToNote(0, 33, 74);
+                this.___acV_mapMIDIEventToNote(0, 34, 77);
+                this.___acV_mapMIDIEventToNote(0, 35, 76);
+                this.___acV_mapMIDIEventToNote(0, 36, 81);
+                this.___acV_mapMIDIEventToNote(0, 37, 79);
+                this.___acV_mapMIDIEventToNote(0, 38, 84);
+                this.___acV_mapMIDIEventToNote(0, 39, 82);
+                this.___acV_mapMIDIEventToNote(0, 40, 89);
+                this.___acV_mapMIDIEventToNote(0, 41, 86);
+                this.___acV_mapMIDIEventToNote(0, 42, 93);
+                this.___acV_mapMIDIEventToNote(0, 43, 88);
+                this.___acV_mapMIDIEventToNote(0, 44, 66);
+                this.___acV_mapMIDIEventToNote(0, 45, 68);
+                this.___acV_mapMIDIEventToNote(0, 46, 55);
+                this.___acV_mapMIDIEventToNote(0, 47, 59);
+                this.___acV_mapMIDIEventToNote(0, 48, 60);
+                this.___acV_mapMIDIEventToNote(0, 49, 62);
+                this.___acV_mapMIDIEventToNote(0, 50, 64);
+                this.___acV_mapMIDIEventToNote(0, 51, 65);
+                this.___acV_mapMIDIEventToNote(0, 52, 67);
+                this.___acV_mapMIDIEventToNote(0, 53, 69);
+                this.___acV_mapMIDIEventToNote(0, 54, 72);
+                this.___acV_mapMIDIEventToNote(0, 55, 71);
+                this.___acV_mapMIDIEventToNote(0, 56, 76);
+                this.___acV_mapMIDIEventToNote(0, 57, 74);
+                this.___acV_mapMIDIEventToNote(0, 58, 79);
+                this.___acV_mapMIDIEventToNote(0, 59, 77);
+                this.___acV_mapMIDIEventToNote(0, 60, 84);
+                this.___acV_mapMIDIEventToNote(0, 61, 81);
+                this.___acV_mapMIDIEventToNote(0, 62, 88);
+                this.___acV_mapMIDIEventToNote(0, 63, 83);
+                this.___acV_mapMIDIEventToNote(0, 64, 91);
+                this.___acV_mapMIDIEventToNote(0, 65, 86);
+                this.___acV_mapMIDIEventToNote(0, 66, 61);
+                this.___acV_mapMIDIEventToNote(0, 67, 63);
+                this.___acV_mapMIDIEventToNote(0, 68, 55);
+                this.___acV_mapMIDIEventToNote(0, 69, 57);
+                this.___acV_mapMIDIEventToNote(0, 70, 59);
+                this.___acV_mapMIDIEventToNote(0, 71, 60);
+                this.___acV_mapMIDIEventToNote(0, 72, 62);
+                this.___acV_mapMIDIEventToNote(0, 73, 64);
+                this.___acV_mapMIDIEventToNote(0, 74, 67);
+                this.___acV_mapMIDIEventToNote(0, 75, 66);
+                this.___acV_mapMIDIEventToNote(0, 76, 71);
+                this.___acV_mapMIDIEventToNote(0, 77, 69);
+                this.___acV_mapMIDIEventToNote(0, 78, 74);
+                this.___acV_mapMIDIEventToNote(0, 79, 72);
+                this.___acV_mapMIDIEventToNote(0, 80, 79);
+                this.___acV_mapMIDIEventToNote(0, 81, 76);
+                this.___acV_mapMIDIEventToNote(0, 82, 83);
+                this.___acV_mapMIDIEventToNote(0, 83, 78);
+                this.___acV_mapMIDIEventToNote(0, 84, 86);
+                this.___acV_mapMIDIEventToNote(0, 85, 81);
+                this.___acV_setChord(60, 'M', [
+                    [0, 48, 50, 52]
+                ]);
+                this.___acV_setChord(60, 'm', [
+                    [0, 67, 71, 29]
+                ]);
+                this.___acV_setChord(73, 'M', [
+                    [0, 45, 25, 51]
+                ]);
+                this.___acV_setChord(73, 'm', [
+                    [0, 45, 25, 73]
+                ]);
+                this.___acV_setChord(62, 'M', [
+                    [0, 49, 75, 77]
+                ]);
+                this.___acV_setChord(62, 'm', [
+                    [0, 51, 49, 53]
+                ]);
+                this.___acV_setChord(63, 'M', [
+                    [0, 67, 29, 31]
+                ]);
+                this.___acV_setChord(63, 'm', [
+                    [0, 67, 75, 31]
+                ]);
+                this.___acV_setChord(64, 'M', [
+                    [0, 45, 47, 73]
+                ]);
+                this.___acV_setChord(64, 'm', [
+                    [0, 46, 70, 50]
+                ]);
+                this.___acV_setChord(65, 'M', [
+                    [0, 28, 30, 32]
+                ]);
+                this.___acV_setChord(65, 'M (2)', [
+                    [0, 51, 71, 53]
+                ]);
+                this.___acV_setChord(65, 'm', [
+                    [0, 45, 71, 51]
+                ]);
+                this.___acV_setChord(66, 'M', [
+                    [0, 25, 75, 31]
+                ]);
+                this.___acV_setChord(66, 'm', [
+                    [0, 75, 77, 25]
+                ]);
+                this.___acV_setChord(66, 'm (2)', [
+                    [0, 30, 44, 66]
+                ]);
+                this.___acV_setChord(55, 'M', [
+                    [0, 68, 70, 72]
+                ]);
+                this.___acV_setChord(67, 'M', [
+                    [0, 29, 55, 57]
+                ]);
+                this.___acV_setChord(67, 'm', [
+                    [0, 29, 31, 33]
+                ]);
+                this.___acV_setChord(68, 'M', [
+                    [0, 45, 67, 71]
+                ]);
+                this.___acV_setChord(68, 'm', [
+                    [0, 45, 67, 55]
+                ]);
+                this.___acV_setChord(68, 'm (2)', [
+                    [0, 45, 67, 47]
+                ]);
+                this.___acV_setChord(69, 'M', [
+                    [0, 66, 50, 30]
+                ]);
+                this.___acV_setChord(69, 'M (2)', [
+                    [0, 25, 53, 35]
+                ]);
+                this.___acV_setChord(69, 'M (3)', [
+                    [0, 25, 27, 53]
+                ]);
+                this.___acV_setChord(57, 'm', [
+                    [0, 69, 71, 73]
+                ]);
+                this.___acV_setChord(69, 'm', [
+                    [0, 48, 50, 30]
+                ]);
+                this.___acV_setChord(69, 'm (2)', [
+                    [0, 48, 50, 30]
+                ]);
+                this.___acV_setChord(69, 'm (3)', [
+                    [0, 30, 32, 56]
+                ]);
+                this.___acV_setChord(70, 'M', [
+                    [0, 49, 51, 31]
+                ]);
+                this.___acV_setChord(70, 'M (2)', [
+                    [0, 31, 33, 59]
+                ]);
+                this.___acV_setChord(70, 'm', [
+                    [0, 25, 51, 31]
+                ]);
+                this.___acV_setChord(82, 'M', [
+                    [0, 59, 39, 41]
+                ]);
+                this.___acV_setChord(71, 'M', [
+                    [0, 67, 75, 55]
+                ]);
+                this.___acV_setChord(71, 'm', [
+                    [0, 55, 57, 83]
+                ]);
+                this.___acV_setChord(59, 'm', [
+                    [0, 44, 70, 72]
+                ]);
+                this.___acV_setChord(59, 'm (2)', [
+                    [0, 47, 49, 75]
+                ]);
+                this.___acV_setKeyboardToNote('w', [0, 24]);
+                this.___acV_setKeyboardToNote('e', [0, 26]);
+                this.___acV_setKeyboardToNote('r', [0, 28]);
+                this.___acV_setKeyboardToNote('t', [0, 30]);
+                this.___acV_setKeyboardToNote('y', [0, 32]);
+                this.___acV_setKeyboardToNote('u', [0, 34]);
+                this.___acV_setKeyboardToNote('i', [0, 36]);
+                this.___acV_setKeyboardToNote('o', [0, 38]);
+                this.___acV_setKeyboardToNote('p', [0, 40]);
+                this.___acV_setKeyboardToNote('[', [0, 42]);
+                this.___acV_setKeyboardToNote('a', [0, 44]);
+                this.___acV_setKeyboardToNote('s', [0, 46]);
+                this.___acV_setKeyboardToNote('d', [0, 48]);
+                this.___acV_setKeyboardToNote('f', [0, 50]);
+                this.___acV_setKeyboardToNote('g', [0, 52]);
+                this.___acV_setKeyboardToNote('h', [0, 54]);
+                this.___acV_setKeyboardToNote('j', [0, 56]);
+                this.___acV_setKeyboardToNote('k', [0, 58]);
+                this.___acV_setKeyboardToNote('l', [0, 60]);
+                this.___acV_setKeyboardToNote(';', [0, 62]);
+                this.___acV_setKeyboardToNote('0', [0, 64]);
+                this.___acV_setKeyboardToNote('z', [0, 66]);
+                this.___acV_setKeyboardToNote('x', [0, 68]);
+                this.___acV_setKeyboardToNote('c', [0, 70]);
+                this.___acV_setKeyboardToNote('v', [0, 72]);
+                this.___acV_setKeyboardToNote('b', [0, 74]);
+                this.___acV_setKeyboardToNote('n', [0, 76]);
+                this.___acV_setKeyboardToNote('m', [0, 78]);
+                this.___acV_setKeyboardToNote(',', [0, 80]);
+                this.___acV_setKeyboardToNote('.', [0, 82]);
+                this.___acV_setKeyboardToNote('/', [0, 84]);
+                this._setNoteNames();
             }
         });
     </script>
