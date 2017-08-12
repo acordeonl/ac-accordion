@@ -141,7 +141,7 @@
             },
         // ------------------- acLed Action -------------------
             ___acV_mapMIDIEventToAcLedId: function (channel, midiNote) {
-                return Math.floor((midiNote - 24) / 2);
+                return [Math.floor((midiNote - 24) / 2)];
             },
             ___acV_mapMIDIEventToAcLedState: function (channel, midiNote) {
                 return ((midiNote - 24) % 2) + 1;

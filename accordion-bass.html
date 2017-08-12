@@ -115,9 +115,9 @@ For an overlayed drop menu:
         /* ------------------- acLed Action ------------------- */
             ___acV_mapMIDIEventToAcLedId: function (channel, midiNote) {
                 if (channel === 1)
-                    return Math.floor((midiNote - 48) / 2);
+                    return [Math.floor((midiNote - 48) / 2)];
                 if (channel === 2) {
-                    return Math.floor(midiNote / 2);
+                    return [Math.floor(midiNote / 2)];
                 }
             },
             ___acV_mapMIDIEventToAcLedState: function (channel, midiNote) {
