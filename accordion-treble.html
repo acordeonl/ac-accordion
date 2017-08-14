@@ -122,9 +122,7 @@
             is: "accordion-treble",
             observers: ['_swap(showingTreble)'],
             behaviors: [acLedGroupBehavior],
-            listeners: {
-                'click': '_toggleButtonNotes'
-            },
+            listeners: {},
             properties: {
                 updateOpening: {
                     type: Boolean,
@@ -175,12 +173,6 @@
                     nodeList[i].note1 = (nodeList[i].note1.substring((note1 % 12) * 2, (note1 % 12) * 2 + 2) + (Math.floor(note1 / 12)).toString()).replace(" ", "");
                     nodeList[i].note2 = "C C#D EbE F F#G AbA BbB ";
                     nodeList[i].note2 = (nodeList[i].note2.substring((note2 % 12) * 2, (note2 % 12) * 2 + 2) + (Math.floor(note2 / 12)).toString()).replace(" ", "");
-                }
-            },
-            _toggleButtonNotes: function () {
-                var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
-                for (var i = 0; i < nodeList.length; i++) {
-                    nodeList[i].toggleButtonNotes();
                 }
             },
             updateOpening: async function (opening) {

@@ -70,7 +70,7 @@ For an overlayed drop menu:
         <div style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
             <div circle shadow style$='width:[[buttonWidth]]; height:[[buttonHeight]];'></div>
             <div circle style$='width:[[buttonWidth]]; height:[[buttonHeight]];'>
-                <div noteNames style$='display:[[showingNotes]] ;'>
+                <div noteNames style$='display:{{_computeDisplay(___acV_displayingNotes)}} ;'>
                     [[note2]]
                     </br>
                     [[note1]]
@@ -89,10 +89,6 @@ For an overlayed drop menu:
             is: "accordion-button",
             behaviors: [acLedBehavior],
             properties:{
-                showingNotes:{
-                    type:String,
-                    value:'none'
-                },
                 buttonWidth:{
                     type:String,
                     value:'6.8vh'
@@ -106,12 +102,11 @@ For an overlayed drop menu:
                     value:false
                 }
             },
-            toggleButtonNotes: function(){
-                if (this.showingNotes === 'flex')
-                    this.showingNotes = 'none' ;
-                else {
-                    this.showingNotes = 'flex' ;
+            _computeDisplay: function (value) {
+                if (value) {
+                    return 'flex' ; 
                 }
+                return 'none'
             },
             ___acV_getNoteName: function(note,channel){
                 if (channel === 2) 
@@ -122,15 +117,6 @@ For an overlayed drop menu:
                 name += octave;
                 return name;
             },
-            // override
-            // ___acV_acLedColor: function(acLedState){
-            //     if (acLedState === 1) {
-            //         return 'blue' ;
-            //     }
-            //     if (acLedState === 2) {
-            //         return 'red' ;
-            //     }
-            // },
             ready: function () {
                 if(this.isBass){
                     this.buttonWidth = '5.4vh';
