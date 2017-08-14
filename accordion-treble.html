@@ -144,7 +144,7 @@
                 return [Math.floor((midiNote - 24) / 2)];
             },
             ___acV_mapMIDIEventToAcLedState: function (channel, midiNote) {
-                return ((midiNote - 24) % 2) + 1;
+                return [((midiNote - 24) % 2) + 1];
             },
         // ------------------- GUI -------------------
             _computeRotation: function (rotation) {

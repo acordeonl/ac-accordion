@@ -122,9 +122,9 @@ For an overlayed drop menu:
             },
             ___acV_mapMIDIEventToAcLedState: function (channel, midiNote) {
                 if (channel === 1)
-                    return ((midiNote - 48) % 2) + 1;
+                    return [((midiNote - 48) % 2) + 1];
                 if (channel === 2){
-                    return (midiNote % 2) + 1;
+                    return [(midiNote % 2) + 1];
                 }
             },
             ___acV_handleAddPitch: function (note,channel,diff) {
