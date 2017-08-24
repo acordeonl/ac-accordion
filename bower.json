@@ -1,0 +1,28 @@
+{
+  "name": "ac-accordion",
+  "authors": [
+    "acordeonl <admin@acorde.onl>"
+  ],
+  "description": "",
+  "keywords": [
+    "web-components",
+    "polymer"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "ac-view": "acordeonl/ac-view#^2.0.0",
+    "local-dom": "acordeonl/local-dom#^2.0.0",
+    "paper-icon-button": "PolymerElements/paper-icon-button#^2.0.0",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0"
+  }
+}
+  
