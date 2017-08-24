@@ -148,9 +148,6 @@
                     type: Object
                 }
             },
-            ___acV_onFinishedLoadingNotes: function () {
-                this.playAnimation('entry');
-            },
         // ------------ keyboard mouse activity -------------
             _updateOpening: function (e) {
                 if (e.movementX > 0)
@@ -266,7 +263,6 @@
         // ----------------- GUI ---------------
             swap: function () {
                 this.showingTreble = !this.showingTreble;
-                this.playAnimation('entry');
             },
             _computeDisplay: function (flag) {
                 if (flag)
