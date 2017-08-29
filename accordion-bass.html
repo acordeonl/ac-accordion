@@ -62,7 +62,7 @@
         </local-dom>
     </template>
     <script>
-        class AccordionBass extends Polymer.mixinBehaviors([acLedGroupBehavior], Polymer.Element) {
+        class AccordionBass extends ACLedGroup {
             static get is() { return 'accordion-bass'; }
             static get properties() {return {
                 buttonCloseNote: {type: Array,value: []},

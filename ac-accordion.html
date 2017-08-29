@@ -116,7 +116,7 @@
         </local-dom>
     </template>
     <script>
-        class ACAccordion extends Polymer.mixinBehaviors([ACViewBehavior], Polymer.Element) {
+        class ACAccordion extends ACViewBehavior{
             static get is() { return 'ac-accordion'; }
             static get properties() {return {
                 _chordOn: {type: Number,value: -1},

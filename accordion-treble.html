@@ -89,7 +89,7 @@
         </local-dom>
     </template>
     <script>
-        class AccordionTreble extends Polymer.mixinBehaviors([acLedGroupBehavior], Polymer.Element) {
+        class AccordionTreble extends ACLedGroup {
             static get is() { return 'accordion-treble'; }
             static get observers() {return [
                 '_swap(showingTreble)'

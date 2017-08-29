@@ -61,7 +61,7 @@
         </div>
     </template>
     <script>
-        class AccordionButon extends Polymer.mixinBehaviors([acLedBehavior], Polymer.Element) {
+        class AccordionButon extends ACLedBehavior {
             static get is() { return 'accordion-button'; }
             static get properties() {return {
                 buttonWidth:{type:String,value:'6.8vh'},
