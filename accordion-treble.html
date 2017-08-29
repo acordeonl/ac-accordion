@@ -1,60 +1,31 @@
 <imports >
-    <link rel="import" href="../polymer/polymer.html">
+    <link rel="import" href="../polymer/polymer-element.html">
     <link rel="import" href="../ac-view/ac-led-group-behavior.html">
     <link rel="import" href="../ac-view/view-audio.html">
     <link rel="import" href="../local-dom/local-dom.html">
     <link rel="import" href="./accordion-button.html">
 </imports>
-<!--
 
-    Shows drop down menu (works on chrome)
-
-    ### Usage
-    The list displayed in the drop down menu can be set as an attribute.
-
-        <drop-menu list-items='["first" ,"second"]'></drop-menu>
-
-    For an overlayed drop menu:
-
-        <drop-menu overlay-menu list-items='["first" ,"second"]'></drop-menu>
-
-    ### Styling
-    Custom property | Description | Default
-    ----------------|-------------|----------
-    `--item-background-color` | List item backround color | `#f1ecef`
-    `--item-color` | List item color used for fonts | `#302f31`
-    `--button-close-color` | Icon button hover color | `4775D1`
-    `--button-background-color` | Drop menu's background color | `white`
-    `--button-close-color` | Icon button hover color | `4775D1`
-    `--icon-button` | Mixin applied the icon button | `{}`
-
-    @demo demo/drop-menu-demo.html
--->
 <dom-module id="accordion-treble">
     <template>
         <style>
-            :host {}
             local-dom {
                 height: 100vh;
                 width: 100%;
-                @apply(--layout-center);
-                @apply(--layout-justified);
-                @apply(--layout-horizontal);
+                @apply --layout-center;
+                @apply --layout-justified;
+                @apply --layout-horizontal;
             }
             .col1 {
                 height: 82vh;
                 margin: 0;
                 padding: 0;
-                /*@apply(--layout-vertical);*/
-                @apply(--layout-justified);
+                @apply --layout-justified;
             }
             .col2 {
                 height: 92vh;
                 padding: 0;
-                /*margin-left: -0.3vh;
-                margin-right: -0.3vh;*/
-                /*@apply(--layout-vertical);*/
-                @apply(--layout-justified);
+                @apply --layout-justified;
             }
             [mobile] .col2 {
                 padding: 0;
@@ -63,16 +34,16 @@
                 padding: 0;
             }
             .vertical {
-                @apply(--layout-vertical);
+                @apply --layout-vertical;
             }
             .reversedVertical {
-                @apply(--layout-vertical-reverse);
+                @apply --layout-vertical-reverse;
             }
             .reversedHorizontal {
-                @apply(--layout-horizontal-reverse);
+                @apply --layout-horizontal-reverse;
             }
             .horizontal {
-                @apply(--layout-horizontal);
+                @apply --layout-horizontal;
             }
         </style>
         <!-- local DOM -->
@@ -118,53 +89,46 @@
         </local-dom>
     </template>
     <script>
-        Polymer({
-            is: "accordion-treble",
-            observers: ['_swap(showingTreble)'],
-            behaviors: [acLedGroupBehavior],
-            listeners: {},
-            properties: {
-                updateOpening: {
-                    type: Boolean,
-                    value: false
-                },
-                opening: {
-                    type: Boolean,
-                    value: false
-                },
-                keysDown: {
-                    type: Array,
-                    value: []
-                }
-            },
+        class AccordionTreble extends Polymer.mixinBehaviors([acLedGroupBehavior], Polymer.Element) {
+            static get is() { return 'accordion-treble'; }
+            static get observers() {return [
+                '_swap(showingTreble)'
+            ]}
+            static get properties() {return {
+                opening: {type: Boolean,value: false},
+                keysDown: {type: Array,value: []}
+            }}
+            constructor() {
+                super();
+            }
         // ------------------- acLed Action -------------------
-            ___acV_mapMIDIEventToAcLedId: function (channel, midiNote) {
+            ___acV_mapMIDIEventToAcLedId (channel, midiNote) {
                 return [Math.floor((midiNote - 24) / 2)];
-            },
-            ___acV_mapMIDIEventToAcLedState: function (channel, midiNote) {
+            }
+            ___acV_mapMIDIEventToAcLedState (channel, midiNote) {
                 return [((midiNote - 24) % 2) + 1];
-            },
+            }
         // ------------------- GUI -------------------
-            _computeRotation: function (rotation) {
+            _computeRotation (rotation) {
                 if (rotation)
                     return "reversedHorizontal";
                 return "horizontal";
-            },
-            _computeColRotation: function (rotation) {
+            }
+            _computeColRotation (rotation) {
                 if (rotation)
                     return "reversedVertical";
                 return "vertical";
-            },
-            _swap: function (showingTreble) {
+            }
+            _swap (showingTreble) {
                 if (showingTreble) {
                     this.playAnimation('entry');
                 }
-            },
+            }
         // ------------------- Setup -------------------
-            ___acV_onAddPitch: function () {
+            ___acV_onAddPitch () {
                 this._setNoteNames();
-            },
-            _setNoteNames: function () {
+            }
+            _setNoteNames () {
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
                 for (var i = 0; i < nodeList.length; i++) {
                     var note1 = this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId * 2 + 24];
@@ -174,21 +138,20 @@
                     nodeList[i].note2 = "C C#D EbE F F#G AbA BbB ";
                     nodeList[i].note2 = (nodeList[i].note2.substring((note2 % 12) * 2, (note2 % 12) * 2 + 2) + (Math.floor(note2 / 12)).toString()).replace(" ", "");
                 }
-            },
-            updateOpening: async function (opening) {
+            }
+            updateOpening (opening) {
                 if (opening !== this.opening) {
                     var arr = []
-                    for (var i = 0; i < this.keysDown.length; i++) {
+                    for (var i = 0; i < this.keysDown.length; i++) 
                         arr[i] = this.keysDown[i]
-                    }
                     for (let i = 0; i < arr.length; i++)
                         this.___acV_onKeyboardNoteOff(arr[i]);
                     this.opening = opening;
                     for (let i = 0; i < arr.length; i++)
                         this.___acV_onKeyboardNoteOn(arr[i]);
-                    }
-                },
-            ___acV_onKeyboardNoteOn: function (key) {
+                }
+            }
+            ___acV_onKeyboardNoteOn (key) {
                 for (var i = 0; i < this.keysDown.length; i++) {
                     if (this.keysDown[i] === key) {
                         return;
@@ -206,8 +169,8 @@
                     this.keysDown.push(key);
                     this.___acV_onMIDIEvent(e);
                 }
-            },
-            ___acV_onKeyboardNoteOff: function (key) {
+            }
+            ___acV_onKeyboardNoteOff (key) {
                 var flag = true;
                 for (var i = 0; i < this.keysDown.length; i++) {
                     if (this.keysDown[i] === key) {
@@ -234,8 +197,9 @@
                     this.keysDown.splice(index, 1);
                     this.___acV_onMIDIEvent(e);
                 }
-            },
-            ready: function () {
+            }
+            ready() {
+                super.ready() ;
             // ------------------- MIDI note mapping -------------------
                 this.___acV_mapMIDIEventToNote(0, 24, 75);
                 this.___acV_mapMIDIEventToNote(0, 25, 73);
@@ -445,6 +409,7 @@
                 this.___acV_setKeyboardToNote('/', [0, 84]);
                 this._setNoteNames();
             }
-        });
+        }
+        customElements.define('accordion-treble', AccordionTreble);
     </script>
 </dom-module>

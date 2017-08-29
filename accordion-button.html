@@ -1,30 +1,6 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../ac-view/ac-led-behavior.html">
-<!--
 
-Shows drop down menu (works on chrome)
-
-### Usage
-The list displayed in the drop down menu can be set as an attribute.
-
-    <drop-menu list-items='["first" ,"second"]'></drop-menu>
-
-For an overlayed drop menu:
-
-    <drop-menu overlay-menu list-items='["first" ,"second"]'></drop-menu>
-
-### Styling
- Custom property | Description | Default
-----------------|-------------|----------
-`--item-background-color` | List item backround color | `#f1ecef`
-`--item-color` | List item color used for fonts | `#302f31`
-`--button-close-color` | Icon button hover color | `4775D1`
-`--button-background-color` | Drop menu's background color | `white`
-`--button-close-color` | Icon button hover color | `4775D1`
-`--icon-button` | Mixin applied the icon button | `{}`
-
-@demo demo/drop-menu-demo.html
--->
 <dom-module id="accordion-button">
     <template>
         <style accordionButton>
@@ -56,10 +32,10 @@ For an overlayed drop menu:
                 color:red ;
             }*/
             [noteNames] {
-                @apply(--layout-center);
-                @apply(--layout-center-justified);
-                @apply(--layout-horizontal);
-                @apply(--layout-vertical);
+                @apply --layout-center;
+                @apply --layout-center-justified;
+                @apply --layout-horizontal;
+                @apply --layout-vertical;
                 height:100%;
                 width:100%;
                 margin-left: 2px ;
@@ -85,30 +61,23 @@ For an overlayed drop menu:
         </div>
     </template>
     <script>
-        Polymer({
-            is: "accordion-button",
-            behaviors: [acLedBehavior],
-            properties:{
-                buttonWidth:{
-                    type:String,
-                    value:'6.8vh'
-                },
-                buttonHeight:{
-                    type:String,
-                    value:'6.8vh'
-                },
-                isBass:{
-                    type:Boolean,
-                    value:false
-                }
-            },
-            _computeDisplay: function (value) {
+        class AccordionButon extends Polymer.mixinBehaviors([acLedBehavior], Polymer.Element) {
+            static get is() { return 'accordion-button'; }
+            static get properties() {return {
+                buttonWidth:{type:String,value:'6.8vh'},
+                buttonHeight:{type:String,value:'6.8vh'},
+                isBass:{type:Boolean,value:false}
+            }}
+            constructor() {
+                super();
+            }
+            _computeDisplay (value) {
                 if (value) {
                     return 'flex' ; 
                 }
                 return 'none'
-            },
-            ___acV_getNoteName: function(note,channel){
+            }
+            ___acV_getNoteName(note,channel){
                 if (channel === 2) 
                     return '' ;
                 var notes = ['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
@@ -116,13 +85,15 @@ For an overlayed drop menu:
                 var name = notes[note % 12];
                 name += octave;
                 return name;
-            },
-            ready: function () {
+            }
+            ready() {
+                super.ready() ;
                 if(this.isBass){
                     this.buttonWidth = '5.4vh';
                     this.buttonHeight = '5.4vh';
                 }
             }
-        });
+        }
+        customElements.define('accordion-button', AccordionButon);
     </script>
 </dom-module>

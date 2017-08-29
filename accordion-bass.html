@@ -1,49 +1,24 @@
 <imports >
-    <link rel="import" href="../polymer/polymer.html">
+    <link rel="import" href="../polymer/polymer-element.html">
     <link rel="import" href="../ac-view/ac-led-group-behavior.html">
     <link rel="import" href="../ac-view/view-audio.html">
     <link rel="import" href="../local-dom/local-dom.html">
     <link rel="import" href="./accordion-button.html">
     <script src="./bassButtonNoteMapping.js"></script>
 </imports>
-<!--
 
-Shows drop down menu (works on chrome)
-
-### Usage
-The list displayed in the drop down menu can be set as an attribute.
-
-    <drop-menu list-items='["first" ,"second"]'></drop-menu>
-
-For an overlayed drop menu:
-
-    <drop-menu overlay-menu list-items='["first" ,"second"]'></drop-menu>
-
-### Styling
- Custom property | Description | Default
-----------------|-------------|----------
-`--item-background-color` | List item backround color | `#f1ecef`
-`--item-color` | List item color used for fonts | `#302f31`
-`--button-close-color` | Icon button hover color | `4775D1`
-`--button-background-color` | Drop menu's background color | `white`
-`--button-close-color` | Icon button hover color | `4775D1`
-`--icon-button` | Mixin applied the icon button | `{}`
-
-@demo demo/drop-menu-demo.html
--->
 <dom-module id="accordion-bass">
     <template>
         <style>
-            :host {}
             local-dom {
                 height: 100vh;
-                @apply(--layout-center);
-                @apply(--layout-justified);
+                @apply --layout-center;
+                @apply --layout-justified;
             }
             .col {
                 padding: 1.3vw;
                 height: 51vh;
-                @apply(--layout-justified);
+                @apply --layout-justified;
             }
             [mobile] .col {
                 padding: 3vw;
@@ -52,16 +27,16 @@ For an overlayed drop menu:
                 padding: 1.2vw;
             }
             .vertical {
-                @apply(--layout-vertical);
+                @apply --layout-vertical;
             }
             .reversedVertical {
-                @apply(--layout-vertical-reverse);
+                @apply --layout-vertical-reverse;
             }
             .reversedHorizontal {
-                @apply(--layout-horizontal-reverse);
+                @apply --layout-horizontal-reverse;
             }
             .horizontal {
-                @apply(--layout-horizontal);
+                @apply --layout-horizontal;
             }
         </style>
         <!-- local DOM -->
@@ -87,61 +62,49 @@ For an overlayed drop menu:
         </local-dom>
     </template>
     <script>
-        Polymer({
-            is: "accordion-bass",
-            observers: ['_swap(showingTreble)'],
-            listeners: {},
-            behaviors: [acLedGroupBehavior],
-            properties: {
-                buttonCloseNote: {
-                    type: Array,
-                    value: []
-                },
-                buttonOpenNote: {
-                    type: Array,
-                    value: []
-                },
-                chordButtonCloseNote: {
-                    type: Array,
-                    value: []
-                },
-                chordButtonOpenNote: {
-                    type: Array,
-                    value: []
-                }
-            },
+        class AccordionBass extends Polymer.mixinBehaviors([acLedGroupBehavior], Polymer.Element) {
+            static get is() { return 'accordion-bass'; }
+            static get properties() {return {
+                buttonCloseNote: {type: Array,value: []},
+                buttonOpenNote: {type: Array,value: []},
+                chordButtonCloseNote: {type: Array,value: []},
+                chordButtonOpenNote: {type: Array,value: []}
+            }}
+            constructor() {
+                super();
+            }
         /* ------------------- acLed Action ------------------- */
-            ___acV_mapMIDIEventToAcLedId: function (channel, midiNote) {
+            ___acV_mapMIDIEventToAcLedId (channel, midiNote) {
                 if (channel === 1)
                     return [Math.floor((midiNote - 48) / 2)];
                 if (channel === 2) {
                     return [Math.floor(midiNote / 2)];
                 }
-            },
-            ___acV_mapMIDIEventToAcLedState: function (channel, midiNote) {
+            }
+            ___acV_mapMIDIEventToAcLedState (channel, midiNote) {
                 if (channel === 1)
                     return [((midiNote - 48) % 2) + 1];
                 if (channel === 2){
                     return [(midiNote % 2) + 1];
                 }
-            },
-            ___acV_handleAddPitch: function (note,channel,diff) {
+            }
+            ___acV_handleAddPitch (note,channel,diff) {
                 if (channel === 1)
                     return this._changeBassNotesPitch(note,diff);
                 if (channel === 2) {
                     var newNote = this._changeChordsPitch(note,diff);
                     return newNote ;
                 }
-            },
+            }
         /* ------------------- Change pitch helpers ------------------- */
-            _checkBassNotes: function (note) {
+            _checkBassNotes (note) {
                 if (note > 59)
                     return note - 60 + 48;
                 else if (note < 48)
                     return 59 - 47 + note;
                 return note;
-            },
-            _changeBassNotesPitch: function (note,diff) {
+            }
+            _changeBassNotesPitch (note,diff) {
                 var subs = false;
                 if (diff < 0) {
                     subs = true;
@@ -152,8 +115,8 @@ For an overlayed drop menu:
                 else
                     note -= (diff % 12);
                 return this._checkBassNotes(note);
-            },
-            _changeChordsPitch: function (note,diff) {
+            }
+            _changeChordsPitch (note,diff) {
                 if (diff === 0)
                     return note;
                 if (diff > 0) {
@@ -165,28 +128,28 @@ For an overlayed drop menu:
                     note = this._changeChordsPitch(note,diff + 1);
                 }
                 return note ;
-            },
+            }
         /* ------------------- GUI  ------------------- */
-            _swap: function (showingTreble) {
+            _swap (showingTreble) {
                 if (!showingTreble) {
                     this.playAnimation('entry');
                 }
-            },
-            _computeRotation: function (rotation) {
+            }
+            _computeRotation (rotation) {
                 if (rotation)
                     return "reversedHorizontal";
                 return "horizontal";
-            },
-            _computeColRotation: function (rotation) {
+            }
+            _computeColRotation (rotation) {
                 if (rotation)
                     return "reversedVertical";
                 return "vertical";
-            },
+            }
         /* ------------------- Setup ------------------- */
-            ___acV_onAddPitch: function(){
+            ___acV_onAddPitch(){
                 this._setNoteNames() ;
-            },
-            _setNoteNames: function(){
+            }
+            _setNoteNames(){
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
                 for (var i = 0; i < nodeList.length; i++) {
                     if (nodeList[i].channel === 2 )
@@ -198,8 +161,9 @@ For an overlayed drop menu:
                     nodeList[i].note2 = "C C#D EbE F F#G AbA BbB " ;
                     nodeList[i].note2 = (nodeList[i].note2.substring((note2 % 12) * 2, (note2 % 12) * 2 + 2) + (Math.floor(note2 / 12) ).toString()).replace(" ", "");
                 }
-            },
-            ready: function () {
+            }
+            ready() {
+                super.ready() ;
             /* ------------------- MIDI note mapping ------------------- */
                 //bass notes
                 this.___acV_mapMIDIEventToNote(1,48,55);
@@ -230,6 +194,7 @@ For an overlayed drop menu:
 
                 this._setNoteNames() ;
             }
-        });
+        }
+        customElements.define('accordion-bass', AccordionBass);
     </script>
 </dom-module>

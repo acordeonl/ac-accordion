@@ -1,5 +1,6 @@
 <imports >
-    <link rel="import" href="../polymer/polymer.html">
+    <link rel="import" href="../polymer/polymer-element.html">
+    <link rel="import" href="../polymer/lib/elements/dom-if.html">
     <link rel="import" href="../paper-icon-button/paper-icon-button.html" async>
     <link rel="import" href="../ac-view/ac-view-behavior.html">
     <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
@@ -47,9 +48,9 @@
                 position: absolute;
                 height: 100%;
                 width: 100%;
-                @apply(--layout-horizontal);
-                @apply(--layout-center);
-                @apply(--layout-end-justified);
+                @apply --layout-horizontal;
+                @apply --layout-center;
+                @apply --layout-end-justified;
             }
             [swap-button] {
                 background-color: var(--background-color0);
@@ -67,19 +68,19 @@
                 padding: 0;
                 height: 100%;
                 width: 100%;
-                @apply(--layout-horizontal);
-                @apply(--layout-around-justified);
+                @apply --layout-horizontal;
+                @apply --layout-around-justified;
             }
             [wrapper] {
                 width: 65vw;
-                @apply(--layout-horizontal);
-                @apply(--layout-around-justified);
+                @apply --layout-horizontal;
+                @apply --layout-around-justified;
             }
             .reversed {
-                @apply(--layout-horizontal-reverse);
+                @apply --layout-horizontal-reverse;
             }
             .horizontal {
-                @apply(--layout-horizontal);
+                @apply --layout-horizontal;
             }
             .withDisplay {
                 display: flex;
@@ -115,50 +116,29 @@
         </local-dom>
     </template>
     <script>
-        Polymer({
-            is: "ac-accordion",
-            observers: [],
-            behaviors: [
-                ACViewBehavior
-            ],
-            listeners: {
-                'theme-app': '_themeApp',
-                'theme-update': '_updateTheme',
-                'set-default-theme': '_setDefaultTheme',
-                'mousemove': '_updateOpening'
-            },
-            properties: {
-                _chordOn: {
-                    type: Number,
-                    value: -1
-                },
-                opening: {
-                    type: Boolean,
-                    value: false
-                },
-                showingTreble: {
-                    type: Boolean,
-                    value: true
-                },
-                bassNotes: {
-                    type: Number,
-                    value: 0
-                },
-                theme: {
-                    type: Object
-                }
-            },
+        class ACAccordion extends Polymer.mixinBehaviors([ACViewBehavior], Polymer.Element) {
+            static get is() { return 'ac-accordion'; }
+            static get properties() {return {
+                _chordOn: {type: Number,value: -1},
+                opening: {type: Boolean,value: false},
+                showingTreble: {type: Boolean,value: true},
+                bassNotes: {type: Number,value: 0},
+                theme: {type: Object}
+            }}
+            constructor() {
+                super();
+            }
         // ------------ keyboard mouse activity -------------
-            _updateOpening: function (e) {
+            _updateOpening (e) {
                 if (e.movementX > 0)
                     this.opening = true;
                 if (e.movementX < 0) {
                     this.opening = false;
                 }
-                this.$$('ACCORDION-TREBLE').updateOpening(this.opening);
-            },
+                this.shadowRoot.querySelector('accordion-treble').updateOpening(this.opening) ;
+            }
         // ----------------- MIDI -------------
-            _chordActivity: function () {
+            _chordActivity () {
                 var st = this.bassNotes;
                 var midiNote = -1;
                 //based on G accrdion with notes on bass: 41,43,45,46,48,49,50,51,52,53,54,55,56,57,58,59  bits represent: 41,42,43,44,45,46,47,48,49,50,51,52,53,54,  55,56,57,58,59   this.$.trebleSynthesizer.allNotesOffChords(); s0 closed
@@ -216,14 +196,14 @@
                 e.origin = 'acView';
                 e.cmd = 'note-on';
                 this._chordOn = midiNote;
-                this.$$('ACCORDION-BASS').___acV_onMIDIEvent(e);
-            },
-            ___acV_handleMIDIEvent: function (e) {
+                this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
+            }
+            ___acV_handleMIDIEvent (e) {
                 if (e.channel === 0) {
-                    this.$$('ACCORDION-TREBLE').___acV_onMIDIEvent(e);
+                    this.shadowRoot.querySelector('ACCORDION-TREBLE').___acV_onMIDIEvent(e);
                 }
                 if (e.channel === 1) {
-                    this.$$('ACCORDION-BASS').___acV_onMIDIEvent(e);
+                    this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
                 if (e.channel === 2) {
                     var cnt,
@@ -245,54 +225,62 @@
                             e.channel = 2;
                             e.origin = 'acView';
                             e.cmd = 'note-off';
-                            this.$$('ACCORDION-BASS').___acV_onMIDIEvent(e);
+                            this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                             this._chordOn = -1;
                         }
                     }
                 }
-            },
+            }
         // ------------------- MIDI helpers -------------------
-            _bitCount: function (num) {
+            _bitCount (num) {
                 var cnt = 0;
                 for (var i = 0; i < 31; i++) {
                     if (num & (1 << i))
                         cnt++;
                     }
                 return cnt;
-            },
+            }
         // ----------------- GUI ---------------
-            swap: function () {
+            swap () {
                 this.showingTreble = !this.showingTreble;
-            },
-            _computeDisplay: function (flag) {
+            }
+            _computeDisplay (flag) {
                 if (flag)
                     return 'withDisplay';
                 return 'noDisplay';
-            },
-            _computeDisplayTreble: function (mobile, flag) {
+            }
+            _computeDisplayTreble (mobile, flag) {
                 if (!mobile)
                     return 'withDisplay';
                 if (flag)
                     return 'withDisplay';
                 return 'noDisplay';
-            },
-            _computeDisplayBass: function (mobile, flag) {
+            }
+            _computeDisplayBass (mobile, flag) {
                 if (!mobile)
                     return 'withDisplay';
                 if (!flag)
                     return 'withDisplay';
                 return 'noDisplay';
-            },
-            _computeRotation: function (rotation) {
+            }
+            _computeRotation (rotation) {
                 if (rotation)
                     return "reversed";
                 return "horizontal";
-            },
-        // ------------------- Initialization -------------------
-            ready: function () {
+            }
+            ready() {
+                super.ready() ;
                 this.___acV_setDefaultReverb(30);
                 this.___acV_setReferencePitch(55);
+                Polymer.RenderStatus.afterNextRender(this, function() {
+                    this.addEventListener('theme-app', e => this._themeApp(e));
+                    this.addEventListener('theme-update', e => this._updateTheme(e));
+                    this.addEventListener('set-default-theme', e => this._setDefaultTheme(e));
+                    this.addEventListener('mousemove', e => this._updateOpening(e));
+                });
             }
-        });
+        }
+        customElements.define('ac-accordion', ACAccordion);
     </script>
 </dom-module>
+    
