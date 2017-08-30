@@ -2,7 +2,7 @@
     <link rel="import" href="../polymer/polymer-element.html">
     <link rel="import" href="../polymer/lib/elements/dom-if.html">
     <link rel="import" href="../paper-icon-button/paper-icon-button.html" async>
-    <link rel="import" href="../ac-view/ac-view-behavior.html">
+    <link rel="import" href="../ac-view/ac-view.html">
     <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
     <link rel="import" href="../local-dom/local-dom.html">
     <link rel="import" href="./accordion-treble.html">
@@ -116,7 +116,7 @@
         </local-dom>
     </template>
     <script>
-        class ACAccordion extends ACViewBehavior{
+        class ACAccordion extends ACView{
             static get is() { return 'ac-accordion'; }
             static get properties() {return {
                 _chordOn: {type: Number,value: -1},
