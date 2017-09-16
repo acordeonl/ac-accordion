@@ -190,13 +190,8 @@
 
             // ------------------- adds midiNote action -------------------
                 if (midiNote !== -1) {
-                    // var e = {};
-                    // e.time = instrumentContext.currentTime;
                     e.midiNote = midiNote;
-                    // e.channel = 2;
-                    // e.origin = 'playback';
-                    // e.cmd = 'note-on';
-                    // e.tempo = 100 ; 
+                    e.channel = 3 ;
                     this._chordOn = midiNote;
                     this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
@@ -208,8 +203,8 @@
                 if (e.channel === 1) {
                     this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
+                // used for instrument activity
                 if (e.channel === 2) {
-                    // console.log(e);
                     var cnt,
                         bNote = e.midiNote - 41;
                     if (e.cmd === 'note-on') {
@@ -223,17 +218,16 @@
                         this.bassNotes = this.bassNotes & tmp;
                         cnt = (this._bitCount(this.bassNotes) % 3);
                         if (cnt === 0 && this._chordOn !== -1) {
-                            // var e = {};
-                            // e.time = instrumentContext.currentTime;
-                            // e.midiNote = this._chordOn;
-                            // e.channel = 2;
-                            // e.origin = 'playback';
-                            // e.cmd = 'note-off';
                             e.midiNote = this._chordOn ; 
+                            e.channel = 3 ;
                             this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                             this._chordOn = -1;
                         }
                     }
+                }
+                // used for playback activity
+                if (e.channel === 3) {
+                    this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
             }
         // ------------------- MIDI helpers -------------------

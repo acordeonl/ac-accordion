@@ -41,22 +41,22 @@
         </style>
         <!-- local DOM -->
         <view-audio id="bassNotesAudio" channel='1' default-audio-url='/data/accordion_synth/bass_notes.mp3'></view-audio>
-        <view-audio id="bassChordsAudio" channel='2' default-audio-url='/data/accordion_synth/bass_chords.mp3'></view-audio>
+        <view-audio id="bassChordsAudio" channel='3' default-audio-url='/data/accordion_synth/bass_chords.mp3'></view-audio>
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(___acV_rotation)}}">
             <div class$="col {{_computeColRotation(___acV_rotation)}}">
-                <accordion-button is-bass acLed ac-id='3' channel='2' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='3' channel='3' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='3' channel='1' ></accordion-button>
-                <accordion-button is-bass acLed ac-id='4' channel='2' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='4' channel='3' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='4' channel='1' ></accordion-button>
-                <accordion-button is-bass acLed ac-id='5' channel='2' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='5' channel='3' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='5' channel='1' ></accordion-button>
             </div>
             <div class$="col {{_computeColRotation(___acV_rotation)}}">
-                <accordion-button is-bass acLed ac-id='0' channel='2' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='0' channel='3' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='0' channel='1' ></accordion-button>
-                <accordion-button is-bass acLed ac-id='1' channel='2' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='1' channel='3' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='1' channel='1' ></accordion-button>
-                <accordion-button is-bass acLed ac-id='2' channel='2' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='2' channel='3' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='2' channel='1' ></accordion-button>
             </div>
         </local-dom>
@@ -77,21 +77,21 @@
             ___acV_mapMIDIEventToAcLedId (channel, midiNote) {
                 if (channel === 1)
                     return [Math.floor((midiNote - 48) / 2)];
-                if (channel === 2) {
+                if (channel === 3 ) {
                     return [Math.floor(midiNote / 2)];
                 }
             }
             ___acV_mapMIDIEventToAcLedState (channel, midiNote) {
                 if (channel === 1)
                     return [((midiNote - 48) % 2) + 1];
-                if (channel === 2){
+                if (channel === 3 ){
                     return [(midiNote % 2) + 1];
                 }
             }
             ___acV_handleAddPitch (note,channel,diff) {
                 if (channel === 1)
                     return this._changeBassNotesPitch(note,diff);
-                if (channel === 2) {
+                if (channel === 3) {
                     var newNote = this._changeChordsPitch(note,diff);
                     return newNote ;
                 }
@@ -152,7 +152,7 @@
             _setNoteNames(){
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
                 for (var i = 0; i < nodeList.length; i++) {
-                    if (nodeList[i].channel === 2 )
+                    if (nodeList[i].channel === 3 )
                         continue ;
                     var note1 = this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+48] ;
                     var note2 =this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+49] ;
@@ -179,18 +179,18 @@
                 this.___acV_mapMIDIEventToNote(1,58,58);
                 this.___acV_mapMIDIEventToNote(1,59,58);
                 //bass chords
-                this.___acV_mapMIDIEventToNote(2,0,35);
-                this.___acV_mapMIDIEventToNote(2,1,26);
-                this.___acV_mapMIDIEventToNote(2,2,15);
-                this.___acV_mapMIDIEventToNote(2,3,35);
-                this.___acV_mapMIDIEventToNote(2,4,22);
-                this.___acV_mapMIDIEventToNote(2,5,15);
-                this.___acV_mapMIDIEventToNote(2,6,41);
-                this.___acV_mapMIDIEventToNote(2,7,3);
-                this.___acV_mapMIDIEventToNote(2,8,5);
-                this.___acV_mapMIDIEventToNote(2,9,24);
-                this.___acV_mapMIDIEventToNote(2,10,9);
-                this.___acV_mapMIDIEventToNote(2,11,9);
+                this.___acV_mapMIDIEventToNote(3,0,35);
+                this.___acV_mapMIDIEventToNote(3,1,26);
+                this.___acV_mapMIDIEventToNote(3,2,15);
+                this.___acV_mapMIDIEventToNote(3,3,35);
+                this.___acV_mapMIDIEventToNote(3,4,22);
+                this.___acV_mapMIDIEventToNote(3,5,15);
+                this.___acV_mapMIDIEventToNote(3,6,41);
+                this.___acV_mapMIDIEventToNote(3,7,3);
+                this.___acV_mapMIDIEventToNote(3,8,5);
+                this.___acV_mapMIDIEventToNote(3,9,24);
+                this.___acV_mapMIDIEventToNote(3,10,9);
+                this.___acV_mapMIDIEventToNote(3,11,9);
 
                 this._setNoteNames() ;
             }
