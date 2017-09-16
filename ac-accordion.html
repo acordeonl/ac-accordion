@@ -119,10 +119,10 @@
         class ACAccordion extends ACView{
             static get is() { return 'ac-accordion'; }
             static get properties() {return {
-                _chordOn: {type: Number,value: -1},
+                _chordOn: {type: Array,value:[]},
                 opening: {type: Boolean,value: false},
                 showingTreble: {type: Boolean,value: true},
-                bassNotes: {type: Number,value: 0},
+                bassNotes: {type: Array,value: []},
                 theme: {type: Object}
             }}
             constructor() {
@@ -138,8 +138,7 @@
                 this.shadowRoot.querySelector('accordion-treble').updateOpening(this.opening) ;
             }
         // ----------------- MIDI -------------
-            _chordActivity (e) {
-                var st = this.bassNotes;
+            _chordActivity (st,e) {
                 var midiNote = -1;
                 //based on G accrdion with notes on bass: 41,43,45,46,48,49,50,51,52,53,54,55,56,57,58,59  bits represent: 41,42,43,44,45,46,47,48,49,50,51,52,53,54,  55,56,57,58,59   this.$.trebleSynthesizer.allNotesOffChords(); s0 closed
             // ------------------- Bit test -------------------
@@ -192,7 +191,7 @@
                 if (midiNote !== -1) {
                     e.midiNote = midiNote;
                     e.channel = 3 ;
-                    this._chordOn = midiNote;
+                    this._chordOn[e.origin] = midiNote;
                     this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
             }
@@ -203,30 +202,33 @@
                 if (e.channel === 1) {
                     this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
-                // used for instrument activity
+                // used for instrument activity and recordingPlayback conversion
                 if (e.channel === 2) {
+                    if(this.bassNotes[e.origin] === undefined)
+                        this.bassNotes[e.origin] = 0 ; 
+
                     var cnt,
                         bNote = e.midiNote - 41;
                     if (e.cmd === 'note-on') {
-                        this.bassNotes = this.bassNotes | (1 << bNote);
-                        cnt = (this._bitCount(this.bassNotes) % 3);
-                        if (cnt === 0 && this._chordOn === -1)
-                            this._chordActivity(e);
+                        this.bassNotes[e.origin] = this.bassNotes[e.origin] | (1 << bNote);
+                        cnt = (this._bitCount(this.bassNotes[e.origin]) % 3);
+                        if (cnt === 0 && this._chordOn[e.origin] === undefined)
+                            this._chordActivity(this.bassNotes[e.origin],e);
                     }
                     else {
                         var tmp = 524287 ^ (1 << bNote);
-                        this.bassNotes = this.bassNotes & tmp;
-                        cnt = (this._bitCount(this.bassNotes) % 3);
-                        if (cnt === 0 && this._chordOn !== -1) {
-                            e.midiNote = this._chordOn ; 
+                        this.bassNotes[e.origin] = this.bassNotes[e.origin] & tmp;
+                        cnt = (this._bitCount(this.bassNotes[e.origin]) % 3);
+                        if (cnt === 0 && this._chordOn[e.origin] !== undefined) {
+                            e.midiNote = this._chordOn[e.origin] ; 
                             e.channel = 3 ;
                             this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
-                            this._chordOn = -1;
+                            this._chordOn[e.origin] = undefined;
                         }
                     }
                 }
                 // used for playback activity
-                if (e.channel === 3) {
+                else if (e.channel === 3) {
                     this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
             }
