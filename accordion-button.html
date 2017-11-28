@@ -77,14 +77,10 @@
                 }
                 return 'none'
             }
-            ___acV_getNoteName(note,channel){
+            ___acV_getMIDINoteName(note,channel){
                 if (channel === 3) 
                     return '' ;
-                var notes = ['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
-                var octave = Math.floor(note / 12);
-                var name = notes[note % 12];
-                name += octave;
-                return name;
+                return super.___acV_getMIDINoteName(note,channel) ; 
             }
             ready() {
                 super.ready() ;
