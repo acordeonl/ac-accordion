@@ -164,31 +164,37 @@
                 super.ready() ;
             /* ------------------- MIDI note mapping ------------------- */
                 //bass notes
-                this.___acV_mapMIDIEventToNote(1,48,55);
-                this.___acV_mapMIDIEventToNote(1,49,50);
-                this.___acV_mapMIDIEventToNote(1,50,48);
-                this.___acV_mapMIDIEventToNote(1,51,55);
-                this.___acV_mapMIDIEventToNote(1,52,53);
-                this.___acV_mapMIDIEventToNote(1,53,48);
-                this.___acV_mapMIDIEventToNote(1,54,52);
-                this.___acV_mapMIDIEventToNote(1,55,57);
-                this.___acV_mapMIDIEventToNote(1,56,57);
-                this.___acV_mapMIDIEventToNote(1,57,50);
-                this.___acV_mapMIDIEventToNote(1,58,58);
-                this.___acV_mapMIDIEventToNote(1,59,58);
+                this.___acV_mapMIDINoteToAudioNote(1,48,55);
+                this.___acV_mapMIDINoteToAudioNote(1,49,50);
+                this.___acV_mapMIDINoteToAudioNote(1,50,48);
+                this.___acV_mapMIDINoteToAudioNote(1,51,55);
+                this.___acV_mapMIDINoteToAudioNote(1,52,53);
+                this.___acV_mapMIDINoteToAudioNote(1,53,48);
+                this.___acV_mapMIDINoteToAudioNote(1,54,52);
+                this.___acV_mapMIDINoteToAudioNote(1,55,57);
+                this.___acV_mapMIDINoteToAudioNote(1,56,57);
+                this.___acV_mapMIDINoteToAudioNote(1,57,50);
+                this.___acV_mapMIDINoteToAudioNote(1,58,58);
+                this.___acV_mapMIDINoteToAudioNote(1,59,58);
+
                 //bass chords
-                this.___acV_mapMIDIEventToNote(3,0,35);
-                this.___acV_mapMIDIEventToNote(3,1,26);
-                this.___acV_mapMIDIEventToNote(3,2,15);
-                this.___acV_mapMIDIEventToNote(3,3,35);
-                this.___acV_mapMIDIEventToNote(3,4,22);
-                this.___acV_mapMIDIEventToNote(3,5,15);
-                this.___acV_mapMIDIEventToNote(3,6,41);
-                this.___acV_mapMIDIEventToNote(3,7,3);
-                this.___acV_mapMIDIEventToNote(3,8,5);
-                this.___acV_mapMIDIEventToNote(3,9,24);
-                this.___acV_mapMIDIEventToNote(3,10,9);
-                this.___acV_mapMIDIEventToNote(3,11,9);
+                this.___acV_mapMIDINoteToAudioNote(3,0,35);
+                this.___acV_mapMIDINoteToAudioNote(3,1,26);
+                this.___acV_mapMIDINoteToAudioNote(3,2,15);
+                this.___acV_mapMIDINoteToAudioNote(3,3,35);
+                this.___acV_mapMIDINoteToAudioNote(3,4,22);
+                this.___acV_mapMIDINoteToAudioNote(3,5,15);
+                this.___acV_mapMIDINoteToAudioNote(3,6,41);
+                this.___acV_mapMIDINoteToAudioNote(3,7,3);
+                this.___acV_mapMIDINoteToAudioNote(3,8,5);
+                this.___acV_mapMIDINoteToAudioNote(3,9,24);
+                this.___acV_mapMIDINoteToAudioNote(3,10,9);
+                this.___acV_mapMIDINoteToAudioNote(3,11,9);
+
+                // midi out
+                for(let i = 0 ; i < 42 ; i ++ ){
+                    this.___acV_mapAudioNoteToMIDIOut(3,i,[60+i]) ; 
+                }
 
                 this._setNoteNames() ;
             }
