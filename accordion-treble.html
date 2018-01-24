@@ -131,8 +131,8 @@
             _setNoteNames () {
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
                 for (var i = 0; i < nodeList.length; i++) {
-                    var note1 = this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId * 2 + 24];
-                    var note2 = this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId * 2 + 25];
+                    var note1 = this.___acV_MIDINoteToAudioNoteMap[nodeList[i].channel][nodeList[i].acId * 2 + 24];
+                    var note2 = this.___acV_MIDINoteToAudioNoteMap[nodeList[i].channel][nodeList[i].acId * 2 + 25];
                     nodeList[i].note1 = this.___acV_getMIDINoteName(note1) ; 
                     nodeList[i].note2 = this.___acV_getMIDINoteName(note2) ; 
                 }

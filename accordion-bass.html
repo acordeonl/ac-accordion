@@ -154,8 +154,8 @@
                 for (var i = 0; i < nodeList.length; i++) {
                     if (nodeList[i].channel === 3 )
                         continue ;
-                    var note1 = this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+48] ;
-                    var note2 =this.___acV_MIDIEventToNoteMap[nodeList[i].channel][nodeList[i].acId*2+49] ;
+                    var note1 = this.___acV_MIDINoteToAudioNoteMap[nodeList[i].channel][nodeList[i].acId*2+48] ;
+                    var note2 =this.___acV_MIDINoteToAudioNoteMap[nodeList[i].channel][nodeList[i].acId*2+49] ;
                     nodeList[i].note1 = this.___acV_getMIDINoteName(note1) ; 
                     nodeList[i].note2 = this.___acV_getMIDINoteName(note2) ; 
                 }
