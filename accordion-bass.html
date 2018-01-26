@@ -41,22 +41,22 @@
         </style>
         <!-- local DOM -->
         <view-audio id="bassNotesAudio" channel='1' default-audio-url='/data/accordion_synth/bass_notes.mp3'></view-audio>
-        <view-audio id="bassChordsAudio" channel='3' default-audio-url='/data/accordion_synth/bass_chords.mp3'></view-audio>
+        <view-audio id="bassChordsAudio" channel='2' default-audio-url='/data/accordion_synth/bass_chords.mp3'></view-audio>
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(___acV_rotation)}}">
             <div class$="col {{_computeColRotation(___acV_rotation)}}">
-                <accordion-button is-bass acLed ac-id='3' channel='3' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='3' channel='2' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='3' channel='1' ></accordion-button>
-                <accordion-button is-bass acLed ac-id='4' channel='3' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='4' channel='2' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='4' channel='1' ></accordion-button>
-                <accordion-button is-bass acLed ac-id='5' channel='3' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='5' channel='2' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='5' channel='1' ></accordion-button>
             </div>
             <div class$="col {{_computeColRotation(___acV_rotation)}}">
-                <accordion-button is-bass acLed ac-id='0' channel='3' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='0' channel='2' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='0' channel='1' ></accordion-button>
-                <accordion-button is-bass acLed ac-id='1' channel='3' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='1' channel='2' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='1' channel='1' ></accordion-button>
-                <accordion-button is-bass acLed ac-id='2' channel='3' ></accordion-button>
+                <accordion-button is-bass acLed ac-id='2' channel='2' ></accordion-button>
                 <accordion-button is-bass acLed ac-id='2' channel='1' ></accordion-button>
             </div>
         </local-dom>
@@ -77,21 +77,21 @@
             ___acV_mapMIDIEventToAcLedId (channel, midiNote) {
                 if (channel === 1)
                     return [Math.floor((midiNote - 48) / 2)];
-                if (channel === 3 ) {
+                if (channel === 2 ) {
                     return [Math.floor(midiNote / 2)];
                 }
             }
             ___acV_mapMIDIEventToAcLedState (channel, midiNote) {
                 if (channel === 1)
                     return [((midiNote - 48) % 2) + 1];
-                if (channel === 3 ){
+                if (channel === 2 ){
                     return [(midiNote % 2) + 1];
                 }
             }
             ___acV_handleAddPitch (note,channel,diff) {
                 if (channel === 1)
                     return this._changeBassNotesPitch(note,diff);
-                if (channel === 3) {
+                if (channel === 2) {
                     var newNote = this._changeChordsPitch(note,diff);
                     return newNote ;
                 }
@@ -152,7 +152,7 @@
             _setNoteNames(){
                 var nodeList = Polymer.dom(this.root).querySelectorAll('ACCORDION-BUTTON');
                 for (var i = 0; i < nodeList.length; i++) {
-                    if (nodeList[i].channel === 3 )
+                    if (nodeList[i].channel === 2 )
                         continue ;
                     var note1 = this.___acV_MIDINoteToAudioNoteMap[nodeList[i].channel][nodeList[i].acId*2+48] ;
                     var note2 =this.___acV_MIDINoteToAudioNoteMap[nodeList[i].channel][nodeList[i].acId*2+49] ;
@@ -178,73 +178,73 @@
                 this.___acV_mapMIDINoteToAudioNote(1,59,58);
 
                 //bass chords
-                this.___acV_mapMIDINoteToAudioNote(3,0,35);
-                this.___acV_mapMIDINoteToAudioNote(3,1,26);
-                this.___acV_mapMIDINoteToAudioNote(3,2,15);
-                this.___acV_mapMIDINoteToAudioNote(3,3,35);
-                this.___acV_mapMIDINoteToAudioNote(3,4,22);
-                this.___acV_mapMIDINoteToAudioNote(3,5,15);
-                this.___acV_mapMIDINoteToAudioNote(3,6,41);
-                this.___acV_mapMIDINoteToAudioNote(3,7,3);
-                this.___acV_mapMIDINoteToAudioNote(3,8,5);
-                this.___acV_mapMIDINoteToAudioNote(3,9,24);
-                this.___acV_mapMIDINoteToAudioNote(3,10,9);
-                this.___acV_mapMIDINoteToAudioNote(3,11,9);
+                this.___acV_mapMIDINoteToAudioNote(2,0,35);
+                this.___acV_mapMIDINoteToAudioNote(2,1,26);
+                this.___acV_mapMIDINoteToAudioNote(2,2,15);
+                this.___acV_mapMIDINoteToAudioNote(2,3,35);
+                this.___acV_mapMIDINoteToAudioNote(2,4,22);
+                this.___acV_mapMIDINoteToAudioNote(2,5,15);
+                this.___acV_mapMIDINoteToAudioNote(2,6,41);
+                this.___acV_mapMIDINoteToAudioNote(2,7,3);
+                this.___acV_mapMIDINoteToAudioNote(2,8,5);
+                this.___acV_mapMIDINoteToAudioNote(2,9,24);
+                this.___acV_mapMIDINoteToAudioNote(2,10,9);
+                this.___acV_mapMIDINoteToAudioNote(2,11,9);
 
                 // midi out
                 // C
-                this.___acV_mapAudioNoteToMIDIOut(3, 15, [ 48,52,55 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 35, [ 43,59,50 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 22, [ 41,57,48 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 9, [ 46,50,53 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 5, [ 45,49,52 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 24, [ 50,53,57 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 26, [ 50,54,57 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 29, [ 43,58,50 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 33, [ 51,55,58 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 15, [ 48,52,55 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 35, [ 43,59,50 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 22, [ 41,57,48 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 9, [ 46,50,53 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 5, [ 45,49,52 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 24, [ 50,53,57 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 26, [ 50,54,57 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 29, [ 43,58,50 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 33, [ 51,55,58 ]) ;
                 // C #
-                this.___acV_mapAudioNoteToMIDIOut(3, 19, [ 37,53,56 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 0, [ 32,48,51 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 27, [ 30,58,49 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 11, [ 35,51,54 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 8, [ 34,50,53 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 30, [ 39,54,58 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 32, [ 39,55,58 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 36, [ 32,59,51 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 40, [ 40,56,59 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 19, [ 37,53,56 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 0, [ 32,48,51 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 27, [ 30,58,49 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 11, [ 35,51,54 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 8, [ 34,50,53 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 30, [ 39,54,58 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 32, [ 39,55,58 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 36, [ 32,59,51 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 40, [ 40,56,59 ]) ;
                 // D
-                this.___acV_mapAudioNoteToMIDIOut(3, 25, [ 38,54,57 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 4, [ 33,49,52 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 34, [ 31,59,50 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 14, [ 36,52,55 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 38, [ 40,55,59 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 2, [ 33,48,52 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 21, [ 29,57,48 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 25, [ 38,54,57 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 4, [ 33,49,52 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 34, [ 31,59,50 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 14, [ 36,52,55 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 38, [ 40,55,59 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 2, [ 33,48,52 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 21, [ 29,57,48 ]) ;
                 //Eb
-                this.___acV_mapAudioNoteToMIDIOut(3, 16, [ 29,56,48 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 6, [ 34,49,53 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 16, [ 29,56,48 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 6, [ 34,49,53 ]) ;
                 // E
-                this.___acV_mapAudioNoteToMIDIOut(3, 41, [ 52,56,59 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 12, [ 47,51,54 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 20, [ 49,53,56 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 23, [ 42,57,49 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 28, [ 42,58,49 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 10, [ 47,50,54 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 41, [ 52,56,59 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 12, [ 47,51,54 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 20, [ 49,53,56 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 23, [ 42,57,49 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 28, [ 42,58,49 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 10, [ 47,50,54 ]) ;
                 // F
-                this.___acV_mapAudioNoteToMIDIOut(3, 13, [ 48,51,55 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 1, [ 44,48,51 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 13, [ 48,51,55 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 1, [ 44,48,51 ]) ;
                 // F#
-                this.___acV_mapAudioNoteToMIDIOut(3, 37, [ 44,59,51 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 18, [ 49,52,56 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 37, [ 44,59,51 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 18, [ 49,52,56 ]) ;
                 // G
-                this.___acV_mapAudioNoteToMIDIOut(3, 3, [ 45,48,52 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 3, [ 45,48,52 ]) ;
                 // Ab
-                this.___acV_mapAudioNoteToMIDIOut(3, 7, [ 46,49,53 ]) ;
-                this.___acV_mapAudioNoteToMIDIOut(3, 31, [ 51,54,58 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 7, [ 46,49,53 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 31, [ 51,54,58 ]) ;
                 // A
-                this.___acV_mapAudioNoteToMIDIOut(3, 39, [ 52,55,59 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 39, [ 52,55,59 ]) ;
                 //Bb
-                this.___acV_mapAudioNoteToMIDIOut(3, 17, [ 41,56,48 ]) ;
+                this.___acV_mapAudioNoteToMIDIOut(2, 17, [ 41,56,48 ]) ;
 
                 this._setNoteNames() ;
             }

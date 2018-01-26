@@ -190,7 +190,6 @@
             // ------------------- adds midiNote action -------------------
                 if (midiNote !== -1) {
                     e.midiNote = midiNote;
-                    e.channel = 3 ;
                     this._chordOn[e.origin] = midiNote;
                     this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
@@ -203,10 +202,9 @@
                     this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                 }
                 // used for instrument activity and recordingPlayback conversion
-                if (e.channel === 2) {
+                if (e.channel === 2 ) {
                     if(this.bassNotes[e.origin] === undefined)
                         this.bassNotes[e.origin] = 0 ; 
-
                     var cnt,
                         bNote = e.midiNote - 41;
                     if (e.cmd === 'note-on') {
@@ -221,16 +219,11 @@
                         cnt = (this._bitCount(this.bassNotes[e.origin]) % 3);
                         if (cnt === 0 && this._chordOn[e.origin] !== undefined) {
                             e.midiNote = this._chordOn[e.origin] ; 
-                            e.channel = 3 ;
                             this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                             this._chordOn[e.origin] = undefined;
                         }
                     }
-                }
-                // used for playback activity
-                else if (e.channel === 3) {
-                    this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
-                }
+                }  
             }
         // ------------------- MIDI helpers -------------------
             _bitCount (num) {
