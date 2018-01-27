@@ -203,25 +203,30 @@
                 }
                 // used for instrument activity and recordingPlayback conversion
                 if (e.channel === 2 ) {
-                    if(this.bassNotes[e.origin] === undefined)
-                        this.bassNotes[e.origin] = 0 ; 
-                    var cnt,
-                        bNote = e.midiNote - 41;
-                    if (e.cmd === 'note-on') {
-                        this.bassNotes[e.origin] = this.bassNotes[e.origin] | (1 << bNote);
-                        cnt = (this._bitCount(this.bassNotes[e.origin]) % 3);
-                        if (cnt === 0 && this._chordOn[e.origin] === undefined)
-                            this._chordActivity(this.bassNotes[e.origin],e);
-                    }
-                    else {
-                        var tmp = 524287 ^ (1 << bNote);
-                        this.bassNotes[e.origin] = this.bassNotes[e.origin] & tmp;
-                        cnt = (this._bitCount(this.bassNotes[e.origin]) % 3);
-                        if (cnt === 0 && this._chordOn[e.origin] !== undefined) {
-                            e.midiNote = this._chordOn[e.origin] ; 
-                            this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
-                            this._chordOn[e.origin] = undefined;
+                    if(e.origin.startsWith('___midi_instrument')) {                    
+                        if(this.bassNotes[e.origin] === undefined)
+                            this.bassNotes[e.origin] = 0 ; 
+                        var cnt,
+                            bNote = e.midiNote - 41;
+                        if (e.cmd === 'note-on') {
+                            this.bassNotes[e.origin] = this.bassNotes[e.origin] | (1 << bNote);
+                            cnt = (this._bitCount(this.bassNotes[e.origin]) % 3);
+                            if (cnt === 0 && this._chordOn[e.origin] === undefined)
+                                this._chordActivity(this.bassNotes[e.origin],e);
                         }
+                        else {
+                            var tmp = 524287 ^ (1 << bNote);
+                            this.bassNotes[e.origin] = this.bassNotes[e.origin] & tmp;
+                            cnt = (this._bitCount(this.bassNotes[e.origin]) % 3);
+                            if (cnt === 0 && this._chordOn[e.origin] !== undefined) {
+                                e.midiNote = this._chordOn[e.origin] ; 
+                                this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
+                                this._chordOn[e.origin] = undefined;
+                            }
+                        }
+                    }
+                    else{
+                        this.shadowRoot.querySelector('ACCORDION-BASS').___acV_onMIDIEvent(e);
                     }
                 }  
             }
