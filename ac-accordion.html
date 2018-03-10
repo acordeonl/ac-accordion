@@ -99,7 +99,7 @@
                 <accordion-treble
                     class$='{{_computeDisplayTreble(mobile,showingTreble)}}'
                     acLedGroup
-                    name='diapasón'
+                    name='treble'
                     default-instrument-panning='0.4'
                     default-playback-panning='0.2'
                     default-instrument-volume='1'
@@ -107,7 +107,7 @@
                 <accordion-bass
                     class$='{{_computeDisplayBass(mobile,showingTreble)}}'
                     acLedGroup
-                    name='bajos'
+                    name='bass'
                     default-playback-panning='-0.2'
                     default-instrument-panning='-0.4'
                     default-instrument-volume='0.45'
@@ -270,7 +270,7 @@
             ready() {
                 this.___acV_displayingNotes = true ; 
                 super.ready() ;
-                this.___acV_setName('acordeón') ; 
+                this.___acV_setName('accordion') ; 
                 this.___acV_setDefaultReverb(30);
                 this.___acV_setDefaultViewPitch(55); 
                 this.___acV_canRotate(true) ; 
