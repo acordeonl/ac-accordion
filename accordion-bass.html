@@ -40,8 +40,8 @@
             }
         </style>
         <!-- local DOM -->
-        <view-audio id="bassNotesAudio" channel='1' default-audio-url='/data/accordion_synth/bass_notes.mp3'></view-audio>
-        <view-audio id="bassChordsAudio" channel='2' default-audio-url='/data/accordion_synth/bass_chords.mp3'></view-audio>
+        <view-audio channel='1'></view-audio>
+        <view-audio channel='2'></view-audio>
         <local-dom mobile="{{mobile}}" tablet="{{tablet}}" laptop="{{laptop}}" class$="{{_computeRotation(___acV_rotation)}}">
             <div class$="col {{_computeColRotation(___acV_rotation)}}">
                 <accordion-button is-bass acLed ac-id='3' channel='2' ></accordion-button>
