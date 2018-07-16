@@ -137,65 +137,6 @@
                     nodeList[i].note2 = this.___acV_getMIDINoteName(note2) ; 
                 }
             }
-            updateOpening (opening) {
-                if (opening !== this.opening) {
-                    var arr = []
-                    for (var i = 0; i < this.keysDown.length; i++) 
-                        arr[i] = this.keysDown[i]
-                    for (let i = 0; i < arr.length; i++)
-                        this.___acV_onKeyboardNoteOff(arr[i]);
-                    this.opening = opening;
-                    for (let i = 0; i < arr.length; i++)
-                        this.___acV_onKeyboardNoteOn(arr[i]);
-                }
-            }
-            ___acV_onKeyboardNoteOn (key) {
-                for (var i = 0; i < this.keysDown.length; i++) {
-                    if (this.keysDown[i] === key) {
-                        return;
-                    }
-                }
-                if (this.___acV_mapKeyboardToNote[key] !== undefined) {
-                    var e = {};
-                    e.playNow = 1;
-                    e.midiNote = this.___acV_mapKeyboardToNote[key][1];
-                    if (this.opening)
-                        e.midiNote++;
-                    e.channel = this.___acV_mapKeyboardToNote[key][0];
-                    e.origin = 'keyboard';
-                    e.cmd = 'note-on';
-                    this.keysDown.push(key);
-                    this.___acV_onMIDIEvent(e);
-                }
-            }
-            ___acV_onKeyboardNoteOff (key) {
-                var flag = true;
-                for (var i = 0; i < this.keysDown.length; i++) {
-                    if (this.keysDown[i] === key) {
-                        flag = false;
-                    }
-                }
-                if (flag)
-                    return;
-                if (this.___acV_mapKeyboardToNote[key] !== undefined) {
-                    var e = {};
-                    e.playNow = 1;
-                    e.midiNote = this.___acV_mapKeyboardToNote[key][1];
-                    e.channel = this.___acV_mapKeyboardToNote[key][0];
-                    if (this.opening)
-                        e.midiNote++;
-                    e.origin = 'keyboard';
-                    e.cmd = 'note-off';
-                    var index = 0;
-                    for (let i = 0; i < this.keysDown.length; i++) {
-                        if (this.keysDown[i] === key) {
-                            index = i;
-                        }
-                    }
-                    this.keysDown.splice(index, 1);
-                    this.___acV_onMIDIEvent(e);
-                }
-            }
             ready() {
                 super.ready() ;
             // ------------------- MIDI note mapping -------------------
@@ -373,38 +314,6 @@
                 this.___acV_setChord(59, 'm (2)', [
                     [0, 47, 49, 75]
                 ]);
-            // --------------- keyboard setup ----------------------
-                this.___acV_setKeyboardToNote('w', [0, 24]);
-                this.___acV_setKeyboardToNote('e', [0, 26]);
-                this.___acV_setKeyboardToNote('r', [0, 28]);
-                this.___acV_setKeyboardToNote('t', [0, 30]);
-                this.___acV_setKeyboardToNote('y', [0, 32]);
-                this.___acV_setKeyboardToNote('u', [0, 34]);
-                this.___acV_setKeyboardToNote('i', [0, 36]);
-                this.___acV_setKeyboardToNote('o', [0, 38]);
-                this.___acV_setKeyboardToNote('p', [0, 40]);
-                this.___acV_setKeyboardToNote('[', [0, 42]);
-                this.___acV_setKeyboardToNote('a', [0, 44]);
-                this.___acV_setKeyboardToNote('s', [0, 46]);
-                this.___acV_setKeyboardToNote('d', [0, 48]);
-                this.___acV_setKeyboardToNote('f', [0, 50]);
-                this.___acV_setKeyboardToNote('g', [0, 52]);
-                this.___acV_setKeyboardToNote('h', [0, 54]);
-                this.___acV_setKeyboardToNote('j', [0, 56]);
-                this.___acV_setKeyboardToNote('k', [0, 58]);
-                this.___acV_setKeyboardToNote('l', [0, 60]);
-                this.___acV_setKeyboardToNote(';', [0, 62]);
-                this.___acV_setKeyboardToNote('0', [0, 64]);
-                this.___acV_setKeyboardToNote('z', [0, 66]);
-                this.___acV_setKeyboardToNote('x', [0, 68]);
-                this.___acV_setKeyboardToNote('c', [0, 70]);
-                this.___acV_setKeyboardToNote('v', [0, 72]);
-                this.___acV_setKeyboardToNote('b', [0, 74]);
-                this.___acV_setKeyboardToNote('n', [0, 76]);
-                this.___acV_setKeyboardToNote('m', [0, 78]);
-                this.___acV_setKeyboardToNote(',', [0, 80]);
-                this.___acV_setKeyboardToNote('.', [0, 82]);
-                this.___acV_setKeyboardToNote('/', [0, 84]);
                 this._setNoteNames();
             }
         }

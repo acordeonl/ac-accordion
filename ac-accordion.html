@@ -7,7 +7,6 @@
     <link rel="import" href="../local-dom/local-dom.html">
     <link rel="import" href="./accordion-treble.html">
     <link rel="import" href="./accordion-bass.html">
-    <script src="./keyboardMapping.js"></script>
 </imports>
 <dom-module id="ac-accordion">
     <template>
@@ -132,15 +131,6 @@
             }}
             constructor() {
                 super();
-            }
-        // ------------ keyboard mouse activity -------------
-            _updateOpening (e) {
-                if (e.movementX > 0)
-                    this.opening = true;
-                if (e.movementX < 0) {
-                    this.opening = false;
-                }
-                this.shadowRoot.querySelector('accordion-treble').updateOpening(this.opening) ;
             }
         // ----------------- MIDI -------------
             _chordActivity (st,e) {
@@ -292,7 +282,6 @@
                     this.addEventListener('theme-app', e => this._themeApp(e));
                     this.addEventListener('theme-update', e => this._updateTheme(e));
                     this.addEventListener('set-default-theme', e => this._setDefaultTheme(e));
-                    this.addEventListener('mousemove', e => this._updateOpening(e));
                 });
             }
         }
